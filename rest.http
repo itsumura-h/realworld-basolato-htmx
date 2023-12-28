@@ -1,0 +1,15 @@
+## To use this file, install this extention for VSCode
+## https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+## Registration
+## https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints#registration
+POST http://localhost:5000/api/users
+content-type: application/json
+
+{
+  "user":{
+    "username": "Jacob",
+    "email": "jake@jake.jake",
+    "password": "jakejake"
+  }
+}
