@@ -11,7 +11,7 @@ import ../../models/value_objects/password
 type CreateUserUsecase* = ref object
   repository:ICreatingUserRepository
 
-proc new(_:type CreateUserUsecase):CreateUserUsecase =
+proc new*(_:type CreateUserUsecase):CreateUserUsecase =
   return CreateUserUsecase(
     repository:di.userRepository
   )
@@ -26,3 +26,4 @@ proc invoke*(self:CreateUserUsecase, userName, email, password:string){.async.} 
     raise newException(DomainError, "email is deprecated")
 
   let user = CreatingUser.new(userName, email, password)
+  self.repository.create(user).await

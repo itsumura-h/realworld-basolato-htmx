@@ -2,7 +2,7 @@ import std/asyncdispatch
 import ./migration_user
 
 
-proc main() =
+proc main*() =
   waitFor user()
 
 main()

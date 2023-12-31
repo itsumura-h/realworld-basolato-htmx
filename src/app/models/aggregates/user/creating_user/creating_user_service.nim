@@ -1,4 +1,6 @@
 import std/asyncdispatch
+import std/options
+import ../../../../di_container
 import creating_user_repository_interface
 import creating_user_entity
 import ../../../value_objects/email
@@ -7,10 +9,11 @@ import ../../../value_objects/email
 type CreatingUserService* = ref object
   repository: ICreatingUserRepository
 
-proc new*(_:type CreatingUserService, repository:ICreatingUserRepository):CreatingUserService =
+proc new*(_:type CreatingUserService):CreatingUserService =
   return CreatingUserService(
-    repository: repository
+    repository: di.userRepository
   )
 
 proc isEmailUnique*(self:CreatingUserService, email:Email):Future[bool] {.async.} =
-  return self.repository.isEmailUnique(email).await
+  let user = self.repository.getUserByEmail(email).await
+  return not user.isSome()

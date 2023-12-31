@@ -16,20 +16,25 @@ type CreatingUserRepository* = ref object
 proc new*(_:type CreatingUserRepository):CreatingUserRepository =
   return CreatingUserRepository()
 
-proc isEmailUnique(self:CreatingUserRepository, email:Email):Future[bool] {.async.} =
-  let userOptoon = rdb.table("user").find(email.value()).await
-  return userOptoon.isSome()
 
-proc create*(self:CreatingUserRepository, user:CreatingUser):Future[void] {.async.} =
+proc getUserByEmail(self:CreatingUserRepository, email:Email):Future[Option[JsonNode]] {.async.} =
+  return rdb.table("user")
+            .where("email", "=", email.value())
+            .first()
+            .await
+
+
+proc create(self:CreatingUserRepository, user:CreatingUser):Future[void] {.async.} =
   rdb.table("user").insert(%*{
-    "user_name":user.userName().value(),
+    "username":user.userName().value(),
     "email":user.email().value(),
-    "password":user.password().value(),
+    "password":user.password().hashed(),
   }).await
 
+
 proc toInterface*(self:CreatingUserRepository):ICreatingUserRepository =
-  return ICreatingUserRepository(
-    isEmailUnique:proc(email:Email):Future[bool] = self.isEmailUnique(email),
+  return (
+    getUserByEmail:proc(email:Email):Future[Option[JsonNode]] = self.getUserByEmail(email),
     create:proc(user:CreatingUser):Future[void] = self.create(user),
   )
 
