@@ -13,5 +13,6 @@ proc user*(rdb:PostgresConnections) {.async.} =
       Column.string("password"),
       Column.text("bio").nullable(),
       Column.text("image").nullable(),
+      Column.timestamps(),
     )
   )
