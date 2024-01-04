@@ -1,5 +1,6 @@
 import basolato/view
 import ./head_view
+import ./navbar_view
 
 
 proc applicationView*(title:string, body:Component):Component =
@@ -8,6 +9,7 @@ proc applicationView*(title:string, body:Component):Component =
     <html>
       $(headView(title))
     <body>
+      $(navbarView())
       $(body)
     </body>
     </html>

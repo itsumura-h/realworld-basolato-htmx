@@ -1,8 +1,9 @@
+import std/json
 import basolato/view
 import ../../layouts/application_view
 
 
-proc impl():Component =
+proc impl(oldParams:JsonNode):Component =
   tmpli html"""
     <div class="auth-page">
       <div class="container page">
@@ -24,11 +25,12 @@ proc impl():Component =
             <div id="sign-up-form-messages"></div>
 
             <form method="POST" hx-post="/htmx/sign-up" hx-target="#app-body">
+              $(csrfToken())
               <fieldset class="form-group">
-                <input id="sign-up-username" class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="">
+                <input id="sign-up-username" class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="$(oldParams["name"].getStr)">
               </fieldset>
               <fieldset class="form-group">
-                <input id="sign-up-email" class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="">
+                <input id="sign-up-email" class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="$(oldParams["email"].getStr)">
               </fieldset>
               <fieldset class="form-group">
                 <input id="sign-up-password" class="form-control form-control-lg" type="password" name="password" placeholder="Password">
@@ -45,6 +47,6 @@ proc impl():Component =
   """
 
 
-proc signUpPageView*():string =
+proc signUpPageView*(oldParams:JsonNode):string =
   let title = "sign up"
-  return $applicationView(title, impl())
+  return $applicationView(title, impl(oldParams))
