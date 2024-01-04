@@ -7,9 +7,11 @@ import ../../usecases/user/create_user_usecase
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   return render("index")
 
+
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let id = params.getInt("id")
   return render("show")
+
 
 proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let userParam = params.getJson("user")
@@ -39,25 +41,25 @@ proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let email = userParam["email"].getStr()
   let password = userParam["password"].getStr()
 
-  echo name
-  echo email
-  echo password
-
   let usecase = CreateUserUsecase.new()
   usecase.invoke(name, email, password).await
 
   return render("create")
 
+
 proc store*(context:Context, params:Params):Future[Response] {.async.} =
   return render("store")
+
 
 proc edit*(context:Context, params:Params):Future[Response] {.async.} =
   let id = params.getInt("id")
   return render("edit")
 
+
 proc update*(context:Context, params:Params):Future[Response] {.async.} =
   let id = params.getInt("id")
   return render("update")
+
 
 proc destroy*(context:Context, params:Params):Future[Response] {.async.} =
   let id = params.getInt("id")

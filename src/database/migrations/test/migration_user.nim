@@ -1,10 +1,10 @@
 import std/asyncdispatch
-import std/json
+import allographer/query_builder
 import allographer/schema_builder
-from ../../config/database import rdb
 
 
-proc user*() {.async.} =
+proc user*(rdb:SqliteConnections) {.async.} =
+  echo "rdb: ",$rdb
   rdb.create(
     table("user",
       Column.increments("id"),
