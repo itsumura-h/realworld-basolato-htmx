@@ -10,7 +10,9 @@ proc applicationView*(title:string, body:Component):Component =
       $(headView(title))
     <body>
       $(navbarView())
-      $(body)
+      <div id="app-body">
+        $(body)
+      </div>
     </body>
     </html>
   """

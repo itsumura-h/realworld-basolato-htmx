@@ -1,9 +1,10 @@
 import std/asyncdispatch
-import ./migration_user
 from ../../../config/database import rdb
+import ./migration_create_table
 
 
 proc main*() =
-  user(rdb).waitFor()
-  
+  createTable(rdb).waitFor()
+
+
 main()

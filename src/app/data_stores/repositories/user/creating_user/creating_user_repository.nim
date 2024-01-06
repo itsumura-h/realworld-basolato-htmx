@@ -1,6 +1,7 @@
 import std/asyncdispatch
 import std/options
 import std/json
+import std/times
 import interface_implements
 import allographer/query_builder
 from ../../../../../config/database import rdb
@@ -29,6 +30,7 @@ proc create(self:CreatingUserRepository, user:CreatingUser):Future[void] {.async
     "username":user.userName().value(),
     "email":user.email().value(),
     "password":user.password().hashed(),
+    "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss"),
   }).await
 
 

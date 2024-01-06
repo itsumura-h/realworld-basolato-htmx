@@ -7,6 +7,7 @@ import ./app/http/middlewares/set_headers_middleware
 # controller
 import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/sign_controller
+import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/api_user_controller
 
 
@@ -17,6 +18,10 @@ let routes = @[
       
       Route.get("/sign-up", sign_controller.signUpPage),
       Route.get("/sign-in", sign_controller.signInPage),
+
+      Route.group("/htmx", @[
+        Route.post("/sign-up", htmx_sign_controller.signUp),
+      ])
     ])
     .middleware(session_middleware.sessionFromCookie)
     .middleware(auth_middleware.checkCsrfToken),

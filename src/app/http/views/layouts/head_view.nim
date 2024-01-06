@@ -9,6 +9,7 @@ proc headView*(title:string):Component =
       <title>$(title)</title>
       <link rel="stylesheet" href="/css/style.css">
       <link rel="stylesheet" href="/css/tagify.css">
+      <script src="/js/htmx.js"></script>
 
       <style>
         .tagify--outside{
