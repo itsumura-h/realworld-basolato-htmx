@@ -7,12 +7,12 @@ import faker
 import ./lib/random_text
 
 
-let fake = newFaker()
 
 proc user*(rdb:PostgresConnections) {.async.} =
+  let fake = newFaker()
+
   var users:seq[JsonNode]
   for i in 1..20:
-    let name = fake.name()
     users.add(%*{
       "username": fake.name(),
       "email": fake.email(),

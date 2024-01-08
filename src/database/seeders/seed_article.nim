@@ -12,10 +12,9 @@ let fake = newFaker()
 
 proc article*(rdb:PostgresConnections) {.async.} =
   var articles:seq[JsonNode]
-  for i in 1..20:
+  for i in 1..30:
     let title = randomText(5)
-    let slug = title.replace(" ", "_")
-    let name = fake.name()
+    let slug = title.replace(" ", "-")
     articles.add(%*{
       "title": title,
       "slug": slug,
