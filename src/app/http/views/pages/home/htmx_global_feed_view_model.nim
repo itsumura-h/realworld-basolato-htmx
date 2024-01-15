@@ -1,13 +1,13 @@
 import std/times
 
 
-type Tag* = ref object
+type Tag* = object
   tagId*:int
   articleId*:string
   tagName*:string
 
 
-type User* = ref object
+type User* = object
   id*:int
   userName*:string
   image*:string
@@ -21,7 +21,7 @@ proc new*(_:type User, id:int, name:string, image:string):User =
   return user
 
 
-type Article* = ref object
+type Article* = object
   id*:string
   title*:string
   description*:string
@@ -36,7 +36,8 @@ proc new*(_:type Article,
   description:string,
   createdAt:string,
   favoriteCount:int,
-  user:User
+  user:User,
+  tags:seq[Tag]
 ):Article =
   let createdAt = parse(createdAt, "yyyy-MM-dd hh:mm:ss")
   let artilce = Article(
@@ -45,12 +46,13 @@ proc new*(_:type Article,
     description:description,
     createdAt:createdAt.format("MMMM d"),
     favoriteCount:favoriteCount,
-    user:user
+    user:user,
+    tags:tags
   )
   return artilce
 
 
-type Paginator* = ref object
+type Paginator* = object
   hasPages*:bool
   current*:int
   lastPage*:int

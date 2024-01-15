@@ -36,8 +36,9 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
 
   var articles:seq[Article]
   for i, row in articlesJson:
+    let articleId = row["id"].getStr()
     let favoriteCount = rdb.table("user_article_map")
-                          .where("article_id", "=", row["id"].getStr())
+                          .where("article_id", "=", articleId)
                           .count()
                           .await
 
@@ -47,6 +48,26 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
       image = row["image"].getStr(),
     )
 
+    let articleTagCount = rdb.table("tag_article_map")
+                              .where("article_id", "=", articleId)
+                              .count()
+                              .await
+
+    let tags =
+      if articleTagCount > 0:
+        rdb.select(
+              "tag_article_map.tag_id as tagId",
+              "tag_article_map.article_id as articleId",
+              "tag.tag_name as tagName",
+            )
+            .table("tag_article_map")
+            .join("tag", "tag.id", "=", "tag_article_map.tag_id")
+            .where("tag_article_map.article_id", "=", articleId)
+            .get(Tag)
+            .await
+      else:
+        newSeq[Tag]()
+
     let article = Article.new(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
@@ -54,25 +75,8 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
       createdAt = row["createdAt"].getStr(),
       favoriteCount = favoriteCount,
       user = user,
+      tags = tags
     )
-
-    let articleTagCount = rdb.table("tag_article_map")
-                              .where("article_id", "=", article.id)
-                              .count()
-                              .await
-
-    if articleTagCount > 0:
-      let tags = rdb.select(
-                      "tag_article_map.tag_id as tagId",
-                      "tag_article_map.article_id as articleId",
-                      "tag.tag_name as tagName",
-                    )
-                    .table("tag_article_map")
-                    .join("tag", "tag.id", "=", "tag_article_map.tag_id")
-                    .where("tag_article_map.article_id", "=", article.id)
-                    .get(Tag)
-                    .await
-      article.tags = tags
 
     articles.add(article)
 

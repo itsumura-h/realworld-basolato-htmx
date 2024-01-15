@@ -35,31 +35,34 @@ proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewM
     raise newException(Error404, "invalid article id")
   let res = resOpt.get()
 
-  let article = Article.new(
-    id = articleId,
-    title = res["title"].getStr(),
-    description = res["description"].getStr(),
-    body = res["body"].getStr(),
-    createdAt = res["createdAt"].getStr()
-  )
-
   let articleTagCount = rdb.table("tag_article_map")
                             .where("article_id", "=", articleId)
                             .count()
                             .await
 
-  if articleTagCount > 0:
-    let tags = rdb.select(
-                    "tag_article_map.tag_id as tagId",
-                    "tag_article_map.article_id as articleId",
-                    "tag.tag_name as tagName",
-                  )
-                  .table("tag_article_map")
-                  .join("tag", "tag.id", "=", "tag_article_map.tag_id")
-                  .where("tag_article_map.article_id", "=", articleId)
-                  .get(Tag)
-                  .await
-    article.tags = tags
+  let tags =
+    if articleTagCount > 0:
+      rdb.select(
+            "tag_article_map.tag_id as tagId",
+            "tag_article_map.article_id as articleId",
+            "tag.tag_name as tagName",
+          )
+          .table("tag_article_map")
+          .join("tag", "tag.id", "=", "tag_article_map.tag_id")
+          .where("tag_article_map.article_id", "=", articleId)
+          .get(Tag)
+          .await
+    else:
+      newSeq[Tag]()
+
+  let article = Article.new(
+    id = articleId,
+    title = res["title"].getStr(),
+    description = res["description"].getStr(),
+    body = res["body"].getStr(),
+    createdAt = res["createdAt"].getStr(),
+    tags = tags,
+  )
 
 
   let user = User.new(
@@ -73,5 +76,4 @@ proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewM
     article = article,
     user = user
   )
-  echo viewModel.repr
   return viewModel

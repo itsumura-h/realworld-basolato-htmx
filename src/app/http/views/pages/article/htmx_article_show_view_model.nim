@@ -1,13 +1,13 @@
 import std/times
 
 
-type Tag* = ref object
+type Tag* = object
   tagId*:int
   articleId*:string
   tagName*:string
 
 
-type Article* = ref object
+type Article* = object
   id*:string
   title*:string
   description*:string
@@ -15,7 +15,7 @@ type Article* = ref object
   createdAt*:string = "1970 January 1st"
   tags*:seq[Tag]
 
-proc new*(_:type Article, id, title, description, body, createdAt:string):Article =
+proc new*(_:type Article, id, title, description, body, createdAt:string, tags:seq[Tag]):Article =
   let createdAt = parse(createdAt, "yyyy-MM-dd hh:mm:ss")
   let strCreatedAt = createdAt.format("MMMM d")
 
@@ -24,11 +24,12 @@ proc new*(_:type Article, id, title, description, body, createdAt:string):Articl
     title:title,
     description:description,
     body:body,
-    createdAt:strCreatedAt
+    createdAt:strCreatedAt,
+    tags:tags,
   )
 
 
-type User* = ref object
+type User* = object
   id*:int
   name*:string
   username*:string
@@ -43,7 +44,7 @@ proc new*(_:type User, id:int, name, username, image:string):User =
   )
 
 
-type HtmxArticleShowViewModel* = ref object
+type HtmxArticleShowViewModel* = object
   article*:Article
   user*:User
 
