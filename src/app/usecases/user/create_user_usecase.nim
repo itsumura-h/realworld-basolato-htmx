@@ -8,7 +8,7 @@ import ../../models/value_objects/user_name
 import ../../models/value_objects/email
 import ../../models/value_objects/password
 
-type CreateUserUsecase* = ref object
+type CreateUserUsecase* = object
   repository:ICreatingUserRepository
 
 proc new*(_:type CreateUserUsecase):CreateUserUsecase =

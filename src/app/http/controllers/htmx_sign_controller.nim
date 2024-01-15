@@ -1,4 +1,3 @@
-import std/json
 # framework
 import basolato/controller
 import basolato/request_validation

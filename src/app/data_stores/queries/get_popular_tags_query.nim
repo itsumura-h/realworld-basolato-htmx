@@ -6,22 +6,22 @@ from ../../../config/database import rdb
 import ../../http/views/pages/home/htmx_tag_item_list_view_model
 
 
-type GetFavoriteTagsQuery* = ref object
+type GetPopularTagsQuery* = object
 
-proc new*(_:type GetFavoriteTagsQuery):GetFavoriteTagsQuery =
-  return GetFavoriteTagsQuery()
+proc new*(_:type GetPopularTagsQuery):GetPopularTagsQuery =
+  return GetPopularTagsQuery()
 
 
-proc invoke*(self:GetFavoriteTagsQuery, count:int):Future[HtmxTagItemListViewModel] {.async.} =
+proc invoke*(self:GetPopularTagsQuery, count:int):Future[HtmxTagItemListViewModel] {.async.} =
   let sql = &"""
     SELECT
       "tag"."id",
       "tag_name" as "name",
-      COUNT("id") as "favoriteCount"
+      COUNT("id") as "popularTagsCount"
     FROM "tag"
     JOIN "tag_article_map" ON "tag"."id" = "tag_article_map"."tag_id"
     GROUP BY "tag"."id"
-    ORDER BY "favoriteCount" DESC
+    ORDER BY "popularTagsCount" DESC
     LIMIT {count}
   """
   let tagsJson = rdb.raw(sql).get().await
@@ -31,7 +31,7 @@ proc invoke*(self:GetFavoriteTagsQuery, count:int):Future[HtmxTagItemListViewMod
       Tag.new(
         row["id"].getInt(),
         row["name"].getStr(),
-        row["favoriteCount"].getInt(),
+        row["popularTagsCount"].getInt(),
       )
     )
 

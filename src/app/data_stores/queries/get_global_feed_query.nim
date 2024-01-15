@@ -1,12 +1,11 @@
 import std/asyncdispatch
 import std/json
-import std/strformat
 import allographer/query_builder
 from ../../../config/database import rdb
 import ../../http/views/pages/home/htmx_global_feed_view_model
 
 
-type GetGlobalFeedQuery* = ref object
+type GetGlobalFeedQuery* = object
 
 proc new*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
   return GetGlobalFeedQuery()
@@ -37,7 +36,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
   var articles:seq[Article]
   for i, row in articlesJson:
     let articleId = row["id"].getStr()
-    let favoriteCount = rdb.table("user_article_map")
+    let popularTagsCount = rdb.table("user_article_map")
                           .where("article_id", "=", articleId)
                           .count()
                           .await
@@ -73,7 +72,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
       title = row["title"].getStr(),
       description = row["description"].getStr(),
       createdAt = row["createdAt"].getStr(),
-      favoriteCount = favoriteCount,
+      popularTagsCount = popularTagsCount,
       user = user,
       tags = tags
     )

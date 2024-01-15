@@ -34,7 +34,7 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
               hx-post="/htmx/home/articles/$(article.id)/favorite"
               hx-swap="outerHTML"
             >
-              <i class="ion-heart"></i> $(article.favoriteCount)
+              <i class="ion-heart"></i> $(article.popularTagsCount)
             </button>
 
           </div>

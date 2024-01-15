@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/options
 import std/json
 import std/times
-import interface_implements
+# import interface_implements
 import allographer/query_builder
 from ../../../../../config/database import rdb
 import ../../../../models/value_objects/user_name
@@ -12,7 +12,7 @@ import ../../../../models/aggregates/user/creating_user/creating_user_entity
 import ../../../../models/aggregates/user/creating_user/creating_user_repository_interface
 
 
-type CreatingUserRepository* = ref object
+type CreatingUserRepository* = object
 
 proc new*(_:type CreatingUserRepository):CreatingUserRepository =
   return CreatingUserRepository()

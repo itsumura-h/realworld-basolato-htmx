@@ -1,6 +1,5 @@
 import std/asyncdispatch
 import std/json
-import std/strformat
 import std/options
 import allographer/query_builder
 import basolato/core/base
@@ -9,7 +8,7 @@ import ../../http/views/pages/article/htmx_article_show_view_model
 
 
 
-type GetArticleQuery* = ref object
+type GetArticleQuery* = object
 
 proc new*(_:type GetArticleQuery):GetArticleQuery =
   return GetArticleQuery()

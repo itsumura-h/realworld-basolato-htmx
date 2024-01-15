@@ -1,17 +1,17 @@
-type Tag* = ref object
+type Tag* = object
   id*:int
   name*:string
-  favoriteCount*:int
+  popularTagsCount*:int
 
-proc new*(_:type Tag, id:int, name:string, favoriteCount:int):Tag =
+proc new*(_:type Tag, id:int, name:string, popularTagsCount:int):Tag =
   return Tag(
     id:id,
     name:name,
-    favoriteCount:favoriteCount
+    popularTagsCount:popularTagsCount
   )
 
 
-type HtmxTagItemListViewModel* = ref object
+type HtmxTagItemListViewModel* = object
   tags*:seq[Tag]
 
 proc new*(_:type HtmxTagItemListViewModel, tags:seq[Tag]):HtmxTagItemListViewModel =

@@ -1,8 +1,6 @@
 import std/asyncdispatch
-import std/json
 # framework
 import basolato/controller
-import basolato/request_validation
 import basolato/view
 import ../views/pages/article/htmx_article_show_view
 import ../../data_stores/queries/get_article_query

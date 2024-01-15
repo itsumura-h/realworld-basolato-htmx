@@ -1,12 +1,11 @@
 import std/asyncdispatch
 import std/options
 import ../../../../di_container
-import creating_user_repository_interface
-import creating_user_entity
 import ../../../value_objects/email
+import ./creating_user_repository_interface
 
 
-type CreatingUserService* = ref object
+type CreatingUserService* = object
   repository: ICreatingUserRepository
 
 proc new*(_:type CreatingUserService):CreatingUserService =

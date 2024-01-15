@@ -3,7 +3,7 @@ import ../../../value_objects/email
 import ../../../value_objects/password
 
 
-type CreatingUser* = ref object
+type CreatingUser* = object
   userName:UserName
   email:Email
   password:Password

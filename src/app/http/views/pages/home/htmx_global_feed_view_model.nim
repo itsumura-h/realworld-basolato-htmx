@@ -26,7 +26,7 @@ type Article* = object
   title*:string
   description*:string
   createdAt*:string = "1970-01-01"
-  favoriteCount*:int
+  popularTagsCount*:int
   user*:User
   tags*:seq[Tag]
 
@@ -35,7 +35,7 @@ proc new*(_:type Article,
   title:string,
   description:string,
   createdAt:string,
-  favoriteCount:int,
+  popularTagsCount:int,
   user:User,
   tags:seq[Tag]
 ):Article =
@@ -45,7 +45,7 @@ proc new*(_:type Article,
     title:title,
     description:description,
     createdAt:createdAt.format("MMMM d"),
-    favoriteCount:favoriteCount,
+    popularTagsCount:popularTagsCount,
     user:user,
     tags:tags
   )

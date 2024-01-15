@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/options
 import std/json
 import std/times
-import interface_implements
+# import interface_implements
 import allographer/query_builder
 from ../../../../../config/database import testRdb
 import ../../../../models/value_objects/user_name
@@ -13,7 +13,7 @@ import ../../../../models/aggregates/user/creating_user/creating_user_repository
 
 let rdb = testRdb
 
-type MockCreatingUserRepository* = ref object
+type MockCreatingUserRepository* = object
 
 proc new*(_:type MockCreatingUserRepository):MockCreatingUserRepository =
   return MockCreatingUserRepository()
