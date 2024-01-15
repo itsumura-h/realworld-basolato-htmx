@@ -15,7 +15,6 @@ proc new*(_:type GetArticleQuery):GetArticleQuery =
 
 
 proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewModel] {.async.} =
-  echo articleId
   let resOpt = rdb.select(
                 "title",
                 "description",

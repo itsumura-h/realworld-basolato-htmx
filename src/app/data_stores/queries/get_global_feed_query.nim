@@ -85,8 +85,19 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
     lastPage=lastPage
   )
 
+  var feedNavbarItems:seq[FeedNavbar]
+  feedNavbarItems.add(
+    FeedNavbar.new(
+      title = "Global Feed",
+      isActive = false,
+      hxGetUrl = "/htmx/home/global-feed",
+      hxPushUrl = "/"
+    )
+  )
+
   let viewModel = HtmxGlobalFeedViewModel.new(
     articles=articles,
-    paginator=paginator
+    paginator=paginator,
+    feedNavbarItems = feedNavbarItems
   )
   return viewModel

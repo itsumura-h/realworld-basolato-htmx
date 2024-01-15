@@ -23,7 +23,7 @@ let routes = @[
       Route.get("/sign-up", sign_controller.signUpPage),
       Route.get("/sign-in", sign_controller.signInPage),
 
-      Route.get("/articles/{articleId:string}", article_controller.show),
+      Route.get("/articles/{articleId:str}", article_controller.show),
 
       Route.group("/htmx", @[
         Route.post("/sign-up", htmx_sign_controller.signUp),
@@ -31,7 +31,7 @@ let routes = @[
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),
         Route.get("/home/tag-list", htmx_home_controller.tagList),
 
-        Route.get("/articles/{articleId:string}", htmx_article_controller.show),
+        Route.get("/articles/{articleId:str}", htmx_article_controller.show),
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)

@@ -65,12 +65,38 @@ proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator 
   )
 
 
+type FeedNavbar* = object
+  title*:string
+  isActive*:bool
+  hxGetUrl*:string
+  hxPushUrl*:string
+
+proc new*(_:type FeedNavbar,
+  title:string,
+  isActive:bool,
+  hxGetUrl:string,
+  hxPushUrl:string
+):FeedNavbar =
+  return FeedNavbar(
+    title:title,
+    isActive:isActive,
+    hxGetUrl:hxGetUrl,
+    hxPushUrl:hxPushUrl
+  )
+
+
 type HtmxGlobalFeedViewModel* = object
   articles*:seq[Article]
   paginator*:Paginator
+  feedNavbarItems*:seq[FeedNavbar]
 
-proc new*(_:type HtmxGlobalFeedViewModel, articles:seq[Article], paginator:Paginator):HtmxGlobalFeedViewModel =
+proc new*(_:type HtmxGlobalFeedViewModel,
+  articles:seq[Article],
+  paginator:Paginator,
+  feedNavbarItems:seq[FeedNavbar]
+):HtmxGlobalFeedViewModel =
   return HtmxGlobalFeedViewModel(
     articles:articles,
-    paginator:paginator
+    paginator:paginator,
+    feedNavbarItems:feedNavbarItems
   )

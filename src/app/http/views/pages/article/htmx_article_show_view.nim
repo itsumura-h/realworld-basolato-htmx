@@ -13,7 +13,7 @@ proc impl(viewModel:HtmxArticleShowViewModel):Component =
           <h1>$(viewModel.article.title)</h1>
 
           <div class="post-meta">
-            <a href="profile.html"><img src="$(viewModel.user.image)" /></a>
+            <a href="profile.html"><img src="/$(viewModel.user.image)" /></a>
             <div class="info">
               <a href="/users/$(viewModel.user.username)"
                 hx-push-url="/users/$(viewModel.user.username)"
@@ -56,7 +56,7 @@ proc impl(viewModel:HtmxArticleShowViewModel):Component =
 
         <div class="post-actions">
           <div class="post-meta">
-            <a href="profile.html"><img src="$(viewModel.user.image)" /></a>
+            <a href="profile.html"><img src="/$(viewModel.user.image)" /></a>
             <div class="info">
               <a href="/users/$(viewModel.user.username)"
                 hx-push-url="/users/$(viewModel.user.username)"
