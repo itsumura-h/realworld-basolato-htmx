@@ -68,6 +68,24 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
         </div>
       }
     </div>
+
+    $if viewModel.paginator.hasPages{
+      <nav id="feed-pagination" hx-swap-oob="true">
+        <ul class="pagination">
+        $for i in 1..viewModel.paginator.lastPage{
+          <li class="page-item $if viewModel.paginator.current == i { active }$else{}">
+            <a class="page-link"
+              href="/htmx/home/global-feed?page=$(i)"
+              hx-push-url=""
+              hx-get="/htmx/home/global-feed?page=$(i)"
+            >$(i)</a>
+          </li>
+        }
+        </ul>
+      </nav>
+    }$else{
+      <nav id="feed-pagination" hx-swap-oob="true"></nav>
+    }
   """
 
 proc htmxGlobalFeedPageView*(viewModel:HtmxGlobalFeedViewModel):string =

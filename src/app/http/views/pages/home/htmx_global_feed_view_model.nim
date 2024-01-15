@@ -50,10 +50,25 @@ proc new*(_:type Article,
   return artilce
 
 
+type Paginator* = ref object
+  hasPages*:bool
+  current*:int
+  lastPage*:int
+
+proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator =
+  return Paginator(
+    hasPages:hasPages,
+    current:current,
+    lastPage:lastPage
+  )
+
+
 type HtmxGlobalFeedViewModel* = object
   articles*:seq[Article]
+  paginator*:Paginator
 
-proc new*(_:type HtmxGlobalFeedViewModel, articles:seq[Article]):HtmxGlobalFeedViewModel =
+proc new*(_:type HtmxGlobalFeedViewModel, articles:seq[Article], paginator:Paginator):HtmxGlobalFeedViewModel =
   return HtmxGlobalFeedViewModel(
-    articles:articles
+    articles:articles,
+    paginator:paginator
   )

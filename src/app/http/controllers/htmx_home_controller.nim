@@ -25,7 +25,5 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   let query = GetFavoriteTagsQuery.new()
   let tags = query.invoke(5).await
-  echo "==== tags.reor"
-  echo tags.repr
   let view = htmxTagListView(tags)
   return render(view)

@@ -13,8 +13,11 @@ proc new*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
 
 
 proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] {.async.} =
+  let total = rdb.table("article").count().await
   let display = 5
   let offset = (page - 1) * display
+  let lastPage = total div display
+  let hasPages = lastPage > 1
   let articlesJson = rdb.select(
                       "article.id",
                       "article.title",
@@ -31,7 +34,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
                     .get()
                     .await
 
-  var articles = newSeq[Article]()
+  var articles:seq[Article]
   for i, row in articlesJson:
     let favoriteCount = rdb.table("user_article_map")
                           .where("article_id", "=", row["id"].getStr())
@@ -73,5 +76,11 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
 
     articles.add(article)
 
-  let viewModel = HtmxGlobalFeedViewModel.new(articles)
+  let paginator = Paginator.new(
+    hasPages,
+    page,
+    lastPage
+  )
+
+  let viewModel = HtmxGlobalFeedViewModel.new(articles, paginator)
   return viewModel
