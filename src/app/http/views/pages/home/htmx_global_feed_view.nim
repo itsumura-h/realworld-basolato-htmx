@@ -70,5 +70,5 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
     </div>
   """
 
-proc globalFeedPageView*(viewModel:HtmxGlobalFeedViewModel):string =
+proc htmxGlobalFeedPageView*(viewModel:HtmxGlobalFeedViewModel):string =
   return $impl(viewModel)

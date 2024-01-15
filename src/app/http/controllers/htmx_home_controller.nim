@@ -18,12 +18,14 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
       1
   let query = GetGlobalFeedQuery.new()
   let res = query.invoke(page).await
-  let view = globalFeedPageView(res)
+  let view = htmxGlobalFeedPageView(res)
   return render(view)
 
 
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   let query = GetFavoriteTagsQuery.new()
   let tags = query.invoke(5).await
-  let view = htmlTagListView(tags)
+  echo "==== tags.reor"
+  echo tags.repr
+  let view = htmxTagListView(tags)
   return render(view)

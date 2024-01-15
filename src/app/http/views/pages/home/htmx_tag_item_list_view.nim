@@ -1,19 +1,20 @@
-import std/json
 import basolato/view
+import ./htmx_tag_item_list_view_model
 
-proc impl(popularTags:seq[JsonNode]):Component =
+
+proc impl(popularTags:HtmxTagItemListViewModel):Component =
   tmpli html"""
     <div id="popular-tag-list" class="tag-list" hx-swap-oob="true">
-      $for tag in popularTags{
+      $for tag in popularTags.tags{
         <a class="label label-pill label-default"
-          href="/tag-feed/$(tag["id"].getInt)"
-          hx-get="/htmx/home/tag-feed/$(tag["tag_name"].getStr)"
+          href="/tag-feed/$(tag.id)"
+          hx-get="/htmx/home/tag-feed/$(tag.name)"
           hx-target="#feed-post-preview"
-          hx-push-url="/tag-feed/$(tag["tag_name"].getStr)"
-        >$(tag["tag_name"].getStr)</a>
+          hx-push-url="/tag-feed/$(tag.name)"
+        >$(tag.name)</a>
       }
     </div>
   """
 
-proc htmlTagListView*(popularTags:seq[JsonNode]):string =
+proc htmxTagListView*(popularTags:HtmxTagItemListViewModel):string =
   return $impl(popularTags)

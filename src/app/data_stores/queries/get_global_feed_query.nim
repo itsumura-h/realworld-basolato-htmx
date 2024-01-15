@@ -16,20 +16,20 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
   let display = 5
   let offset = (page - 1) * display
   let articlesJson = rdb.select(
-                  "article.id",
-                  "article.title",
-                  "article.description",
-                  "article.created_at as createdAt",
-                  "user.id as userId",
-                  "user.username as userName",
-                  "user.image as image",
-                )
-                .table("article")
-                .join("user", "user.id", "=", "article.author_id")
-                .offset(offset)
-                .limit(display)
-                .get()
-                .await
+                      "article.id",
+                      "article.title",
+                      "article.description",
+                      "article.created_at as createdAt",
+                      "user.id as userId",
+                      "user.username as userName",
+                      "user.image as image",
+                    )
+                    .table("article")
+                    .join("user", "user.id", "=", "article.author_id")
+                    .offset(offset)
+                    .limit(display)
+                    .get()
+                    .await
 
   var articles = newSeq[Article]()
   for i, row in articlesJson:
