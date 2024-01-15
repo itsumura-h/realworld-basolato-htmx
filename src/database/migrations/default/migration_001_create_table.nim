@@ -7,7 +7,8 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
   rdb.create(
     table("user",
       Column.increments("id"),
-      Column.string("username"),
+      Column.string("name"),
+      Column.string("username").unique(),
       Column.string("email").unique(),
       Column.datetime("email_verified_at").nullable(),
       Column.string("password"),

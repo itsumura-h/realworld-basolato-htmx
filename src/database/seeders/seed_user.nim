@@ -1,6 +1,7 @@
 import std/asyncdispatch
 import std/json
 import std/times
+import std/strutils
 import basolato/password
 import allographer/query_builder
 import faker
@@ -13,8 +14,10 @@ proc user*(rdb:PostgresConnections) {.async.} =
 
   var users:seq[JsonNode]
   for i in 1..20:
+    let name = fake.name()
     users.add(%*{
-      "username": fake.name(),
+      "name": name,
+      "username": name.toLowerAscii().multiReplace([(".", ""), (" ", "-")]),
       "email": fake.email(),
       "password": genHashedPassword("password"),
       "bio": randomText(100),
