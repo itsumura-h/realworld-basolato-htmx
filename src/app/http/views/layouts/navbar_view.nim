@@ -7,8 +7,11 @@ proc navbarView*():Component =
         <a class="navbar-brand" 
           href="/"
           hx-push-url="/"
-          hx-get="/htmx/home" 
-          hx-target="#app-body">conduit</a>
+          hx-get="/htmx/home"
+          hx-target="#app-body"
+        >
+          conduit
+        </a>
 
         <ul id="navbar" class="nav navbar-nav pull-xs-right" hx-swap-oob="true">
           <li class="nav-item">

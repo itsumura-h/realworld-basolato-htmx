@@ -23,6 +23,7 @@ let routes = @[
 
       Route.group("/htmx", @[
         Route.post("/sign-up", htmx_sign_controller.signUp),
+        Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),
         Route.get("/home/tag-list", htmx_home_controller.tagList),
       ])

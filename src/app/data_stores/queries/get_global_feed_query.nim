@@ -42,18 +42,18 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
                           .await
 
     let user = User.new(
-      row["userId"].getInt(),
-      row["userName"].getStr(),
-      row["image"].getStr(),
+      id = row["userId"].getInt(),
+      name = row["userName"].getStr(),
+      image = row["image"].getStr(),
     )
 
     let article = Article.new(
-      row["id"].getStr(),
-      row["title"].getStr(),
-      row["description"].getStr(),
-      row["createdAt"].getStr(),
-      favoriteCount,
-      user,
+      id = row["id"].getStr(),
+      title = row["title"].getStr(),
+      description = row["description"].getStr(),
+      createdAt = row["createdAt"].getStr(),
+      favoriteCount = favoriteCount,
+      user = user,
     )
 
     let articleTagCount = rdb.table("tag_article_map")
@@ -77,10 +77,13 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
     articles.add(article)
 
   let paginator = Paginator.new(
-    hasPages,
-    page,
-    lastPage
+    hasPages=hasPages,
+    current=page,
+    lastPage=lastPage
   )
 
-  let viewModel = HtmxGlobalFeedViewModel.new(articles, paginator)
+  let viewModel = HtmxGlobalFeedViewModel.new(
+    articles=articles,
+    paginator=paginator
+  )
   return viewModel

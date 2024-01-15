@@ -48,3 +48,6 @@ proc impl():Component =
 proc homePageView*():string =
   let title = "conduit"
   return $applicationView(title, impl())
+
+proc htmxHomeView*():string =
+  return $impl()

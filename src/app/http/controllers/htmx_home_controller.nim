@@ -6,8 +6,14 @@ import basolato/request_validation
 import basolato/view
 import ../../data_stores/queries/get_global_feed_query
 import ../../data_stores/queries/get_favorite_tags_query
+import ../views/pages/home/home_page_view
 import ../views/pages/home/htmx_global_feed_view
 import ../views/pages/home/htmx_tag_item_list_view
+
+
+proc index*(context:Context, params:Params):Future[Response] {.async.} =
+  let view = htmxHomeView()
+  return render(view)
 
 
 proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
