@@ -13,7 +13,7 @@ proc favorite*(rdb:PostgresConnections) {.async.} =
     while true:
       let userId = rand(1..20)
       let randomArticleNum = rand(0..articleCount-1)
-      let articleId = articles[randomArticleNum]["slug"].getStr()
+      let articleId = articles[randomArticleNum]["id"].getStr()
 
       var hasSame = false
       for favorite in favorites:
@@ -30,4 +30,4 @@ proc favorite*(rdb:PostgresConnections) {.async.} =
       })
       break
   
-  rdb.table("favorite_user_article_map").insert(favorites).await
+  rdb.table("user_article_map").insert(favorites).await

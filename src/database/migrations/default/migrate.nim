@@ -1,6 +1,6 @@
 import std/asyncdispatch
 from ../../../config/database import rdb
-import ./migration_create_table
+import ./migration_001_create_table
 
 
 proc main*() =

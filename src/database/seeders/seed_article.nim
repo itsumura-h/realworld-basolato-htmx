@@ -14,10 +14,10 @@ proc article*(rdb:PostgresConnections) {.async.} =
   var articles:seq[JsonNode]
   for i in 1..30:
     let title = randomText(5)
-    let slug = title.replace(" ", "-")
+    let id = title.replace(" ", "-")
     articles.add(%*{
       "title": title,
-      "slug": slug,
+      "id": id,
       "description": randomText(30),
       "body": randomText(1000),
       "author_id": rand(1..20),

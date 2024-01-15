@@ -3,7 +3,7 @@ import allographer/query_builder
 import allographer/schema_builder
 
 
-proc createTable*(rdb:PostgresConnections) {.async.} =
+proc createTable*(rdb:SqliteConnections) {.async.} =
   rdb.create(
     table("user",
       Column.increments("id"),
@@ -16,8 +16,8 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
       Column.timestamps(),
     ),
     table("article",
+      Column.string("id").unique(),
       Column.string("title"),
-      Column.string("slug").unique(), # id
       COlumn.text("description"),
       COlumn.text("body"),
       Column.foreign("author_id").reference("id").onTable("user").onDelete(CASCADE),
@@ -26,24 +26,25 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
     table("comment",
       Column.increments("id"),
       COlumn.text("body"),
-      Column.strForeign("article_slug").reference("slug").onTable("article").onDelete(CASCADE),
+      Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE),
       Column.foreign("author_id").reference("id").onTable("user").onDelete(CASCADE),
       Column.timestamps()
     ),
     table("tag",
+      Column.increments("id"),
       Column.string("tag_name").unique(),
     ),
 
-    table("follow_user_user_map",
+    table("user_user_map",
       Column.foreign("user_id").reference("id").onTable("user").onDelete(CASCADE).index(),
       Column.foreign("follower_id").reference("id").onTable("user").onDelete(CASCADE).index(),
     ),
-    table("favorite_user_article_map",
+    table("user_article_map",
       Column.foreign("user_id").reference("id").onTable("user").onDelete(CASCADE),
-      Column.strForeign("article_id").reference("slug").onTable("article").onDelete(CASCADE).index(),
+      Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE).index(),
     ),
-    table("tag_list_tag_article_map",
-      Column.strForeign("tag_name").reference("tag_name").onTable("tag").onDelete(CASCADE),
-      Column.strForeign("article_id").reference("slug").onTable("article").onDelete(CASCADE),
+    table("tag_article_map",
+      Column.foreign("tag_id").reference("id").onTable("tag").onDelete(CASCADE).index(),
+      Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE).index(),
     )
   )
