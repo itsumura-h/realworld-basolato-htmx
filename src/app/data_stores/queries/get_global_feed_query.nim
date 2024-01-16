@@ -3,6 +3,7 @@ import std/json
 import allographer/query_builder
 from ../../../config/database import rdb
 import ../../http/views/pages/home/htmx_global_feed_view_model
+import ../../http/views/layouts/home/feed_navigation_view_model
 
 
 type GetGlobalFeedQuery* = object
@@ -23,6 +24,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
                       "article.description",
                       "article.created_at as createdAt",
                       "user.id as userId",
+                      "user.name",
                       "user.username as userName",
                       "user.image as image",
                     )
@@ -43,7 +45,8 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
 
     let user = User.new(
       id = row["userId"].getInt(),
-      name = row["userName"].getStr(),
+      name = row["name"].getStr(),
+      userName = row["userName"].getStr(),
       image = row["image"].getStr(),
     )
 
@@ -96,8 +99,8 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
   )
 
   let viewModel = HtmxGlobalFeedViewModel.new(
-    articles=articles,
-    paginator=paginator,
+    articles = articles,
+    paginator = paginator,
     feedNavbarItems = feedNavbarItems
   )
   return viewModel
