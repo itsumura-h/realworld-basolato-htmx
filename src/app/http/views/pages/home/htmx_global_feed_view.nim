@@ -1,27 +1,12 @@
 # import std/json
 import basolato/view
 import ./htmx_global_feed_view_model
+import ../../layouts/home/feed_navigation_view
 
 
 proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
   tmpli html"""
-    <ul id="feed-navigation" class="nav nav-pills outline-active" hx-swap-oob="true">
-      $for item in viewModel.feedNavbarItems{
-        <li class="nav-item">
-          <a class="nav-link $if item.isActive{active}"
-            $if not item.isActive{
-              href="$(item.hxPushUrl)"
-              hx-get="$(item.hxGetUrl)"
-              hx-trigger="click"
-              hx-target="#feed-post-preview"
-              hx-push-url="$(item.hxPushUrl)"
-            }
-          >
-            $(item.title)
-          </a>
-        </li>
-      }
-    </ul>
+    $(feedNavigationView(viewModel.feedNavbarItems))
 
     <div id="feed-post-preview" hx-swap-oob="true">
       $for article in viewModel.articles{
@@ -42,7 +27,7 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
                 hx-target="#app-body"
                 class="author"
               >
-                $(article.user.userName)
+                $(article.user.name)
               </a>
               <span class="date">$(article.createdAt)</span>
             </div>

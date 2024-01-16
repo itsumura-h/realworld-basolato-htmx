@@ -1,4 +1,5 @@
 import std/times
+import ../../layouts/home/feed_navigation_view_model
 
 
 type Tag* = object
@@ -9,13 +10,15 @@ type Tag* = object
 
 type User* = object
   id*:int
+  name*:string
   userName*:string
   image*:string
 
-proc new*(_:type User, id:int, name:string, image:string):User =
+proc new*(_:type User, id:int, name:string, userName:string, image:string):User =
   let user = User(
     id:id,
-    userName:name,
+    name:name,
+    userName:userName,
     image:image
   )
   return user
@@ -25,7 +28,7 @@ type Article* = object
   id*:string
   title*:string
   description*:string
-  createdAt*:string = "1970-01-01"
+  createdAt*:string = "1970 January 1"
   popularTagsCount*:int
   user*:User
   tags*:seq[Tag]
@@ -62,26 +65,6 @@ proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator 
     hasPages:hasPages,
     current:current,
     lastPage:lastPage
-  )
-
-
-type FeedNavbar* = object
-  title*:string
-  isActive*:bool
-  hxGetUrl*:string
-  hxPushUrl*:string
-
-proc new*(_:type FeedNavbar,
-  title:string,
-  isActive:bool,
-  hxGetUrl:string,
-  hxPushUrl:string
-):FeedNavbar =
-  return FeedNavbar(
-    title:title,
-    isActive:isActive,
-    hxGetUrl:hxGetUrl,
-    hxPushUrl:hxPushUrl
   )
 
 
