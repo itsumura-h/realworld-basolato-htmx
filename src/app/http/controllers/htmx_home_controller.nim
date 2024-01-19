@@ -1,11 +1,14 @@
 import std/asyncdispatch
+import std/json
 # framework
 import basolato/controller
 import basolato/view
-import ../../data_stores/queries/get_global_feed_query
-import ../../data_stores/queries/get_popular_tags_query
+import ../../usecases/get_global_feed/get_global_feed_usecase
+import ../../usecases/get_popular_tags/get_popular_tags_usecase
 import ../views/pages/home/home_page_view
+import ../views/pages/home/htmx_global_feed_view_model
 import ../views/pages/home/htmx_global_feed_view
+import ../views/pages/home/htmx_tag_item_list_view_model
 import ../views/pages/home/htmx_tag_item_list_view
 
 
@@ -20,14 +23,20 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
-  let query = GetGlobalFeedQuery.new()
-  let res = query.invoke(page).await
-  let view = htmxGlobalFeedPageView(res)
+  # let query = GetGlobalFeedQuery.new()
+  # let res = query.invoke(page).await
+  let usecase = GetGlobalFeedUsecase.new()
+  let globalFeedDto = usecase.invoke(page).await
+  let viewModel = HtmxGlobalFeedViewModel.new(globalFeedDto)
+  let view = htmxGlobalFeedPageView(viewModel)
   return render(view)
+  # return render(Http200, "")
 
 
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
-  let query = GetPopularTagsQuery.new()
-  let tags = query.invoke(5).await
-  let view = htmxTagListView(tags)
+  let usecase = GetPopularTagsUsecase.new()
+  let tagsDto = usecase.invoke().await
+  let viewModel = HtmxTagItemListViewModel.new(tagsDto)
+  let view = htmxTagListView(viewModel)
   return render(view)
+  # return render(%tagsDto)

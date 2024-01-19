@@ -37,7 +37,7 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
               hx-post="/htmx/home/articles/$(article.id)/favorite"
               hx-swap="outerHTML"
             >
-              <i class="ion-heart"></i> $(article.popularTagsCount)
+              <i class="ion-heart"></i> $(article.popularCount)
             </button>
 
           </div>
@@ -55,7 +55,7 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
 
               <ul class="tag-list">
                 $for tag in article.tags{
-                  <li class="tag-default tag-pill tag-outline">$(tag.tagName)</li>
+                  <li class="tag-default tag-pill tag-outline">$(tag.name)</li>
                 }
               </ul>
             </div>

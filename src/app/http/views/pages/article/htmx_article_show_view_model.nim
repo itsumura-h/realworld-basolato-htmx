@@ -1,4 +1,5 @@
 import std/times
+import ../../../../usecases/get_global_feed/get_global_feed_dto
 
 
 type Tag* = object

@@ -2,22 +2,18 @@ import std/asyncdispatch
 import std/json
 import allographer/query_builder
 from ../../../config/database import rdb
-import ../../http/views/pages/home/htmx_global_feed_view_model
-import ../../http/views/layouts/home/feed_navigation_view_model
+import ../../usecases/get_global_feed/get_global_feed_dto
 
 
-type GetGlobalFeedQuery* = object
+type GetArticlesWithAuthorQuery* = object
 
-proc new*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
-  return GetGlobalFeedQuery()
+proc new*(_:type GetArticlesWithAuthorQuery):GetArticlesWithAuthorQuery =
+  return GetArticlesWithAuthorQuery()
 
 
-proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] {.async.} =
-  let total = rdb.table("article").count().await
+proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuthorDto]] {.async.} =
   const display = 5
   let offset = (page - 1) * display
-  let lastPage = total div display
-  let hasPages = lastPage > 1
   let articlesJson = rdb.select(
                       "article.id",
                       "article.title",
@@ -35,15 +31,15 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
                     .get()
                     .await
 
-  var articles:seq[Article]
+  var articles:seq[ArticleWithAuthorDto]
   for i, row in articlesJson:
     let articleId = row["id"].getStr()
-    let popularTagsCount = rdb.table("user_article_map")
+    let popularCount = rdb.table("user_article_map")
                           .where("article_id", "=", articleId)
                           .count()
                           .await
 
-    let user = User.new(
+    let author = AuthorDto.new(
       id = row["userId"].getInt(),
       name = row["name"].getStr(),
       userName = row["userName"].getStr(),
@@ -58,49 +54,27 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
     let tags =
       if articleTagCount > 0:
         rdb.select(
-              "tag_article_map.tag_id as tagId",
-              "tag_article_map.article_id as articleId",
-              "tag.tag_name as tagName",
+              "tag_article_map.tag_id as id",
+              "tag.tag_name as name",
             )
             .table("tag_article_map")
             .join("tag", "tag.id", "=", "tag_article_map.tag_id")
             .where("tag_article_map.article_id", "=", articleId)
-            .get(Tag)
+            .get(TagDto)
             .await
       else:
-        newSeq[Tag]()
+        newSeq[TagDto]()
 
-    let article = Article.new(
+    let article = ArticleWithAuthorDto.new(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
       description = row["description"].getStr(),
       createdAt = row["createdAt"].getStr(),
-      popularTagsCount = popularTagsCount,
-      user = user,
+      popularCount = popularCount,
+      author = author,
       tags = tags
     )
 
     articles.add(article)
 
-  let paginator = Paginator.new(
-    hasPages=hasPages,
-    current=page,
-    lastPage=lastPage
-  )
-
-  var feedNavbarItems:seq[FeedNavbar]
-  feedNavbarItems.add(
-    FeedNavbar.new(
-      title = "Global Feed",
-      isActive = true,
-      hxGetUrl = "/htmx/home/global-feed",
-      hxPushUrl = "/"
-    )
-  )
-
-  let viewModel = HtmxGlobalFeedViewModel.new(
-    articles = articles,
-    paginator = paginator,
-    feedNavbarItems = feedNavbarItems
-  )
-  return viewModel
+  return articles
