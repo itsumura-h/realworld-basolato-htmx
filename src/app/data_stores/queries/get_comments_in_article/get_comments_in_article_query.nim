@@ -3,7 +3,6 @@ import std/json
 import std/options
 import std/times
 import allographer/query_builder
-import interface_implements
 from ../../../../config/database import rdb
 import ../../../usecases/get_comments_in_article/get_comments_in_article_dto
 import ../../../usecases/get_comments_in_article/get_comments_in_article_query_interface

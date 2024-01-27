@@ -1,6 +1,5 @@
 import std/asyncdispatch
 import std/times
-import interface_implements
 import ../../../usecases/get_comments_in_article/get_comments_in_article_dto
 import ../../../usecases/get_comments_in_article/get_comments_in_article_query_interface
 

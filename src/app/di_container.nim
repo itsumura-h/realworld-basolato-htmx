@@ -29,10 +29,10 @@ proc newDiContainer():DiContainer =
   else:
     return (
       userRepository: CreatingUserRepository.new().toInterface(),
-      getArticleQuery: GetArticleQuery.new(),
       # getArticleQuery: MockGetArticleQuery.new(),
-      getCommentsInArticleQuery:GetCommentsInArticleQuery.new(),
+      getArticleQuery: GetArticleQuery.new(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
+      getCommentsInArticleQuery:GetCommentsInArticleQuery.new(),
     )
 
 let di* = newDiContainer()

@@ -1,9 +1,5 @@
 import std/asyncdispatch
-import std/json
-import std/options
 import std/times
-import allographer/query_builder
-import basolato/core/base
 import ../../../usecases/get_article/get_article_query_interface
 import ../../../usecases/get_article/get_article_dto
 

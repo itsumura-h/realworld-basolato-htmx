@@ -6,7 +6,6 @@ import ../../di_container
 import ../../usecases/get_article/get_article_usecase
 import ../views/pages/article/article_show_view_model
 import ../views/pages/article/article_show_view
-import ../../data_stores/queries/get_article/get_article_query
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
