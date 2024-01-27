@@ -76,16 +76,14 @@ type HtmxGlobalFeedViewModel* = object
   paginator*:Paginator
   feedNavbarItems*:seq[FeedNavbar]
 
-proc new*(_:type HtmxGlobalFeedViewModel,
-  globalFeedDto:GlobalFeedDto,
-):HtmxGlobalFeedViewModel =
+proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGlobalFeedViewModel =
   var articles:seq[Article]
   for row in globalFeedDto.articlesWithAuthor:
     let user = User.new(
-      id=row.author.id,
-      name=row.author.name,
-      userName=row.author.userName,
-      image=row.author.image
+      id = row.author.id,
+      name = row.author.name,
+      userName = row.author.userName,
+      image = row.author.image
     )
     var tags:seq[Tag]
     for row in row.tags:
@@ -103,15 +101,14 @@ proc new*(_:type HtmxGlobalFeedViewModel,
     )
     articles.add(article)
 
-  var feedNavbarItems:seq[FeedNavbar]
-  feedNavbarItems.add(
+  let feedNavbarItems = @[
     FeedNavbar.new(
       title = "Global Feed",
       isActive = true,
       hxGetUrl = "/htmx/home/global-feed",
       hxPushUrl = "/"
     )
-  )
+  ]
 
   let paginator = Paginator.new(
     hasPages = globalFeedDto.globalFeedPaginator.hasPages,

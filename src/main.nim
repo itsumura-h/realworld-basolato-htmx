@@ -32,6 +32,8 @@ let routes = @[
         Route.get("/home/tag-list", htmx_home_controller.tagList),
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
+
+        Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments)
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)

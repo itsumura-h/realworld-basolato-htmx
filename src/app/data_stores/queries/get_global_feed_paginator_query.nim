@@ -1,5 +1,4 @@
 import std/asyncdispatch
-import std/json
 import allographer/query_builder
 from ../../../config/database import rdb
 import ../../usecases/get_global_feed/get_global_feed_dto

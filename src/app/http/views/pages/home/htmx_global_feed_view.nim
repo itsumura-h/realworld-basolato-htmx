@@ -76,7 +76,7 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
       <nav id="feed-pagination" hx-swap-oob="true">
         <ul class="pagination">
         $for i in 1..viewModel.paginator.lastPage{
-          <li class="page-item $if viewModel.paginator.current == i { active }$else{}">
+          <li class="page-item $if viewModel.paginator.current == i { active }">
             <a class="page-link"
               href="/htmx/home/global-feed?page=$(i)"
               hx-push-url=""
