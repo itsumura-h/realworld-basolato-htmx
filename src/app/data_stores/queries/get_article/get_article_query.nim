@@ -3,18 +3,18 @@ import std/json
 import std/options
 import allographer/query_builder
 import basolato/core/base
-from ../../../config/database import rdb
-import ../../http/views/pages/article/htmx_article_show_view_model
+from ../../../../config/database import rdb
+import ../../../usecases/get_article/get_article_query_interface
+import ../../../usecases/get_article/get_article_dto
 
 
-
-type GetArticleQuery* = object
+type GetArticleQuery* = object of IGetArticleQuery
 
 proc new*(_:type GetArticleQuery):GetArticleQuery =
   return GetArticleQuery()
 
 
-proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewModel] {.async.} =
+method invoke*(self:GetArticleQuery, articleId:string):Future[GetArticleDto] {.async.} =
   let resOpt = rdb.select(
                 "title",
                 "description",
@@ -48,12 +48,12 @@ proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewM
           .table("tag_article_map")
           .join("tag", "tag.id", "=", "tag_article_map.tag_id")
           .where("tag_article_map.article_id", "=", articleId)
-          .get(Tag)
+          .get(TagDto)
           .await
     else:
-      newSeq[Tag]()
+      newSeq[TagDto]()
 
-  let article = Article.new(
+  let article = ArticleDto.new(
     id = articleId,
     title = res["title"].getStr(),
     description = res["description"].getStr(),
@@ -63,15 +63,15 @@ proc invoke*(self:GetArticleQuery, articleId:string):Future[HtmxArticleShowViewM
   )
 
 
-  let user = User.new(
+  let user = UserDto.new(
     id = res["authorId"].getInt(),
     name = res["name"].getStr(),
     username = res["userName"].getStr(),
     image = res["image"].getStr()
   )
 
-  let viewModel = HtmxArticleShowViewModel.new(
+  let dto = GetArticleDto.new(
     article = article,
     user = user
   )
-  return viewModel
+  return dto

@@ -1,9 +1,9 @@
 import basolato/view
-import ./htmx_article_show_view_model
+import ./article_show_view_model
 import ../../layouts/application_view
 
 
-proc impl(viewModel:HtmxArticleShowViewModel):Component =
+proc impl(viewModel:ArticleShowViewModel):Component =
   tmpli html"""
     <div class="post-page">
 
@@ -88,9 +88,9 @@ proc impl(viewModel:HtmxArticleShowViewModel):Component =
     </div>
   """
 
-proc htmxArticleShowView*(viewModel:HtmxArticleShowViewModel):string =
+proc htmxArticleShowView*(viewModel:ArticleShowViewModel):string =
   return $impl(viewModel)
 
-proc articleShowPageView*(viewModel:HtmxArticleShowViewModel):string =
+proc articleShowPageView*(viewModel:ArticleShowViewModel):string =
   let title = viewModel.article.title
   return $applicationView(title, impl(viewModel))
