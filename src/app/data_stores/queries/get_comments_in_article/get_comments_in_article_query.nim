@@ -2,8 +2,12 @@ import std/asyncdispatch
 import std/json
 import std/options
 import std/times
+import std/sequtils
+import std/strformat
+import basolato/core/base
 import allographer/query_builder
 from ../../../../config/database import rdb
+import ../../../errors
 import ../../../usecases/get_comments_in_article/get_comments_in_article_dto
 import ../../../usecases/get_comments_in_article/get_comments_in_article_query_interface
 
@@ -15,7 +19,7 @@ proc new*(_:type GetCommentsInArticleQuery):GetCommentsInArticleQuery =
 
 
 method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetCommentsInArticleDto] {.async.} =
-  let articleData = rdb.select(
+  let articleDataOpt = rdb.select(
                         "article.id",
                         "article.author_id",
                         "user.name",
@@ -26,7 +30,13 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
                       .join("user", "user.id", "=", "author_id")
                       .find(articleId, "article.id")
                       .await
-                      .get()
+  
+  let articleData =
+    if articleDataOpt.isSome():
+      articleDataOpt.get()
+    else:
+      raise newException(IdNotFoundError, &"articleId {articleId} is not found")
+
   let author = UserDto.new(
     articleData["name"].getStr,
     articleData["username"].getStr,
@@ -51,20 +61,20 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
                     .get()
                     .await
   
-  var comments:seq[CommentDto]
-  for commentData in commentsData:
-    let user = UserDto.new(
-      commentData["name"].getStr,
-      commentData["username"].getStr,
-      commentData["image"].getStr,
-    )
-    comments.add(
-      CommentDto.new(
-        user,
-        commentData["body"].getStr,
-        commentData["created_at"].getStr().parse("yyyy-MM-dd hh:mm:ss")
+  let comments = commentsData.map(
+    proc(row:JsonNode):CommentDto =
+      let user = UserDto.new(
+        row["name"].getStr,
+        row["username"].getStr,
+        row["image"].getStr,
       )
-    )
+      let comment = CommentDto.new(
+        user,
+        row["body"].getStr,
+        row["created_at"].getStr().parse("yyyy-MM-dd hh:mm:ss")
+      )
+      return comment
+  )
 
   let dto = GetCommentsInArticleDto.new(
     comments,

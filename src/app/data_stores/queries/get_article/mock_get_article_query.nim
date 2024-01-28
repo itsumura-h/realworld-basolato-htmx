@@ -4,7 +4,6 @@ import ../../../usecases/get_article/get_article_query_interface
 import ../../../usecases/get_article/get_article_dto
 
 
-
 type MockGetArticleQuery* = object of IGetArticleQuery
 
 proc new*(_:type MockGetArticleQuery):MockGetArticleQuery =

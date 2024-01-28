@@ -3,6 +3,10 @@ import ./env
 import ./models/aggregates/user/creating_user/creating_user_repository_interface
 import ./data_stores/repositories/user/creating_user/creating_user_repository
 import ./data_stores/repositories/user/creating_user/mock_creating_user_repository
+# article
+import ./models/aggregates/article/article_repository_interface
+import ./data_stores/repositories/article/mock_article_repository
+import ./data_stores/repositories/article/article_repository
 # get article
 import ./usecases/get_article/get_article_query_interface
 import ./data_stores/queries/get_article/mock_get_article_query
@@ -15,6 +19,7 @@ import ./data_stores/queries/get_comments_in_article/get_comments_in_article_que
 
 type DiContainer* = tuple
   userRepository: ICreatingUserRepository
+  articleRepository: IArticleRepository
   getArticleQuery: IGetArticleQuery
   getCommentsInArticleQuery:IGetCommentsInArticleQuery
 
@@ -23,12 +28,15 @@ proc newDiContainer():DiContainer =
   if APP_ENV == "test":
     return (
       userRepository: MockCreatingUserRepository.new().toInterface(),
+      articleRepository: MockArticleRepository.new(),
       getArticleQuery: MockGetArticleQuery.new(),
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
     )
   else:
     return (
       userRepository: CreatingUserRepository.new().toInterface(),
+      articleRepository: MockArticleRepository.new(),
+      # articleRepository: ArticleRepository.new(),
       # getArticleQuery: MockGetArticleQuery.new(),
       getArticleQuery: GetArticleQuery.new(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
