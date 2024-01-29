@@ -22,14 +22,11 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
-  # let query = GetGlobalFeedQuery.new()
-  # let res = query.invoke(page).await
   let usecase = GetGlobalFeedUsecase.new()
   let globalFeedDto = usecase.invoke(page).await
   let viewModel = HtmxGlobalFeedViewModel.new(globalFeedDto)
   let view = htmxGlobalFeedPageView(viewModel)
   return render(view)
-  # return render(Http200, "")
 
 
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
@@ -38,4 +35,3 @@ proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   let viewModel = HtmxTagItemListViewModel.new(tagsDto)
   let view = htmxTagListView(viewModel)
   return render(view)
-  # return render(%tagsDto)

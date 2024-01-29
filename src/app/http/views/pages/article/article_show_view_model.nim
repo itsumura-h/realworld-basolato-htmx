@@ -39,16 +39,14 @@ proc new*(_:type Article, id, title, description, body:string, createdAt:DateTim
 
 
 type User* = object
-  id*:int
+  id*:string
   name*:string
-  username*:string
   image*:string
 
-proc new*(_:type User, id:int, name, username, image:string):User =
+proc new*(_:type User, id, name, image:string):User =
   return User(
     id:id,
     name:name,
-    username:username,
     image:image,
   )
 
@@ -77,7 +75,6 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleDto):ArticleShowViewModel =
   let author = User.new(
     dto.user.id,
     dto.user.name,
-    dto.user.username,
     dto.user.image,
   )
   return ArticleShowViewModel(

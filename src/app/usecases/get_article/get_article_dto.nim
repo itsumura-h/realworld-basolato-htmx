@@ -34,16 +34,14 @@ proc new*(_:type ArticleDto, id, title, description, body, createdAt:string, tag
 
 
 type UserDto* = object
-  id*:int
+  id*:string
   name*:string
-  username*:string
   image*:string
 
-proc new*(_:type UserDto, id:int, name, username, image:string):UserDto =
+proc new*(_:type UserDto, id, name, image:string):UserDto =
   return UserDto(
     id:id,
     name:name,
-    username:username,
     image:image,
   )
 

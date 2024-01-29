@@ -15,9 +15,9 @@ proc impl(viewModel:ArticleShowViewModel):Component =
           <div class="post-meta">
             <a href="profile.html"><img src="/$(viewModel.user.image)" /></a>
             <div class="info">
-              <a href="/users/$(viewModel.user.username)"
-                hx-push-url="/users/$(viewModel.user.username)"
-                hx-get="/htmx/users/$(viewModel.user.username)"
+              <a href="/users/$(viewModel.user.id)"
+                hx-push-url="/users/$(viewModel.user.id)"
+                hx-get="/htmx/users/$(viewModel.user.id)"
                 hx-target="#app-body"
                 class="author"
               >
@@ -58,9 +58,9 @@ proc impl(viewModel:ArticleShowViewModel):Component =
           <div class="post-meta">
             <a href="profile.html"><img src="/$(viewModel.user.image)" /></a>
             <div class="info">
-              <a href="/users/$(viewModel.user.username)"
-                hx-push-url="/users/$(viewModel.user.username)"
-                hx-get="/htmx/users/$(viewModel.user.username)"
+              <a href="/users/$(viewModel.user.id)"
+                hx-push-url="/users/$(viewModel.user.id)"
+                hx-get="/htmx/users/$(viewModel.user.id)"
                 hx-target="#app-body"
                 class="author"
               >

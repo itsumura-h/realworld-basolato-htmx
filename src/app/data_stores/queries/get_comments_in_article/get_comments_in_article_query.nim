@@ -23,7 +23,6 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
                         "article.id",
                         "article.author_id",
                         "user.name",
-                        "user.username",
                         "user.image",
                       )
                       .table("article")
@@ -38,8 +37,8 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
       raise newException(IdNotFoundError, &"articleId {articleId} is not found")
 
   let author = UserDto.new(
+    articleData["author_id"].getStr,
     articleData["name"].getStr,
-    articleData["username"].getStr,
     articleData["image"].getStr,
   )
   let article = ArticleDto.new(
@@ -51,8 +50,8 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
                       "comment.article_id",
                       "comment.body",
                       "comment.created_at",
+                      "user.id as userId",
                       "user.name",
-                      "user.username",
                       "user.image",
                     )
                     .table("comment")
@@ -64,8 +63,8 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
   let comments = commentsData.map(
     proc(row:JsonNode):CommentDto =
       let user = UserDto.new(
+        row["userId"].getStr,
         row["name"].getStr,
-        row["username"].getStr,
         row["image"].getStr,
       )
       let comment = CommentDto.new(

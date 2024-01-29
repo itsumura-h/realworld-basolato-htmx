@@ -23,8 +23,8 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] 
                 "body",
                 "article.created_at as createdAt",
                 "author_id as authorId",
+                "user.id",
                 "user.name",
-                "user.username as userName",
                 "user.image",
               )
               .table("article")
@@ -69,9 +69,8 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] 
 
 
   let user = UserDto.new(
-    id = res["authorId"].getInt(),
+    id = res["authorId"].getStr(),
     name = res["name"].getStr(),
-    username = res["userName"].getStr(),
     image = res["image"].getStr()
   )
 

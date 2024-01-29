@@ -2,7 +2,7 @@
 import basolato/controller
 import basolato/request_validation
 import basolato/view
-import ../../usecases/user/create_user_usecase
+import ../../usecases/create_user_usecase
 
 
 proc signUp*(context:Context, params:Params):Future[Response] {.async.} =

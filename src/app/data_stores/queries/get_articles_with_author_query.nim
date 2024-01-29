@@ -19,9 +19,8 @@ proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuth
                       "article.title",
                       "article.description",
                       "article.created_at as createdAt",
-                      "user.id as userId",
+                      "article.author_id",
                       "user.name",
-                      "user.username as userName",
                       "user.image as image",
                     )
                     .table("article")
@@ -40,9 +39,8 @@ proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuth
                           .await
 
     let author = AuthorDto.new(
-      id = row["userId"].getInt(),
+      id = row["author_id"].getStr(),
       name = row["name"].getStr(),
-      userName = row["userName"].getStr(),
       image = row["image"].getStr(),
     )
 

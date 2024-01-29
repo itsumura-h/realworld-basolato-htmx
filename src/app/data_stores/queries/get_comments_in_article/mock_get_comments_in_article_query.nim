@@ -11,8 +11,8 @@ proc new*(_:type MockGetCommentsInArticleQuery):MockGetCommentsInArticleQuery =
 
 method invoke(self:MockGetCommentsInArticleQuery, articleId:string):Future[GetCommentsInArticleDto] {.async.} =
   let author = UserDto.new(
+    id="author",
     name="author",
-    username="author",
     image=""
   )
   let article = ArticleDto.new(
@@ -20,8 +20,8 @@ method invoke(self:MockGetCommentsInArticleQuery, articleId:string):Future[GetCo
     user=author
   )
   let commentWriter1 = UserDto.new(
+    id="comment-writer-1",
     name="comment writer 1",
-    username="comment writer 1",
     image=""
   )
   let comment1 = CommentDto.new(
@@ -30,8 +30,8 @@ method invoke(self:MockGetCommentsInArticleQuery, articleId:string):Future[GetCo
     createdAt=parse("2024-01-01 12:00:00", "yyyy-MM-dd hh:mm:ss")
   )
   let commentWriter2 = UserDto.new(
+    id="comment-writer-2",
     name="comment writer 2",
-    username="comment writer 2",
     image=""
   )
   let comment2 = CommentDto.new(

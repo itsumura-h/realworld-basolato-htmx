@@ -33,8 +33,7 @@ method invoke*(self:MockGetArticleQuery, articleId:string):Future[GetArticleDto]
     tags
   )
   let user = UserDto.new(
-    1,
-    "name",
+    "user-name",
     "user name",
     ""
   )

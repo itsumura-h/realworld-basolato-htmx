@@ -13,16 +13,14 @@ proc new*(_:type Tag, name:string):Tag =
 
 
 type User* = object
-  id*:int
+  id*:string
   name*:string
-  userName*:string
   image*:string
 
-proc new*(_:type User, id:int, name:string, userName:string, image:string):User =
+proc new*(_:type User, id:string, name:string, image:string):User =
   let user = User(
     id:id,
     name:name,
-    userName:userName,
     image:image
   )
   return user
@@ -82,7 +80,6 @@ proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGloba
     let user = User.new(
       id = row.author.id,
       name = row.author.name,
-      userName = row.author.userName,
       image = row.author.image
     )
     var tags:seq[Tag]

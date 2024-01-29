@@ -1,14 +1,14 @@
 import std/times
 
 type UserDto* = object
+  id*:string
   name*:string
-  username*:string
   image*:string
 
-proc new*(_:type UserDto, name, username, image:string):UserDto =
+proc new*(_:type UserDto, id, name, image:string):UserDto =
   return UserDto(
+    id:id,
     name:name,
-    username:username,
     image:image
   )
 

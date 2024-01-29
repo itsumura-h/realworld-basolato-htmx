@@ -7,16 +7,14 @@ type TagDto* = object
 
 
 type AuthorDto* = object
-  id*:int
+  id*:string
   name*:string
-  userName*:string
   image*:string
 
-proc new*(_:type AuthorDto, id:int, name:string, userName:string, image:string):AuthorDto =
+proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
   return AuthorDto(
     id:id,
     name:name,
-    userName:userName,
     image:image
   )
 

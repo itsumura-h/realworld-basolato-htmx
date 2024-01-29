@@ -25,7 +25,6 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[HtmxGlobalFeedViewModel] 
                       "article.created_at as createdAt",
                       "user.id as userId",
                       "user.name",
-                      "user.username as userName",
                       "user.image as image",
                     )
                     .table("article")

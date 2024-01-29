@@ -12,18 +12,18 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
       $for article in viewModel.articles{
         <div class="post-preview">
           <div class="post-meta">
-            <a href="/users/$(article.user.userName)"
-              hx-push-url="/users/$(article.user.userName)"
-              hx-get="/htmx/users/$(article.user.userName)"
+            <a href="/users/$(article.user.id)"
+              hx-push-url="/users/$(article.user.id)"
+              hx-get="/htmx/users/$(article.user.id)"
               hx-target="#app-body"
             >
               <img src="$(article.user.image)" />
             </a>
 
             <div class="info">
-              <a href="/users/$(article.user.userName)"
-                hx-push-url="/users/$(article.user.userName)"
-                hx-get="/htmx/users/$(article.user.userName)"
+              <a href="/users/$(article.user.id)"
+                hx-push-url="/users/$(article.user.id)"
+                hx-get="/htmx/users/$(article.user.id)"
                 hx-target="#app-body"
                 class="author"
               >

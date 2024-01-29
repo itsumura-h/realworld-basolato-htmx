@@ -13,9 +13,9 @@ proc commentCardView*(comment:Comment):Component =
           <img src="$(comment.user.image)" class="comment-author-img" />
         </a>
         &nbsp;
-        <a href="/users/$(comment.user.username)"
-          hx-push-url="/users/$(comment.user.username)"
-          hx-get="/htmx/users/$(comment.user.username)"
+        <a href="/users/$(comment.user.id)"
+          hx-push-url="/users/$(comment.user.id)"
+          hx-get="/htmx/users/$(comment.user.id)"
           hx-target="#app-body"
           class="comment-author"
         >

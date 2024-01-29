@@ -12,7 +12,7 @@ proc impl(viewModel:CommentViewModel):Component =
       }
     </div>
 
-    $if viewModel.isLogin{
+    $if not viewModel.isLogin{
       <div>
         <a href="/htmx/sign-in" hx-get="/htmx/sign-in" hx-target="#app-body"
           hx-push-url="/sign-in"
@@ -28,7 +28,7 @@ proc impl(viewModel:CommentViewModel):Component =
         to add comments on this article.
       </div>
     }$else{
-      $(commentFormView(viewModel.article, false))
+      $(commentFormView(viewModel.article, not viewModel.isLogin))
     }
   """
 
