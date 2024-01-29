@@ -11,10 +11,11 @@ type DraftUser* = object
   password*:Password
 
 
-proc new*(_:type DraftUser, userId:UserId, userName:UserName, email:Email, password:Password):DraftUser =
+proc new*(_:type DraftUser, userName:UserName, email:Email, password:Password):DraftUser =
+  let userId = UserId.new(userName)
   return DraftUser(
-    userId:userId,
-    userName:userName,
+    id:userId,
+    name:userName,
     email:email,
     password:password,
   )
@@ -29,7 +30,7 @@ type User* = object
 
 proc new*(_:type User, userId:UserId, userName:UserName, email:Email, password:Password):User =
   return User(
-    userId:userId,
+    id:userId,
     name:userName,
     email:email,
     password:password,

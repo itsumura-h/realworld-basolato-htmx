@@ -43,7 +43,7 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
   return user.some()
 
 
-method create(self:UserRepository, user:User):Future[void] {.async.} =
+method create(self:UserRepository, user:DraftUser):Future[void] {.async.} =
   rdb.table("user").insert(%*{
     "id":user.id.value,
     "name":user.name.value,

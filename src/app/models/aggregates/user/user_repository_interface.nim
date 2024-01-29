@@ -11,4 +11,4 @@ interfaceDefs:
   type IUserRepository* = object of RootObj
     getUserByEmail:proc(self:IUserRepository, email:Email):Future[Option[JsonNode]]
     getUserById:proc(self:IUserRepository, userId:UserId):Future[Option[User]]
-    create:proc(self:IUserRepository, user:User):Future[void]
+    create:proc(self:IUserRepository, user:DraftUser):Future[void]

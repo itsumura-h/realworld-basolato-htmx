@@ -4,6 +4,7 @@ import ../di_container
 import ../models/aggregates/user/user_repository_interface
 import ../models/aggregates/user/user_service
 import ../models/aggregates/user/user_entity
+import ../models/aggregates/user/vo/user_id
 import ../models/aggregates/user/vo/user_name
 import ../models/aggregates/user/vo/email
 import ../models/aggregates/user/vo/password
@@ -25,5 +26,5 @@ proc invoke*(self:CreateUserUsecase, userName, email, password:string){.async.} 
   if not service.isEmailUnique(email).await:
     raise newException(DomainError, "email is deprecated")
 
-  let user = User.new(userName, email, password)
+  let user = DraftUser.new(userName, email, password)
   self.repository.create(user).await
