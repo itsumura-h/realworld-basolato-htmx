@@ -1,5 +1,5 @@
 import basolato/core/validation
-import ../../errors
+import ../../../../errors
 
 type Email* = object
   value:string

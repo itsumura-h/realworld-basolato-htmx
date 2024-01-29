@@ -8,6 +8,7 @@ import ./lib/random_text
 
 
 proc comment*(rdb:PostgresConnections) {.async.} =
+  let users = rdb.table("user").get().await
   let articles = rdb.table("article").get().await
   let articleCount = articles.len()
   var comments:seq[JsonNode]
@@ -16,7 +17,7 @@ proc comment*(rdb:PostgresConnections) {.async.} =
     comments.add(%*{
       "body": randomText(150),
       "article_id": articles[randomArticleNum]["id"].getStr(),
-      "author_id": rand(1..20),
+      "author_id": users[rand(0..<users.len)]["id"].getStr(),
       "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss")
     })
   

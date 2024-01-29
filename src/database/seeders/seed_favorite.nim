@@ -6,18 +6,19 @@ import faker
 
 
 proc favorite*(rdb:PostgresConnections) {.async.} =
+  let users = rdb.table("user").get().await
   let articles = rdb.table("article").get().await
   let articleCount = articles.len()
   var favorites:seq[JsonNode]
   for i in 1..200:
     while true:
-      let userId = rand(1..20)
+      let userId = users[rand(1..<users.len)]["id"].getStr
       let randomArticleNum = rand(0..articleCount-1)
       let articleId = articles[randomArticleNum]["id"].getStr()
 
       var hasSame = false
       for favorite in favorites:
-        if favorite["user_id"].getInt() == userId and favorite["article_id"].getStr() == articleId:
+        if favorite["user_id"].getStr() == userId and favorite["article_id"].getStr() == articleId:
           hasSame = true
           break
 

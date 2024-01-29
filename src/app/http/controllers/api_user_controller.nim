@@ -2,7 +2,7 @@ import std/json
 # framework
 import basolato/controller
 # usecase
-import ../../usecases/user/create_user_usecase
+import ../../usecases/create_user_usecase
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   return render("index")

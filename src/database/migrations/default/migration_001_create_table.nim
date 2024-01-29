@@ -6,9 +6,8 @@ import allographer/schema_builder
 proc createTable*(rdb:PostgresConnections) {.async.} =
   rdb.create(
     table("user",
-      Column.increments("id"),
+      Column.string("id").unique(), # username
       Column.string("name"),
-      Column.string("username").unique(),
       Column.string("email").unique(),
       Column.datetime("email_verified_at").nullable(),
       Column.string("password"),
@@ -21,14 +20,14 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
       Column.string("title").default(""),
       Column.text("description").default(""),
       Column.text("body").default(""),
-      Column.foreign("author_id").reference("id").onTable("user").onDelete(CASCADE),
+      Column.strForeign("author_id").reference("id").onTable("user").onDelete(CASCADE),
       Column.timestamps()
     ),
     table("comment",
       Column.increments("id"),
       COlumn.text("body"),
       Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE),
-      Column.foreign("author_id").reference("id").onTable("user").onDelete(CASCADE),
+      Column.strForeign("author_id").reference("id").onTable("user").onDelete(CASCADE),
       Column.timestamps()
     ),
     table("tag",
@@ -37,11 +36,11 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
     ),
 
     table("user_user_map",
-      Column.foreign("user_id").reference("id").onTable("user").onDelete(CASCADE).index(),
-      Column.foreign("follower_id").reference("id").onTable("user").onDelete(CASCADE).index(),
+      Column.strForeign("user_id").reference("id").onTable("user").onDelete(CASCADE).index(),
+      Column.strForeign("follower_id").reference("id").onTable("user").onDelete(CASCADE).index(),
     ),
     table("user_article_map",
-      Column.foreign("user_id").reference("id").onTable("user").onDelete(CASCADE),
+      Column.strForeign("user_id").reference("id").onTable("user").onDelete(CASCADE),
       Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE).index(),
     ),
     table("tag_article_map",

@@ -16,8 +16,8 @@ proc user*(rdb:PostgresConnections) {.async.} =
   for i in 1..20:
     let name = fake.name()
     users.add(%*{
+      "id": name.toLowerAscii().multiReplace([(".", ""), (" ", "-")]),
       "name": name,
-      "username": name.toLowerAscii().multiReplace([(".", ""), (" ", "-")]),
       "email": fake.email(),
       "password": genHashedPassword("password"),
       "bio": randomText(100),
