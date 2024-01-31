@@ -1,7 +1,7 @@
 # import std/json
 import basolato/view
 import ./htmx_global_feed_view_model
-import ../../layouts/home/feed_navigation_view
+import ../../layouts/feed_navigation/feed_navigation_view
 
 
 proc impl(viewModel:HtmxGlobalFeedViewModel):Component =

@@ -1,5 +1,5 @@
 import std/times
-import ../../layouts/home/feed_navigation_view_model
+import ../../layouts/feed_navigation/feed_navigation_view_model
 import ../../../../usecases/get_global_feed/get_global_feed_dto
 
 
