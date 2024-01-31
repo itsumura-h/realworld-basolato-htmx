@@ -8,6 +8,7 @@ import ./app/http/middlewares/set_headers_middleware
 # import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/home_controller
 import ./app/http/controllers/article_controller
+import ./app/http/controllers/user_controller
 import ./app/http/controllers/sign_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
@@ -25,6 +26,8 @@ let routes = @[
 
       Route.get("/articles/{articleId:str}", article_controller.show),
 
+      Route.get("/users/{userId:str}", user_controller.show),
+
       Route.group("/htmx", @[
         Route.post("/sign-up", htmx_sign_controller.signUp),
         Route.get("/home", htmx_home_controller.index),
@@ -32,8 +35,7 @@ let routes = @[
         Route.get("/home/tag-list", htmx_home_controller.tagList),
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
-
-        Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments)
+        Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)

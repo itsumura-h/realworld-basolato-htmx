@@ -26,9 +26,10 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc comments*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
+  let isLogin = false
   let query = di.getCommentsInArticleQuery
   let usecase = GetCommentsInArticleUsecase.new(query)
   let dto = usecase.invoke(articleId).await
-  let viewModel = CommentViewModel.new(dto, false)
+  let viewModel = CommentViewModel.new(dto, isLogin)
   let view = commentWrapperView(viewModel)
   return render(view)
