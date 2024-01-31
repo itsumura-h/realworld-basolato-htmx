@@ -1,4 +1,4 @@
-type GetArticlesInUserDto* = object
+type GetUserShowDto* = object
   id*:string
   name*:string
   bio*:string
@@ -6,15 +6,15 @@ type GetArticlesInUserDto* = object
   isFollowed*:bool
   followerCount*:int
 
-proc new*(_:type GetArticlesInUserDto,
+proc new*(_:type GetUserShowDto,
   id:string,
   name:string,
   bio:string,
   image:string,
   isFollowed:bool,
   followerCount:int,
-):GetArticlesInUserDto =
-  return GetArticlesInUserDto(
+):GetUserShowDto =
+  return GetUserShowDto(
     id:id, 
     name:name,
     bio:bio,

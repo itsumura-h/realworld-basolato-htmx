@@ -5,23 +5,23 @@ import ../../di_container
 import ../../errors
 import ../../models/aggregates/user/vo/user_id
 import ../../models/aggregates/user/user_service
-import ./get_articles_in_user_dto
-import ./get_articles_in_user_query_interface
+import ./get_user_show_dto
+import ./get_user_show_query_interface
 
 
-type GetArticlesInUserUsecase* = object
+type GetUserShowUsecase* = object
   service:UserService
-  query:IGetArticlesInUserQuery
+  query:IGetUserShowQuery
 
 
-proc new*(_:type GetArticlesInUserUsecase):GetArticlesInUserUsecase =
-  return GetArticlesInUserUsecase(
+proc new*(_:type GetUserShowUsecase):GetUserShowUsecase =
+  return GetUserShowUsecase(
     service:UserService.new(),
     query: di.getArticlesInUserQuery
   )
 
 
-proc invoke*(self:GetArticlesInUserUsecase, userId:string, loginUserId:Option[string]):Future[GetArticlesInUserDto] {.async.} =
+proc invoke*(self:GetUserShowUsecase, userId:string, loginUserId:Option[string]):Future[GetUserShowDto] {.async.} =
   let userId = UserId.new(userId)
   if not self.service.isExistsUser(userId).await:
     raise newException(IdNotFoundError, &"user id {userId} is not found")

@@ -4,17 +4,17 @@ import std/json
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../models/aggregates/user/vo/user_id
-import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interface
-import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
+import ../../../usecases/get_user_show/get_user_show_query_interface
+import ../../../usecases/get_user_show/get_user_show_dto
 
 
-type GetArticlesInUserQuery* = object of IGetArticlesInUserQuery
+type GetUserShowQuery* = object of IGetUserShowQuery
 
-proc new*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
-  return GetArticlesInUserQuery()
+proc new*(_:type GetUserShowQuery):GetUserShowQuery =
+  return GetUserShowQuery()
 
 
-method invoke*(self:GetArticlesInUserQuery, userId:UserId, loginUserId:Option[UserId]):Future[GetArticlesInUserDto] {.async.} =
+method invoke*(self:GetUserShowQuery, userId:UserId, loginUserId:Option[UserId]):Future[GetUserShowDto] {.async.} =
   let userOpt = rdb.table("user")
                     .find(userId.value)
                     .await
@@ -35,7 +35,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId, loginUserId:Option[Us
     isFollowed = follow > 0
 
 
-  let dto = GetArticlesInUserDto.new(
+  let dto = GetUserShowDto.new(
     user["id"].getStr(),
     user["name"].getStr(),
     user["bio"].getStr(),

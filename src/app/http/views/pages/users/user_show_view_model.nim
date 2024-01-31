@@ -1,5 +1,5 @@
 import ../../layouts/users/follow_button_view_model
-import ../../../../usecases/get_articles_in_user/get_articles_in_user_dto
+import ../../../../usecases/get_user_show/get_user_show_dto
 
 
 type User* = object
@@ -24,7 +24,7 @@ type UserShowViewModel* = object
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool
 
-proc new*(_:type UserShowViewModel, dto:GetArticlesInUserDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
+proc new*(_:type UserShowViewModel, dto:GetUserShowDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
   let user = User.new(
     dto.id,
     dto.name,
