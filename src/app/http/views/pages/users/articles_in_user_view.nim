@@ -59,3 +59,7 @@ proc impl(viewModel:ArticlesInUserViewModel):Component =
 
 proc articlesInUserView*(viewModel:ArticlesInUserViewModel):string =
   $application_view("users", impl(viewModel))
+
+
+proc htmxArticlesInUserView*(viewModel:ArticlesInUserViewModel):string =
+  $impl(viewModel)

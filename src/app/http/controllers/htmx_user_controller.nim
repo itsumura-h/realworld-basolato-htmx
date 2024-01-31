@@ -18,7 +18,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
     let usecase = GetArticlesInUserUsecase.new()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
     let viewModel = ArticlesInUserViewModel.new(dto, isSelf, loadFavorites)
-    let view = articlesInUserView(viewModel)
+    let view = htmxArticlesInUserView(viewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")

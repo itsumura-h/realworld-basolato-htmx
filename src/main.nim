@@ -13,6 +13,7 @@ import ./app/http/controllers/sign_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
 import ./app/http/controllers/htmx_article_controller
+import ./app/http/controllers/htmx_user_controller
 import ./app/http/controllers/api_user_controller
 
 
@@ -36,6 +37,8 @@ let routes = @[
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
         Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
+
+        Route.get("/users/{userId:str}", htmx_user_controller.show),
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)
