@@ -19,12 +19,12 @@ proc new*(_:type User, id:string, name:string, bio:string, image:string, isSelf:
   )
 
 
-type ArticlesInUserViewModel* = object
+type UserShowViewModel* = object
   user*:User
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool
 
-proc new*(_:type ArticlesInUserViewModel, dto:GetArticlesInUserDto, isSelf:bool, loadFavorites:bool):ArticlesInUserViewModel =
+proc new*(_:type UserShowViewModel, dto:GetArticlesInUserDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
   let user = User.new(
     dto.id,
     dto.name,
@@ -40,7 +40,7 @@ proc new*(_:type ArticlesInUserViewModel, dto:GetArticlesInUserDto, isSelf:bool,
     dto.followerCount
   )
 
-  let viewModel = ArticlesInUserViewModel(
+  let viewModel = UserShowViewModel(
     user:user,
     followButtonViewModel:followButtonViewModel,
     loadFavorites:loadFavorites,

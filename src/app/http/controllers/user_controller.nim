@@ -3,8 +3,8 @@ import std/options
 import basolato/controller
 import ../../errors
 import ../../usecases/get_articles_in_user/get_articles_in_user_usecase
-import ../views/pages/users/articles_in_user_view_model
-import ../views/pages/users/articles_in_user_view
+import ../views/pages/users/user_show_view_model
+import ../views/pages/users/user_show_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -17,8 +17,8 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let usecase = GetArticlesInUserUsecase.new()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
-    let viewModel = ArticlesInUserViewModel.new(dto, isSelf, loadFavorites)
-    let view = articlesInUserView(viewModel)
+    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let view = userShowView(viewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")

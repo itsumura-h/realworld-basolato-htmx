@@ -1,10 +1,10 @@
 import basolato/view
 import ../../layouts/application_view
 import ../../layouts/users/follow_button_view
-import ./articles_in_user_view_model
+import ./user_show_view_model
 
 
-proc impl(viewModel:ArticlesInUserViewModel):Component =
+proc impl(viewModel:UserShowViewModel):Component =
   tmpli html"""
     <div class="profile-page">
       <div class="user-info">
@@ -16,7 +16,7 @@ proc impl(viewModel:ArticlesInUserViewModel):Component =
               <h4>$(viewModel.user.name)</h4>
               <p>$(viewModel.user.bio)</p>
 
-              @$if viewModel.user.isSelf{
+              $if viewModel.user.isSelf{
                 <a class="btn btn-sm btn-outline-secondary action-btn"
                   href="/settings"
                   hx-push-url="/settings"
@@ -57,9 +57,9 @@ proc impl(viewModel:ArticlesInUserViewModel):Component =
     </div>
   """
 
-proc articlesInUserView*(viewModel:ArticlesInUserViewModel):string =
+proc userShowView*(viewModel:UserShowViewModel):string =
   $application_view("users", impl(viewModel))
 
 
-proc htmxArticlesInUserView*(viewModel:ArticlesInUserViewModel):string =
+proc htmxUserShowView*(viewModel:UserShowViewModel):string =
   $impl(viewModel)
