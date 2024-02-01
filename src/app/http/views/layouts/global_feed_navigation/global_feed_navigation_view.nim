@@ -1,8 +1,8 @@
 import basolato/view
-import ./feed_navigation_view_model
+import ./global_feed_navigation_view_model
 
 
-proc feedNavigationView*(feedNavbarItems:seq[FeedNavbar]):Component =
+proc globalfeedNavigationView*(feedNavbarItems:seq[GlobalFeedNavbar]):Component =
   tmpli html"""
     <ul id="feed-navigation" class="nav nav-pills outline-active" hx-swap-oob="true">
       $for item in feedNavbarItems{

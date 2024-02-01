@@ -1,5 +1,5 @@
 import std/times
-import ../../layouts/feed_navigation/feed_navigation_view_model
+import ../../layouts/global_feed_navigation/global_feed_navigation_view_model
 import ../../../../usecases/get_global_feed/get_global_feed_dto
 
 
@@ -72,7 +72,7 @@ proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator 
 type HtmxGlobalFeedViewModel* = object
   articles*:seq[Article]
   paginator*:Paginator
-  feedNavbarItems*:seq[FeedNavbar]
+  feedNavbarItems*:seq[GlobalFeedNavbar]
 
 proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGlobalFeedViewModel =
   var articles:seq[Article]
@@ -99,7 +99,7 @@ proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGloba
     articles.add(article)
 
   let feedNavbarItems = @[
-    FeedNavbar.new(
+    GlobalFeedNavbar.new(
       title = "Global Feed",
       isActive = true,
       hxGetUrl = "/htmx/home/global-feed",
