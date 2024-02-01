@@ -3,8 +3,8 @@ import std/options
 import basolato/controller
 import ../../errors
 import ../../usecases/get_user_show/get_user_show_usecase
-import ../views/pages/users/user_show_view_model
-import ../views/pages/users/user_show_view
+import ../views/pages/user/user_show_view_model
+import ../views/pages/user/user_show_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
