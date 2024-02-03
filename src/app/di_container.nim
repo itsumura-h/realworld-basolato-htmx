@@ -55,8 +55,8 @@ proc newDiContainer():DiContainer =
       getCommentsInArticleQuery:GetCommentsInArticleQuery.new(),
       # getUserShowQuery: MockGetUserShowQuery.new(),
       getUserShowQuery: GetUserShowQuery.new(),
-      getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
-      # getArticlesInUserQuery: GetArticlesInUserQuery.new(),
+      # getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
+      getArticlesInUserQuery: GetArticlesInUserQuery.new(),
     )
 
 let di* = newDiContainer()

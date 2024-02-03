@@ -20,7 +20,7 @@ proc user*(rdb:PostgresConnections) {.async.} =
       "name": name,
       "email": fake.email(),
       "password": genHashedPassword("password"),
-      "bio": randomText(100),
+      "bio": randomText(30),
       "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss")
     })
   
