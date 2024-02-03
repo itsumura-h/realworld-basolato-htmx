@@ -39,6 +39,7 @@ let routes = @[
         Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
 
         Route.get("/users/{userId:str}", htmx_user_controller.show),
+        Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)

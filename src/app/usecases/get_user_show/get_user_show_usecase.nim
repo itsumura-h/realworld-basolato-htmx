@@ -17,7 +17,7 @@ type GetUserShowUsecase* = object
 proc new*(_:type GetUserShowUsecase):GetUserShowUsecase =
   return GetUserShowUsecase(
     service:UserService.new(),
-    query: di.getArticlesInUserQuery
+    query: di.getUserShowQuery
   )
 
 
