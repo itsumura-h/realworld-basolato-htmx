@@ -9,11 +9,23 @@ proc applicationView*(title:string, body:Component):Component =
     <!DOCTYPE html>
     <html>
       $(headView(title))
-    <body>
-      $(navbarView(false))
+    <body hx-ext="head-support">
+      <nav class="navbar navbar-light">
+        <div class="container">
+          <a class="navbar-brand" 
+            href="/"
+            hx-push-url="/"
+            hx-get="/htmx/home" 
+            hx-target="#app-body">conduit</a>
+            
+          $(navbarView())
+        </div>
+      </nav>
+
       <div id="app-body">
         $(body)
       </div>
+
       $(footerView())
     </body>
     </html>
