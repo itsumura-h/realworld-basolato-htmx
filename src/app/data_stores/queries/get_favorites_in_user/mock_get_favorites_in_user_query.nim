@@ -1,17 +1,19 @@
 import std/asyncdispatch
 import std/times
 import ../../../models/aggregates/user/vo/user_id
-import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interface
-import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
+import ../../../usecases/get_favorites_in_user/get_favorites_in_user_query_interface
+import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 
-type MockGetArticlesInUserQuery* = object of IGetArticlesInUserQuery
+type MockGetFavoritesInUserQuery* = object of IGetFavoritesInUserQuery
 
-proc new*(_:type MockGetArticlesInUserQuery):MockGetArticlesInUserQuery =
-  return MockGetArticlesInUserQuery()
+proc new*(_:type MockGetFavoritesInUserQuery):MockGetFavoritesInUserQuery =
+  return MockGetFavoritesInUserQuery()
 
 
-method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticlesInUserDto] {.async.} =
+method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesInUserDto] {.async.} =
+  let user = UserDto.new("user-1")
+  
   let author = AuthorDto.new(
     "author",
     "Author",
@@ -49,5 +51,8 @@ method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticle
     ),
   ]
 
-  let dto = GetArticlesInUserDto.new(articles)
+  let dto = GetFavoritesInUserDto.new(
+    user,
+    articles
+  )
   return dto

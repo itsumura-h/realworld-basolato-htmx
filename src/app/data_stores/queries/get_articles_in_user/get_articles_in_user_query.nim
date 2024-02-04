@@ -13,7 +13,7 @@ proc new*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
   return GetArticlesInUserQuery()
 
 
-method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInUserQueryDto] {.async.} =
+method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInUserDto] {.async.} =
   let articlesData = rdb.select(
                       "article.id",
                       "article.title",
@@ -76,7 +76,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
         )
       )
 
-  let dto = GetArticlesInUserQueryDto.new(
+  let dto = GetArticlesInUserDto.new(
     articles
   )
   return dto

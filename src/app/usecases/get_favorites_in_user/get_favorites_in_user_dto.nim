@@ -1,6 +1,15 @@
 import std/times
 
 
+type UserDto* = object
+  id*:string
+
+proc new*(_:type UserDto, id:string):UserDto =
+  return UserDto(
+    id:id
+  )
+
+
 type AuthorDto* = object
   id*:string
   name*:string
@@ -63,10 +72,12 @@ proc new*(_:type ArticleDto,
 
 
 
-type GetArticlesInUserDto* = object
+type GetFavoritesInUserDto* = object
+  user*:UserDto
   articles*:seq[ArticleDto]
 
-proc new*(_:type GetArticlesInUserDto, articles:seq[ArticleDto]):GetArticlesInUserDto =
-  return GetArticlesInUserDto(
+proc new*(_:type GetFavoritesInUserDto, user:UserDto, articles:seq[ArticleDto]):GetFavoritesInUserDto =
+  return GetFavoritesInUserDto(
+    user:user,
     articles:articles
   )

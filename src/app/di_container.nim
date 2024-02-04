@@ -17,13 +17,16 @@ import ./data_stores/queries/get_comments_in_article/mock_get_comments_in_articl
 import ./data_stores/queries/get_comments_in_article/get_comments_in_article_query
 # get user show page
 import ./usecases/get_user_show/get_user_show_query_interface
-import ./data_stores/queries/get_user_show_query/get_user_show_query
 import ./data_stores/queries/get_user_show_query/mock_get_user_show_query
+import ./data_stores/queries/get_user_show_query/get_user_show_query
 # get articles in user
 import ./usecases/get_articles_in_user/get_articles_in_user_query_interface
-import ./data_stores/queries/get_articles_in_user/get_articles_in_user_query
 import ./data_stores/queries/get_articles_in_user/mock_get_articles_in_user_query
-
+import ./data_stores/queries/get_articles_in_user/get_articles_in_user_query
+# get favorite articles in user
+import ./usecases/get_favorites_in_user/get_favorites_in_user_query_interface
+import ./data_stores/queries/get_favorites_in_user/mock_get_favorites_in_user_query
+import ./data_stores/queries/get_favorites_in_user/get_favorites_in_user_query
 
 type DiContainer* = tuple
   userRepository: IUserRepository
@@ -32,6 +35,7 @@ type DiContainer* = tuple
   getCommentsInArticleQuery:IGetCommentsInArticleQuery
   getUserShowQuery: IGetUserShowQuery
   getArticlesInUserQuery: IGetArticlesInUserQuery
+  getFavoritesInUserQuery: IGetFavoritesInUserQuery
 
 
 proc newDiContainer():DiContainer =
@@ -43,6 +47,7 @@ proc newDiContainer():DiContainer =
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getUserShowQuery: MockGetUserShowQuery.new(),
       getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
+      getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
     )
   else:
     return (
@@ -57,6 +62,8 @@ proc newDiContainer():DiContainer =
       getUserShowQuery: GetUserShowQuery.new(),
       # getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getArticlesInUserQuery: GetArticlesInUserQuery.new(),
+      # getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
+      getFavoritesInUserQuery: GetFavoritesInUserQuery.new(),
     )
 
 let di* = newDiContainer()

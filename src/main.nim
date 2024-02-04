@@ -40,6 +40,7 @@ let routes = @[
 
         Route.get("/users/{userId:str}", htmx_user_controller.show),
         Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
+        Route.get("/users/{userId:str}/favorites", htmx_user_controller.favorites),
       ])
     ])
     .middleware(session_middleware.sessionFromCookie)

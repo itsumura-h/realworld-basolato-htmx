@@ -10,6 +10,10 @@ import ../../usecases/get_articles_in_user/get_articles_in_user_usecase
 import ../views/pages/user/htmx_user_feed_view
 import ../views/pages/user/htmx_user_feed_view_model
 
+import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
+
+
+
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isLogin = context.isLogin().await
@@ -33,6 +37,19 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
   let loginUserId = context.get("loginUserId").await
   try:
     let usecase = GetArticlesInUserUsecase.new()
+    let dto = usecase.invoke(userId).await
+    let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
+    let view = htmxUserFeedView(viewModel)
+    return render(view)
+  except IdNotFoundError:
+    return render(Http404, "")
+
+
+proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
+  let userId = params.getStr("userId")
+  let loginUserId = context.get("loginUserId").await
+  try:
+    let usecase = GetFavoritesInUserUsecase.new()
     let dto = usecase.invoke(userId).await
     let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
     let view = htmxUserFeedView(viewModel)

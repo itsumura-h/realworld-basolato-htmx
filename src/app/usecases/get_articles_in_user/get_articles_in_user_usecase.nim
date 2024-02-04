@@ -14,7 +14,7 @@ proc new*(_:type GetArticlesInUserUsecase):GetArticlesInUserUsecase =
   )
 
 
-proc invoke*(self:GetArticlesInUserUsecase, userId:string):Future[GetArticlesInUserQueryDto] {.async.} =
+proc invoke*(self:GetArticlesInUserUsecase, userId:string):Future[GetArticlesInUserDto] {.async.} =
   let userId = UserId.new(userId)
   let dto = self.query.invoke(userId).await
   return dto

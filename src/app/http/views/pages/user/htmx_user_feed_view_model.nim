@@ -2,6 +2,7 @@ import std/times
 import std/sequtils
 import std/strformat
 import ../../../../usecases/get_articles_in_user/get_articles_in_user_dto
+import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 import ../../layouts/favorite_button/favorite_button_view_model
 import ../../layouts/user_feed_navigation/user_feed_navigation_view_model
 
@@ -88,7 +89,7 @@ type HtmxUserFeedViewModel* = object
   articles*:seq[Article]
   userFeedNavigationViewModel*:UserFeedNavigationViewModel
 
-proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserQueryDto, loginUserId:string):HtmxUserFeedViewModel =
+proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
   let articles = dto.articles.map(
     proc(article:ArticleDto):Article =
       let author = Author.new(
@@ -133,6 +134,64 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserQueryDto, loginUser
       false,
       &"/users/{dto.articles[0].author.id}/favorites",
       &"/htmx/users/{dto.articles[0].author.id}/favorites",
+    )
+  ]
+
+  let userFeedNavigationViewModel = UserFeedNavigationViewModel.new(userFeedNavbarItems)
+  
+  
+  return HtmxUserFeedViewModel(
+    articles:articles,
+    userFeedNavigationViewModel:userFeedNavigationViewModel
+  )
+
+
+
+proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+  let articles = dto.articles.map(
+    proc(article:get_favorites_in_user_dto.ArticleDto):Article =
+      let author = Author.new(
+        article.author.id,
+        article.author.name,
+        article.author.image,
+      )
+
+      let tags = article.tags.map(
+        proc(tag:get_favorites_in_user_dto.TagDto):Tag =
+          return Tag.new(tag.name)
+      )
+
+      let favoritedUsers = article.favoritedUsers.map(
+        proc(favoritedUser:get_favorites_in_user_dto.FavoritedUserDto):FavoritedUser =
+          FavoritedUser.new(favoritedUser.id)
+      )
+
+      let article = Article.new(
+        article.id,
+        article.title,
+        article.description,
+        article.createdAt,
+        author,
+        tags,
+        favoritedUsers,
+        loginUserId,
+      )
+
+      return article
+  )
+
+  let userFeedNavbarItems = @[
+    UserFeedNavbar.new(
+      "My Articles",
+      false,
+      "/users/" & dto.user.id,
+      &"/htmx/users/{dto.user.id}/articles",
+    ),
+    UserFeedNavbar.new(
+      "Favorited Articles",
+      true,
+      &"/users/{dto.user.id}/favorites",
+      &"/htmx/users/{dto.user.id}/favorites",
     )
   ]
 
