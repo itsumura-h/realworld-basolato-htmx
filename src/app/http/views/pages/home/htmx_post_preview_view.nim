@@ -1,12 +1,12 @@
 # import std/json
 import basolato/view
-import ./htmx_global_feed_view_model
-import ../../layouts/global_feed_navigation/global_feed_navigation_view
+import ./htmx_post_preview_view_model
+import ../../layouts/feed_navigation/feed_navigation_view
 
 
-proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
+proc impl(viewModel:HtmxPostPreviewViewModel):Component =
   tmpli html"""
-    $(globalfeedNavigationView(viewModel.feedNavbarItems))
+    $(feedNavigationView(viewModel.feedNavbarItems))
 
     <div id="feed-post-preview" hx-swap-oob="true">
       $for article in viewModel.articles{
@@ -91,5 +91,5 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
     }
   """
 
-proc htmxGlobalFeedView*(viewModel:HtmxGlobalFeedViewModel):string =
+proc htmxPostPreviewView*(viewModel:HtmxPostPreviewViewModel):string =
   return $impl(viewModel)

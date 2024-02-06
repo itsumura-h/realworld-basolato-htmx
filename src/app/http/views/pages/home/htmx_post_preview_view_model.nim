@@ -1,6 +1,7 @@
 import std/times
-import ../../layouts/global_feed_navigation/global_feed_navigation_view_model
+import ../../layouts/feed_navigation/feed_navigation_view_model
 import ../../../../usecases/get_global_feed/get_global_feed_dto
+import ../../../../usecases/get_tag_feed/get_tag_feed_dto
 
 
 type Tag* = object
@@ -69,12 +70,12 @@ proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator 
   )
 
 
-type HtmxGlobalFeedViewModel* = object
+type HtmxPostPreviewViewModel* = object
   articles*:seq[Article]
   paginator*:Paginator
-  feedNavbarItems*:seq[GlobalFeedNavbar]
+  feedNavbarItems*:seq[FeedNavbar]
 
-proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGlobalFeedViewModel =
+proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in globalFeedDto.articlesWithAuthor:
     let user = User.new(
@@ -99,7 +100,7 @@ proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGloba
     articles.add(article)
 
   let feedNavbarItems = @[
-    GlobalFeedNavbar.new(
+    FeedNavbar.new(
       title = "Global Feed",
       isActive = true,
       hxGetUrl = "/htmx/home/global-feed",
@@ -113,7 +114,60 @@ proc new*(_:type HtmxGlobalFeedViewModel, globalFeedDto:GlobalFeedDto):HtmxGloba
     lastPage = globalFeedDto.globalFeedPaginator.lastPage
   )
 
-  return HtmxGlobalFeedViewModel(
+  return HtmxPostPreviewViewModel(
+    articles:articles,
+    paginator:paginator,
+    feedNavbarItems:feedNavbarItems
+  )
+
+
+
+proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string):HtmxPostPreviewViewModel =
+  var articles:seq[Article]
+  for row in tagFeedDto.articlesWithAuthor:
+    let user = User.new(
+      id = row.author.id,
+      name = row.author.name,
+      image = row.author.image
+    )
+    var tags:seq[Tag]
+    for row in row.tags:
+      let tag = Tag.new(row.name)
+      tags.add(tag)
+
+    let article = Article.new(
+      id = row.id,
+      title = row.title,
+      description = row.description,
+      createdAt = row.createdAt.format("yyyy MMMM d"),
+      popularCount = row.popularCount,
+      user = user,
+      tags = tags
+    )
+    articles.add(article)
+
+  let feedNavbarItems = @[
+    FeedNavbar.new(
+      title = "Global Feed",
+      isActive = false,
+      hxGetUrl = "/htmx/home/global-feed",
+      hxPushUrl = "/"
+    ),
+    FeedNavbar.new(
+      title = tagName,
+      isActive = true,
+      hxGetUrl = "/htmx/tag-feed",
+      hxPushUrl = "/tag-feed/" & tagName,
+    ),
+  ]
+
+  let paginator = Paginator.new(
+    hasPages = tagFeedDto.paginator.hasPages,
+    current = tagFeedDto.paginator.current,
+    lastPage = tagFeedDto.paginator.lastPage
+  )
+
+  return HtmxPostPreviewViewModel(
     articles:articles,
     paginator:paginator,
     feedNavbarItems:feedNavbarItems
