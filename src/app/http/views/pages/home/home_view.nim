@@ -45,7 +45,7 @@ proc impl():Component =
   """
 
 
-proc homePageView*():string =
+proc homeView*():string =
   let title = "conduit"
   return $applicationView(title, impl())
 

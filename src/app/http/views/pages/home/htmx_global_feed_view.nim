@@ -91,5 +91,5 @@ proc impl(viewModel:HtmxGlobalFeedViewModel):Component =
     }
   """
 
-proc htmxGlobalFeedPageView*(viewModel:HtmxGlobalFeedViewModel):string =
+proc htmxGlobalFeedView*(viewModel:HtmxGlobalFeedViewModel):string =
   return $impl(viewModel)
