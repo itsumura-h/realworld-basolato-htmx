@@ -1,5 +1,6 @@
 import ../../layouts/users/follow_button_view_model
 import ../../../../usecases/get_user_show/get_user_show_dto
+import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 
 type User* = object

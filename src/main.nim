@@ -28,6 +28,7 @@ let routes = @[
       Route.get("/articles/{articleId:str}", article_controller.show),
 
       Route.get("/users/{userId:str}", user_controller.show),
+      Route.get("/users/{userId:str}/favorites", user_controller.favorites),
 
       Route.group("/htmx", @[
         Route.post("/sign-up", htmx_sign_controller.signUp),

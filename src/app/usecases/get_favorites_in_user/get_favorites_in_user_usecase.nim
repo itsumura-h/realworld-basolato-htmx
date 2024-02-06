@@ -18,5 +18,3 @@ proc invoke*(self:GetFavoritesInUserUsecase, userId: string): Future[GetFavorite
   let userId = UserId.new(userId)
   let dto = self.query.invoke(userId).await
   return dto
-
-  # return GetFavoritesInUserDto()
