@@ -67,7 +67,6 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] 
     tags = tags,
   )
 
-
   let user = UserDto.new(
     id = res["authorId"].getStr(),
     name = res["name"].getStr(),
