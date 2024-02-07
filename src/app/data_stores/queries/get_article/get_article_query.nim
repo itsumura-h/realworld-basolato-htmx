@@ -2,7 +2,6 @@ import std/asyncdispatch
 import std/json
 import std/options
 import allographer/query_builder
-import basolato/core/base
 from ../../../../config/database import rdb
 import ../../../errors
 import ../../../usecases/get_article/get_article_query_interface

@@ -121,7 +121,6 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
   )
 
 
-
 proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in tagFeedDto.articlesWithAuthor:

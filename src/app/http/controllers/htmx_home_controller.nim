@@ -1,11 +1,10 @@
 import std/asyncdispatch
-import std/json
-import std/marshal
 # framework
 import basolato/controller
 import basolato/view
 # global feed
 import ../../usecases/get_global_feed/get_global_feed_usecase
+import ../views/pages/home/home_view_model
 import ../views/pages/home/home_view
 import ../views/pages/home/htmx_post_preview_view_model
 import ../views/pages/home/htmx_post_preview_view
@@ -18,7 +17,8 @@ import ../views/pages/home/htmx_tag_item_list_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
-  let view = htmxHomeView()
+  let viewModel = HomeViewModel.new()
+  let view = htmxHomeView(viewModel)
   return render(view)
 
 

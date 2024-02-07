@@ -1,8 +1,9 @@
 import basolato/view
 import ../../layouts/application_view
+import ./home_view_model
 
 
-proc impl():Component =
+proc impl(viewModel:HomeViewModel):Component =
   tmpli html"""
     <div class="home-page">
       <div class="banner">
@@ -22,7 +23,14 @@ proc impl():Component =
 
             <div id="feed-post-preview"
               hx-trigger="load"
-              hx-get="/htmx/home/global-feed"
+
+              $if viewModel.feedType == tag{
+                hx-get="/htmx/home/tag-feed/$(viewModel.tagName)$if viewModel.hasPage{?page=$(viewModel.page)}"
+              }$elif viewModel.feedType == personal{
+                hx-get="/htmx/home/your-feed/$if viewModel.hasPage{?page=$(viewModel.page)}"
+              }$else{
+                hx-get="/htmx/home/global-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
+              }
             ></div>
 
             <nav id="feed-pagination"></nav>
@@ -45,9 +53,9 @@ proc impl():Component =
   """
 
 
-proc homeView*():string =
+proc homeView*(viewModel:HomeViewModel):string =
   let title = "conduit"
-  return $applicationView(title, impl())
+  return $applicationView(title, impl(viewModel))
 
-proc htmxHomeView*():string =
-  return $impl()
+proc htmxHomeView*(viewModel:HomeViewModel):string =
+  return $impl(viewModel)
