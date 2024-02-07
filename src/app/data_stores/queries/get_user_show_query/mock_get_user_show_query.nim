@@ -1,3 +1,5 @@
+import std/asyncdispatch
+import std/options
 import ../../../models/aggregates/user/vo/user_id
 import ../../../usecases/get_user_show/get_user_show_query_interface
 import ../../../usecases/get_user_show/get_user_show_dto
@@ -9,5 +11,5 @@ proc new*(_:type MockGetUserShowQuery):MockGetUserShowQuery =
   return MockGetUserShowQuery()
 
 
-method invoke*(self:MockGetUserShowQuery, userId:UserId):GetUserShowDto =
+method invoke*(self:MockGetUserShowQuery, userId:UserId, loginUserId:Option[UserId]):Future[GetUserShowDto] {.async.} =
   return GetUserShowDto()

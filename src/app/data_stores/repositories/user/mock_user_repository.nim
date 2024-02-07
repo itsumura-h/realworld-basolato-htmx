@@ -26,7 +26,7 @@ method getUserByEmail*(self:MockUserRepository, email:Email):Future[Option[JsonN
             .await
 
 
-method create*(self:MockUserRepository, user:User):Future[void] {.async.} =
+method create*(self:MockUserRepository, user:DraftUser):Future[void] {.async.} =
   rdb.table("user").insert(%*{
     "id":user.id.value,
     "name":user.name.value,

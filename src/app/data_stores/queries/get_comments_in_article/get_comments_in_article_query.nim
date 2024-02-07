@@ -4,7 +4,6 @@ import std/options
 import std/times
 import std/sequtils
 import std/strformat
-import basolato/core/base
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../errors

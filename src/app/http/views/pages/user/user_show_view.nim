@@ -1,6 +1,5 @@
 import basolato/view
 import ../../layouts/application_view
-import ../../layouts/navbar_view
 import ../../layouts/users/follow_button_view
 import ./user_show_view_model
 

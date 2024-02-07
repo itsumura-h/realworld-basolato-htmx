@@ -2,7 +2,6 @@ import std/asyncdispatch
 import std/options
 import std/json
 import std/times
-import interface_implements
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../models/aggregates/user/vo/user_id

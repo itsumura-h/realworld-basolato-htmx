@@ -6,8 +6,6 @@ import ../../usecases/get_user_show/get_user_show_usecase
 import ../views/pages/user/user_show_view_model
 import ../views/pages/user/user_show_view
 
-import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
-
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isLogin = context.isLogin().await
