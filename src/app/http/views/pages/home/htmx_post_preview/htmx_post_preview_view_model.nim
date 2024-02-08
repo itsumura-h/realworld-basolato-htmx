@@ -1,7 +1,7 @@
 import std/times
-import ../../layouts/feed_navigation/feed_navigation_view_model
-import ../../../../usecases/get_global_feed/get_global_feed_dto
-import ../../../../usecases/get_tag_feed/get_tag_feed_dto
+import ../../../layouts/feed_navigation/feed_navigation_view_model
+import ../../../../../usecases/get_global_feed/get_global_feed_dto
+import ../../../../../usecases/get_tag_feed/get_tag_feed_dto
 
 
 type Tag* = object

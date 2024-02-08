@@ -1,4 +1,5 @@
-import ../../../../usecases/get_popular_tags/get_popular_tags_dto
+import ../../../../../usecases/get_popular_tags/get_popular_tags_dto
+
 
 type Tag* = object
   id*:int
