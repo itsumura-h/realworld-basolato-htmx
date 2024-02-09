@@ -3,8 +3,8 @@ import std/sequtils
 import std/strformat
 import ../../../../usecases/get_articles_in_user/get_articles_in_user_dto
 import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
-import ../../layouts/favorite_button/favorite_button_view_model
-import ../../layouts/user_feed_navigation/user_feed_navigation_view_model
+import ../../components/user/favorite_button/favorite_button_view_model
+import ../../components/user/feed_navigation/feed_navigation_view_model
 
 
 type Author* = object
@@ -87,7 +87,7 @@ proc new*(_:type Article,
 
 type HtmxUserFeedViewModel* = object
   articles*:seq[Article]
-  userFeedNavigationViewModel*:UserFeedNavigationViewModel
+  feedNavigationViewModel*:FeedNavigationViewModel
 
 proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
   let articles = dto.articles.map(
@@ -122,7 +122,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
       return article
   )
 
-  let userFeedNavbarItems = @[
+  let feedNavbarItems = @[
     UserFeedNavbar.new(
       "My Articles",
       true,
@@ -137,12 +137,12 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
     )
   ]
 
-  let userFeedNavigationViewModel = UserFeedNavigationViewModel.new(userFeedNavbarItems)
+  let feedNavigationViewModel = FeedNavigationViewModel.new(feedNavbarItems)
   
   
   return HtmxUserFeedViewModel(
     articles:articles,
-    userFeedNavigationViewModel:userFeedNavigationViewModel
+    feedNavigationViewModel:feedNavigationViewModel
   )
 
 
@@ -180,7 +180,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:s
       return article
   )
 
-  let userFeedNavbarItems = @[
+  let feedNavbarItems = @[
     UserFeedNavbar.new(
       "My Articles",
       false,
@@ -195,10 +195,10 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:s
     )
   ]
 
-  let userFeedNavigationViewModel = UserFeedNavigationViewModel.new(userFeedNavbarItems)
+  let feedNavigationViewModel = FeedNavigationViewModel.new(feedNavbarItems)
   
   
   return HtmxUserFeedViewModel(
     articles:articles,
-    userFeedNavigationViewModel:userFeedNavigationViewModel
+    feedNavigationViewModel:feedNavigationViewModel
   )

@@ -15,11 +15,12 @@ import ../views/pages/comment/comment_wrapper_view
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
+  let loginUserId = context.get("loginUserId").await
   let query = di.getArticleQuery
   let repository = di.articleRepository
   let usecase = GetArticleUsecase.new(query, repository)
   let dto = usecase.invoke(articleId).await
-  let viewModel = ArticleShowViewModel.new(dto)
+  let viewModel = ArticleShowViewModel.new(dto, loginUserId)
   let view = htmxArticleShowView(viewModel)
   return render(view)
 

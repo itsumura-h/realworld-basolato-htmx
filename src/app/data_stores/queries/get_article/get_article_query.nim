@@ -66,10 +66,16 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] 
     tags = tags,
   )
 
+  let followerCount = rdb.table("user_user_map")
+                        .where("user_id", "=", res["authorId"].getStr())
+                        .count()
+                        .await
+
   let user = UserDto.new(
     id = res["authorId"].getStr(),
     name = res["name"].getStr(),
-    image = res["image"].getStr()
+    image = res["image"].getStr(),
+    followerCount = followerCount,
   )
 
   let dto = GetArticleDto.new(

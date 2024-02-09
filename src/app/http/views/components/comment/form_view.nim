@@ -2,7 +2,7 @@ import basolato/view
 import ../../pages/comment/comment_view_model
 
 
-proc commentFormView*(article:Article, oobSwap:bool):Component =
+proc formView*(article:Article, oobSwap:bool):Component =
   tmpli html"""
     <div id="form-message"></div>
 

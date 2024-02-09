@@ -1,6 +1,6 @@
 import basolato/view
-import ../../layouts/comment/comment_card_view
-import ../../layouts/comment/comment_form_view
+import ../../components/comment/card_view
+import ../../components/comment/form_view
 import ./comment_view_model
 
 
@@ -8,7 +8,7 @@ proc impl(viewModel:CommentViewModel):Component =
   tmpli html"""
     <div id="article-comments-wrapper">
       $for comment in viewModel.comments{
-        $(commentCardView(comment))
+        $(cardView(comment))
       }
     </div>
 
@@ -28,7 +28,7 @@ proc impl(viewModel:CommentViewModel):Component =
         to add comments on this article.
       </div>
     }$else{
-      $(commentFormView(viewModel.article, not viewModel.isLogin))
+      $(formView(viewModel.article, not viewModel.isLogin))
     }
   """
 

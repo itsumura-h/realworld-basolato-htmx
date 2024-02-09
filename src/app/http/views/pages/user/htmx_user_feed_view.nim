@@ -1,12 +1,12 @@
 import basolato/view
 import ./htmx_user_feed_view_model
-import ../../layouts/favorite_button/favorite_button_view
-import ../../layouts/user_feed_navigation/user_feed_navigation_view
+import ../../components/user/favorite_button/favorite_button_view
+import ../../components/user/feed_navigation/feed_navigation_view
 
 
 proc impl(viewModel:HtmxUserFeedViewModel):Component =
   tmpli html"""
-    $(userFeedNavigationView(viewModel.userFeedNavigationViewModel))
+    $(feedNavigationView(viewModel.feedNavigationViewModel))
 
     <div id="user-post-preview" hx-swap-oob="true">
     $for article in viewModel.articles{

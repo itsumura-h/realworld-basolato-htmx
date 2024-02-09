@@ -37,12 +37,14 @@ type UserDto* = object
   id*:string
   name*:string
   image*:string
+  followerCount*:int
 
-proc new*(_:type UserDto, id, name, image:string):UserDto =
+proc new*(_:type UserDto, id, name, image:string, followerCount:int):UserDto =
   return UserDto(
     id:id,
     name:name,
     image:image,
+    followerCount:followerCount,
   )
 
 

@@ -13,10 +13,10 @@ proc new*(_:type UserFeedNavbar, title:string, isActive:bool, url:string, hxGetU
   )
 
 
-type UserFeedNavigationViewModel* = object
-  userFeedNavbarItems*:seq[UserFeedNavbar]
+type FeedNavigationViewModel* = object
+  feedNavbarItems*:seq[UserFeedNavbar]
 
-proc new*(_:type UserFeedNavigationViewModel, userFeedNavbarItems:seq[UserFeedNavbar]):UserFeedNavigationViewModel =
-  return UserFeedNavigationViewModel(
-    userFeedNavbarItems:userFeedNavbarItems
+proc new*(_:type FeedNavigationViewModel, feedNavbarItems:seq[UserFeedNavbar]):FeedNavigationViewModel =
+  return FeedNavigationViewModel(
+    feedNavbarItems:feedNavbarItems
   )

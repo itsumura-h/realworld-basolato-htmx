@@ -1,6 +1,7 @@
 import basolato/view
 import ./article_show_view_model
 import ../../layouts/application_view
+import ../../components/article/follow_button/follow_button_view
 
 
 proc impl(viewModel:ArticleShowViewModel):Component =
@@ -31,6 +32,7 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
             <!-- else -->
               <!-- follow button -->
+              $(followButtonView(viewModel.followButtonViewModel))
               <!-- favorite button -->
           </div>
 
@@ -74,6 +76,7 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
             <!-- else -->
               <!-- follow button -->
+              $(followButtonView(viewModel.followButtonViewModel))
               <!-- favorite button -->
 
           </div>

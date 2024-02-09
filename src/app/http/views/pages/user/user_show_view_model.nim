@@ -1,6 +1,6 @@
-import ../../layouts/users/follow_button_view_model
 import ../../../../usecases/get_user_show/get_user_show_dto
 import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
+import ../../components/user/follow_button/follow_button_view_model
 
 
 type User* = object
@@ -35,7 +35,6 @@ proc new*(_:type UserShowViewModel, dto:GetUserShowDto, isSelf:bool, loadFavorit
   )
 
   let followButtonViewModel = FollowButtonViewModel.new(
-    dto.id,
     dto.name,
     dto.isFollowed,
     dto.followerCount

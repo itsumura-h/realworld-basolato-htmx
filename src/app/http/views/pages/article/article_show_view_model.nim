@@ -1,7 +1,7 @@
 import std/times
 import std/sequtils
-# import ../../../../usecases/get_global_feed/get_global_feed_dto
 import ../../../../usecases/get_article/get_article_dto
+import ../../components/article/follow_button/follow_button_view_model
 
 
 type Tag* = object
@@ -54,8 +54,9 @@ proc new*(_:type User, id, name, image:string):User =
 type ArticleShowViewModel* = object
   article*:Article
   user*:User
+  followButtonViewModel*:FollowButtonViewModel
 
-proc new*(_:type ArticleShowViewModel, dto:GetArticleDto):ArticleShowViewModel =
+proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
     proc(tag:TagDto):Tag =
       return Tag.new(
@@ -77,7 +78,16 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleDto):ArticleShowViewModel =
     dto.user.name,
     dto.user.image,
   )
+
+  let followButtonViewModel = FollowButtonViewModel.new(
+    dto.user.name,
+    false,
+    dto.user.id == loginUserId,
+    dto.user.followerCount,
+  )
+
   return ArticleShowViewModel(
     article:article,
-    user:author
+    user:author,
+    followButtonViewModel:followButtonViewModel,
   )

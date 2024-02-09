@@ -2,7 +2,7 @@ import basolato/view
 import ../../pages/comment/comment_view_model
 
 
-proc commentCardView*(comment:Comment):Component =
+proc cardView*(comment:Comment):Component =
   tmpli html"""
     <div class="card">
       <div class="card-block">

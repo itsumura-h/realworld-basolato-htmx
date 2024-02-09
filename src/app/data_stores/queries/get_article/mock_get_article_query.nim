@@ -36,7 +36,8 @@ method invoke*(self:MockGetArticleQuery, articleId:ArticleId):Future[GetArticleD
   let user = UserDto.new(
     "user-name",
     "user name",
-    ""
+    "",
+    5
   )
   let dto = GetArticleDto.new(
     article,

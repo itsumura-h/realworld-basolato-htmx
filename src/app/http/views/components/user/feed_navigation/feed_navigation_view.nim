@@ -1,11 +1,11 @@
 import basolato/view
-import ./user_feed_navigation_view_model
+import ./feed_navigation_view_model
 
 
-proc userFeedNavigationView*(viewModel:UserFeedNavigationViewModel):Component =
+proc feedNavigationView*(viewModel:FeedNavigationViewModel):Component =
   tmpli html"""
     <ul id="user-feed-navigation" class="nav nav-pills outline-active" hx-swap-oob="true">
-      $for item in viewModel.userFeedNavbarItems{
+      $for item in viewModel.feedNavbarItems{
         <li class="nav-item">
           <a class="nav-link $if item.isActive{active}"
             href="$(item.url)"

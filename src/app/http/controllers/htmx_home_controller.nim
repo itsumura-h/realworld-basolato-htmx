@@ -6,14 +6,14 @@ import basolato/view
 import ../../usecases/get_global_feed/get_global_feed_usecase
 import ../views/pages/home/home_view_model
 import ../views/pages/home/home_view
-import ../views/pages/home/htmx_post_preview_view_model
-import ../views/pages/home/htmx_post_preview_view
+import ../views/pages/home/htmx_post_preview/htmx_post_preview_view_model
+import ../views/pages/home/htmx_post_preview/htmx_post_preview_view
 # tag feed
 import ../../usecases/get_tag_feed/get_tag_feed_usecase
 # tag list
 import ../../usecases/get_popular_tags/get_popular_tags_usecase
-import ../views/pages/home/htmx_tag_item_list_view_model
-import ../views/pages/home/htmx_tag_item_list_view
+import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view_model
+import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
