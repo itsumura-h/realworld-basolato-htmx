@@ -10,8 +10,8 @@ import ../views/pages/signin/signin_view
 
 
 proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let oldName = old(params, "username")
-  let oldEmail = old(params, "email")
+  let oldName = params.old("username")
+  let oldEmail = params.old("email")
   let viewModel = SignUpViewModel.new(oldName, oldEmail)
   let view = htmxSignUpView(viewModel)
   return render(view)
@@ -39,7 +39,7 @@ proc signUp*(context:Context, params:Params):Future[Response] {.async.} =
 
 
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let oldEmail = old(params, "email")
+  let oldEmail = params.old("email")
   let viewModel = SignInViewModel.new(oldEmail)
   let view = htmxSignInView(viewModel)
   return render(view)

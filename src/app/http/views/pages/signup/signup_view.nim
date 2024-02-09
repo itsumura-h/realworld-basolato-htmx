@@ -1,4 +1,3 @@
-import std/json
 import basolato/view
 import ../../layouts/application_view
 import ./signup_view_model
