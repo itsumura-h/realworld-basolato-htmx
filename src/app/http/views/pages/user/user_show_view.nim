@@ -1,5 +1,6 @@
 import basolato/view
-import ../../layouts/application_view
+import ../../layouts/application/application_view_model
+import ../../layouts/application/application_view
 import ../../components/user/follow_button/follow_button_view
 import ./user_show_view_model
 
@@ -57,8 +58,8 @@ proc impl(viewModel:UserShowViewModel):Component =
     </div>
   """
 
-proc userShowView*(viewModel:UserShowViewModel):string =
-  $applicationView("", impl(viewModel))
+proc userShowView*(appViewModel:ApplicationViewModel, viewModel:UserShowViewModel):string =
+  $applicationView(appViewModel, impl(viewModel))
 
 
 proc htmxUserShowView*(viewModel:UserShowViewModel):string =

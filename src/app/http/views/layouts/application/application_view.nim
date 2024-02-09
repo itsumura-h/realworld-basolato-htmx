@@ -1,14 +1,15 @@
 import basolato/view
-import ./head_view
-import ./navbar_view
-import ./footer_view
+import ../head_view
+import ../navbar/navbar_view
+import ../footer_view
+import ./application_view_model
 
 
-proc applicationView*(title:string, body:Component):Component =
+proc applicationView*(viewModel:ApplicationViewModel, body:Component):Component =
   tmpli html"""
     <!DOCTYPE html>
     <html>
-      $(headView(title))
+      $(headView(viewModel.title))
     <body hx-ext="head-support">
       <nav class="navbar navbar-light">
         <div class="container">
@@ -18,7 +19,7 @@ proc applicationView*(title:string, body:Component):Component =
             hx-get="/htmx/home" 
             hx-target="#app-body">conduit</a>
             
-          $(navbarView())
+          $(navbarView(viewModel.navbarViewModel))
         </div>
       </nav>
 

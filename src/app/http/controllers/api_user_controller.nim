@@ -42,9 +42,9 @@ proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let password = userParam["password"].getStr()
 
   let usecase = CreateUserUsecase.new()
-  usecase.invoke(name, email, password).await
+  let id = usecase.invoke(name, email, password).await
 
-  return render("create")
+  return render(id)
 
 
 proc store*(context:Context, params:Params):Future[Response] {.async.} =

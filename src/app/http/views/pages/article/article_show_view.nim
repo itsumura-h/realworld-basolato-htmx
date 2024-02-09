@@ -1,6 +1,7 @@
 import basolato/view
 import ./article_show_view_model
-import ../../layouts/application_view
+import ../../layouts/application/application_view_model
+import ../../layouts/application/application_view
 import ../../components/article/follow_button/follow_button_view
 import ../../components/article/favorite_button/favorite_button_view
 
@@ -97,6 +98,5 @@ proc impl(viewModel:ArticleShowViewModel):Component =
 proc htmxArticleShowView*(viewModel:ArticleShowViewModel):string =
   return $impl(viewModel)
 
-proc articleShowPageView*(viewModel:ArticleShowViewModel):string =
-  let title = viewModel.article.title
-  return $applicationView(title, impl(viewModel))
+proc articleShowPageView*(appViewModel:ApplicationViewModel, viewModel:ArticleShowViewModel):string =
+  return $applicationView(appViewModel, impl(viewModel))

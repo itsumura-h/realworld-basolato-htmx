@@ -1,6 +1,8 @@
 import basolato/view
+import ./navbar_view_model
 
-proc navbarView*(isLogin=false):Component =
+
+proc navbarView*(viewModel:NavbarViewModel):Component =
   tmpli html"""
     <ul id="navbar" class="nav navbar-nav pull-xs-right" hx-swap-oob="true">
       <li class="nav-item">
@@ -15,7 +17,7 @@ proc navbarView*(isLogin=false):Component =
         </a>
       </li>
 
-      $if not isLogin{
+      $if not viewModel.isLogin{
         <li class="nav-item">
           <a id="nav-link-sign-in"
             href="/sign-in"
@@ -71,7 +73,7 @@ proc navbarView*(isLogin=false):Component =
             class="nav-link"
           >
             <img class="user-pic" src="image">
-            name <!-- username -->
+            $(viewModel.name)
           </a>
         </li>
       }

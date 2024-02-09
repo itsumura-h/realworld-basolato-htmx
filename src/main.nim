@@ -26,6 +26,7 @@ let routes = @[
 
       Route.get("/sign-up", sign_controller.signUpPage),
       Route.get("/sign-in", sign_controller.signInPage),
+      Route.get("/logout", sign_controller.logout),
 
       Route.get("/articles/{articleId:str}", article_controller.show),
 
@@ -36,6 +37,8 @@ let routes = @[
         Route.get("/sign-up", htmx_sign_controller.signUpPage),
         Route.post("/sign-up", htmx_sign_controller.signUp),
         Route.get("/sign-in", htmx_sign_controller.signInPage),
+        Route.post("/sign-in", htmx_sign_controller.signIn),
+        Route.get("/logout", htmx_sign_controller.logout),
 
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),

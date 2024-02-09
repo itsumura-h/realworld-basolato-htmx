@@ -1,5 +1,6 @@
 import basolato/view
-import ../../layouts/application_view
+import ../../layouts/application/application_view_model
+import ../../layouts/application/application_view
 import ./home_view_model
 
 
@@ -53,9 +54,8 @@ proc impl(viewModel:HomeViewModel):Component =
   """
 
 
-proc homeView*(viewModel:HomeViewModel):string =
-  let title = "conduit"
-  return $applicationView(title, impl(viewModel))
+proc homeView*(appViewModel:ApplicationViewModel, viewModel:HomeViewModel):string =
+  return $applicationView(appViewModel, impl(viewModel))
 
 proc htmxHomeView*(viewModel:HomeViewModel):string =
   return $impl(viewModel)

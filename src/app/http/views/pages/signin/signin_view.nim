@@ -1,5 +1,6 @@
 import basolato/view
-import ../../layouts/application_view
+import ../../layouts/application/application_view_model
+import ../../layouts/application/application_view
 import ./signin_view_model
 
 
@@ -44,9 +45,8 @@ proc impl(viewModel:SignInViewModel):Component =
   """
 
 
-proc signInView*(viewModle:SignInViewModel):string =
-  let title = "sign in"
-  return $applicationView(title, impl(viewModle))
+proc signInView*(appViewModel:ApplicationViewModel, viewModle:SignInViewModel):string =
+  return $applicationView(appViewModel, impl(viewModle))
 
 proc htmxSignInView*(viewModl:SignInViewModel):string =
   return $impl(viewModl)

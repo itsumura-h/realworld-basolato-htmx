@@ -2,6 +2,7 @@ import ./vo/user_id
 import ./vo/user_name
 import ./vo/email
 import ./vo/password
+import ./vo/hashed_password
 
 
 type DraftUser* = object
@@ -25,10 +26,10 @@ type User* = object
   id*:UserId
   name*:UserName
   email*:Email
-  password*:Password
+  password*:HashedPassword
 
 
-proc new*(_:type User, userId:UserId, userName:UserName, email:Email, password:Password):User =
+proc new*(_:type User, userId:UserId, userName:UserName, email:Email, password:HashedPassword):User =
   return User(
     id:userId,
     name:userName,

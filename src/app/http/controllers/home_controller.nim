@@ -1,18 +1,21 @@
 # framework
 import basolato/controller
 import basolato/view
+import ./libs/create_application_view_model
 # view
 import ../views/pages/home/home_view_model
 import ../views/pages/home/home_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
+  let appViewModel = createApplicationViewModel(context, "conduit").await
   let viewModel = HomeViewModel.new()
-  let view = homeView(viewModel)
+  let view = homeView(appViewModel, viewModel)
   return render(view)
 
 
 proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
+  let appViewModel = createApplicationViewModel(context, "conduit").await
   let page =
     if params.hasKey("page"):
       params.getInt("page")
@@ -27,5 +30,5 @@ proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
     hasPage,
     page
   )
-  let view = homeView(viewModel)
+  let view = homeView(appViewModel, viewModel)
   return render(view)

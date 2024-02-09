@@ -1,10 +1,10 @@
-import ../../../../errors
 import basolato/password
+import ../../../../errors
+import ./hashed_password
 
 
 type Password* = object
-  value:string
-
+  value*:string
 
 proc new*(_:type Password, value:string):Password =
   if value.len == 0:
@@ -12,8 +12,7 @@ proc new*(_:type Password, value:string):Password =
   
   return Password(value:value)
 
-proc value*(self:Password):string =
-  return self.value
 
-proc hashed*(self:Password):string =
-  return genHashedPassword(self.value)
+proc hashed*(self:Password):HashedPassword =
+  let hashed = genHashedPassword(self.value)
+  return HashedPassword.new(hashed)

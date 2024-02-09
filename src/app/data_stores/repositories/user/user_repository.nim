@@ -8,6 +8,7 @@ import ../../../models/aggregates/user/vo/user_id
 import ../../../models/aggregates/user/vo/user_name
 import ../../../models/aggregates/user/vo/email
 import ../../../models/aggregates/user/vo/password
+import ../../../models/aggregates/user/vo/hashed_password
 import ../../../models/aggregates/user/user_entity
 import ../../../models/aggregates/user/user_repository_interface
 
@@ -18,11 +19,24 @@ proc new*(_:type UserRepository):UserRepository =
   return UserRepository()
 
 
-method getUserByEmail(self:UserRepository, email:Email):Future[Option[JsonNode]] {.async.} =
-  return rdb.table("user")
-            .where("email", "=", email.value())
-            .first()
-            .await
+method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.async.} =
+  let rowOpt = rdb.table("user")
+                  .where("email", "=", email.value())
+                  .first()
+                  .await
+
+  if not rowOpt.isSome():
+    return none(User)
+
+  let row = rowOpt.get()
+  let user = User.new(
+    UserId.new(row["id"].getStr),
+    UserName.new(row["name"].getStr),
+    Email.new(row["email"].getStr),
+    HashedPassword.new(row["password"].getStr),
+  )
+  return user.some()
+
 
 method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.async.} =
   let rowOpt = rdb.table("user")
@@ -37,12 +51,12 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
     UserId.new(row["id"].getStr),
     UserName.new(row["name"].getStr),
     Email.new(row["email"].getStr),
-    Password.new(row["password"].getStr),
+    HashedPassword.new(row["password"].getStr),
   )
   return user.some()
 
 
-method create(self:UserRepository, user:DraftUser):Future[void] {.async.} =
+method create(self:UserRepository, user:DraftUser):Future[UserId] {.async.} =
   rdb.table("user").insert(%*{
     "id":user.id.value,
     "name":user.name.value,
@@ -50,3 +64,4 @@ method create(self:UserRepository, user:DraftUser):Future[void] {.async.} =
     "password":user.password.hashed(),
     "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss"),
   }).await
+  return user.id

@@ -17,7 +17,7 @@ proc new*(_:type CreateUserUsecase):CreateUserUsecase =
     repository:di.userRepository
   )
 
-proc invoke*(self:CreateUserUsecase, userName, email, password:string){.async.} =
+proc invoke*(self:CreateUserUsecase, userName, email, password:string):Future[string] {.async.} =
   let userName = UserName.new(userName)
   let email = Email.new(email)
   let password = Password.new(password)
@@ -27,4 +27,5 @@ proc invoke*(self:CreateUserUsecase, userName, email, password:string){.async.} 
     raise newException(DomainError, "email is deprecated")
 
   let user = DraftUser.new(userName, email, password)
-  self.repository.create(user).await
+  let id = self.repository.create(user).await
+  return id.value
