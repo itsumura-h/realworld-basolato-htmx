@@ -1,8 +1,9 @@
 import basolato/view
 import ../../layouts/application_view
+import ./signin_view_model
 
 
-proc impl():Component =
+proc impl(viewModel:SignInViewModel):Component =
   tmpli html"""
     <div class="auth-page">
       <div class="container page">
@@ -26,7 +27,7 @@ proc impl():Component =
             <form method="POST" hx-post="/htmx/sign-in" hx-target="#app-body">
               $(csrfToken())
               <fieldset class="form-group">
-                <input type="text" id="sign-in-email" class="form-control form-control-lg" name="email" placeholder="Email" value="">
+                <input type="text" id="sign-in-email" class="form-control form-control-lg" name="email" placeholder="Email" value="$(viewModel.oldEmail)">
               </fieldset>
               <fieldset class="form-group">
                 <input type="password" id="sign-in-password" class="form-control form-control-lg" name="password" placeholder="Password">
@@ -43,6 +44,9 @@ proc impl():Component =
   """
 
 
-proc signInPageView*():string =
+proc signInView*(viewModle:SignInViewModel):string =
   let title = "sign in"
-  return $applicationView(title, impl())
+  return $applicationView(title, impl(viewModle))
+
+proc htmxSignInView*(viewModl:SignInViewModel):string =
+  return $impl(viewModl)

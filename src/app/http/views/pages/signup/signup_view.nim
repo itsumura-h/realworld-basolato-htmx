@@ -1,9 +1,9 @@
 import std/json
 import basolato/view
 import ../../layouts/application_view
+import ./signup_view_model
 
-
-proc impl(oldParams:JsonNode):Component =
+proc impl(viewModel:SignUpViewModel):Component =
   tmpli html"""
     <div class="auth-page">
       <div class="container page">
@@ -27,10 +27,10 @@ proc impl(oldParams:JsonNode):Component =
             <form method="POST" hx-post="/htmx/sign-up" hx-target="#app-body">
               $(csrfToken())
               <fieldset class="form-group">
-                <input id="sign-up-username" class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="$(oldParams["name"].getStr)">
+                <input id="sign-up-username" class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="$(viewModel.oldName)">
               </fieldset>
               <fieldset class="form-group">
-                <input id="sign-up-email" class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="$(oldParams["email"].getStr)">
+                <input id="sign-up-email" class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="$(viewModel.oldEmail)">
               </fieldset>
               <fieldset class="form-group">
                 <input id="sign-up-password" class="form-control form-control-lg" type="password" name="password" placeholder="Password">
@@ -47,6 +47,10 @@ proc impl(oldParams:JsonNode):Component =
   """
 
 
-proc signUpPageView*(oldParams:JsonNode):string =
+proc signUpView*(viewModel:SignUpViewModel):string =
   let title = "sign up"
-  return $applicationView(title, impl(oldParams))
+  return $applicationView(title, impl(viewModel))
+
+
+proc htmxSignUpView*(viewModel:SignUpViewModel):string =
+  return $impl(viewModel)

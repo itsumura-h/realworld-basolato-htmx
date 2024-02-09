@@ -33,7 +33,10 @@ let routes = @[
       Route.get("/users/{userId:str}/favorites", user_controller.favorites),
 
       Route.group("/htmx", @[
+        Route.get("/sign-up", htmx_sign_controller.signUpPage),
         Route.post("/sign-up", htmx_sign_controller.signUp),
+        Route.get("/sign-in", htmx_sign_controller.signInPage),
+
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),
         Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
