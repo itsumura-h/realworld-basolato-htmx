@@ -1,7 +1,9 @@
 import std/asyncdispatch
+import std/options
 import ../../models/aggregates/article/vo/article_id
 import ../../models/aggregates/article/article_service
 import ../../models/aggregates/article/article_repository_interface
+import ../../models/aggregates/user/vo/user_id
 import ../../errors
 import ./get_article_query_interface
 import ./get_article_dto
@@ -18,10 +20,15 @@ proc new*(_:type GetArticleUsecase, query:IGetArticleQuery, repository:IArticleR
   )
 
 
-proc invoke*(self:GetArticleUsecase, articleId:string):Future[GetArticleDto] {.async.} =
+proc invoke*(self:GetArticleUsecase, articleId:string, loginUserId:string):Future[GetArticleDto] {.async.} =
   let articleId = ArticleId.new(articleId)
+  let loginUserId =
+    if loginUserId.len > 0:
+      UserId.new(loginUserId).some()
+    else:
+      none(UserId)
   let service = ArticleService.new(self.repository)
   if not service.isExistsArticle(articleId).await:
     raise newException(IdNotFoundError, "article is not found")
-  let dto = self.query.invoke(articleId).await
+  let dto = self.query.invoke(articleId, loginUserId).await
   return dto

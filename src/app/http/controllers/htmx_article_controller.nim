@@ -19,7 +19,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let query = di.getArticleQuery
   let repository = di.articleRepository
   let usecase = GetArticleUsecase.new(query, repository)
-  let dto = usecase.invoke(articleId).await
+  let dto = usecase.invoke(articleId, loginUserId).await
   let viewModel = ArticleShowViewModel.new(dto, loginUserId)
   let view = htmxArticleShowView(viewModel)
   return render(view)

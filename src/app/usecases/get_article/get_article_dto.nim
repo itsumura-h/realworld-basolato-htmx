@@ -20,8 +20,20 @@ type ArticleDto* = object
   body*:string
   createdAt*:DateTime
   tags*:seq[TagDto]
+  # by user
+  isFavorited*:bool
+  favoriteCount*:int
 
-proc new*(_:type ArticleDto, id, title, description, body, createdAt:string, tags:seq[TagDto]):ArticleDto =
+proc new*(_:type ArticleDto,
+  id:string,
+  title:string,
+  description:string,
+  body:string,
+  createdAt:string,
+  tags:seq[TagDto],
+  isFavorited:bool,
+  favoriteCount:int
+):ArticleDto =
   let createdAt = parse(createdAt, "yyyy-MM-dd hh:mm:ss")
   return ArticleDto(
     id:id,
@@ -30,6 +42,8 @@ proc new*(_:type ArticleDto, id, title, description, body, createdAt:string, tag
     body:body,
     createdAt:createdAt,
     tags:tags,
+    isFavorited:isFavorited,
+    favoriteCount:favoriteCount
   )
 
 

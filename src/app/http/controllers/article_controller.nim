@@ -16,7 +16,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let repository = di.articleRepository
   let usecase = GetArticleUsecase.new(query, repository)
   try:
-    let dto = usecase.invoke(articleId).await
+    let dto = usecase.invoke(articleId, loginUserId).await
     let viewModel = ArticleShowViewModel.new(dto, loginUserId)
     let view = articleShowPageView(viewModel)
     return render(view)

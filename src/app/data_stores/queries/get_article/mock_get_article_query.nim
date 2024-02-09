@@ -1,8 +1,10 @@
 import std/asyncdispatch
 import std/times
+import std/options
 import ../../../usecases/get_article/get_article_query_interface
 import ../../../usecases/get_article/get_article_dto
 import ../../../models/aggregates/article/vo/article_id
+import ../../../models/aggregates/user/vo/user_id
 
 
 type MockGetArticleQuery* = object of IGetArticleQuery
@@ -11,7 +13,7 @@ proc new*(_:type MockGetArticleQuery):MockGetArticleQuery =
   return MockGetArticleQuery()
 
 
-method invoke*(self:MockGetArticleQuery, articleId:ArticleId):Future[GetArticleDto] {.async.} =
+method invoke*(self:MockGetArticleQuery, articleId:ArticleId, loginUserId:Option[UserId]):Future[GetArticleDto] {.async.} =
   let tags = @[
     TagDto.new(
       1,
@@ -26,12 +28,14 @@ method invoke*(self:MockGetArticleQuery, articleId:ArticleId):Future[GetArticleD
   ]
 
   let article = ArticleDto.new(
-    articleId.value,
-    "titie",
-    "description",
-    "body",
-    "2024-01-01 12:00:00",
-    tags
+    id = articleId.value,
+    title = "titie",
+    description = "description",
+    body = "body",
+    createdAt = "2024-01-01 12:00:00",
+    tags = tags,
+    isFavorited = false,
+    favoriteCount = 5,
   )
   let user = UserDto.new(
     "user-name",

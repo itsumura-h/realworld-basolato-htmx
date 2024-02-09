@@ -7,6 +7,7 @@ import ../../../errors
 import ../../../usecases/get_article/get_article_query_interface
 import ../../../usecases/get_article/get_article_dto
 import ../../../models/aggregates/article/vo/article_id
+import ../../../models/aggregates/user/vo/user_id
 
 
 type GetArticleQuery* = object of IGetArticleQuery
@@ -15,25 +16,25 @@ proc new*(_:type GetArticleQuery):GetArticleQuery =
   return GetArticleQuery()
 
 
-method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] {.async.} =
-  let resOpt = rdb.select(
-                "title",
-                "description",
-                "body",
-                "article.created_at as createdAt",
-                "author_id as authorId",
-                "user.id",
-                "user.name",
-                "user.image",
-              )
-              .table("article")
-              .join("user", "user.id", "=", "article.author_id")
-              .find(articleId.value, key="article.id")
-              .await
+method invoke*(self:GetArticleQuery, articleId:ArticleId, loginUserId:Option[UserId]):Future[GetArticleDto] {.async.} =
+  let articleDataOpt = rdb.select(
+                            "title",
+                            "description",
+                            "body",
+                            "article.created_at as createdAt",
+                            "author_id as authorId",
+                            "user.id",
+                            "user.name",
+                            "user.image",
+                          )
+                          .table("article")
+                          .join("user", "user.id", "=", "article.author_id") # get info of author
+                          .find(articleId.value, key="article.id")
+                          .await
 
-  let res = 
-    if resOpt.isSome():
-      resOpt.get()
+  let articleData = 
+    if articleDataOpt.isSome():
+      articleDataOpt.get()
     else:
       raise newException(IdNotFoundError, "invalid article id")
 
@@ -57,24 +58,43 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId):Future[GetArticleDto] 
     else:
       newSeq[TagDto]()
 
+  # get data from article whether login user is favorited or not
+  let isLoginUserfavoritedCount =
+    if loginUserId.isSome():
+      rdb.table("user_article_map")
+          .where("user_id", "=", loginUserId.get().value)
+          .where("article_id", "=", articleId.value)
+          .count()
+          .await
+    else:
+      0
+
+  # get favorites count of article
+  let favoriteCount = rdb.table("user_article_map")
+                          .where("article_id", "=", articleId.value)
+                          .count()
+                          .await
+
   let article = ArticleDto.new(
     id = articleId.value,
-    title = res["title"].getStr(),
-    description = res["description"].getStr(),
-    body = res["body"].getStr(),
-    createdAt = res["createdAt"].getStr(),
+    title = articleData["title"].getStr(),
+    description = articleData["description"].getStr(),
+    body = articleData["body"].getStr(),
+    createdAt = articleData["createdAt"].getStr(),
     tags = tags,
+    isFavorited = isLoginUserfavoritedCount > 0,
+    favoriteCount = favoriteCount,
   )
 
   let followerCount = rdb.table("user_user_map")
-                        .where("user_id", "=", res["authorId"].getStr())
+                        .where("user_id", "=", articleData["authorId"].getStr())
                         .count()
                         .await
 
   let user = UserDto.new(
-    id = res["authorId"].getStr(),
-    name = res["name"].getStr(),
-    image = res["image"].getStr(),
+    id = articleData["authorId"].getStr(),
+    name = articleData["name"].getStr(),
+    image = articleData["image"].getStr(),
     followerCount = followerCount,
   )
 

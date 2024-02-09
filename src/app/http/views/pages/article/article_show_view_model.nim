@@ -2,6 +2,7 @@ import std/times
 import std/sequtils
 import ../../../../usecases/get_article/get_article_dto
 import ../../components/article/follow_button/follow_button_view_model
+import ../../components/article/favorite_button/favorite_button_view_model
 
 
 type Tag* = object
@@ -55,6 +56,7 @@ type ArticleShowViewModel* = object
   article*:Article
   user*:User
   followButtonViewModel*:FollowButtonViewModel
+  favoriteButtonViewModel*:FavoriteButtonViewModel
 
 proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
@@ -71,7 +73,7 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):Ar
     dto.article.description,
     dto.article.body,
     dto.article.createdAt,
-    tags
+    tags,
   )
   let author = User.new(
     dto.user.id,
@@ -86,8 +88,16 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):Ar
     dto.user.followerCount,
   )
 
+  let favoriteButtonViewModel = FavoriteButtonViewModel.new(
+    dto.article.isFavorited,
+    dto.article.id,
+    false,
+    dto.article.favoriteCount,
+  )
+
   return ArticleShowViewModel(
     article:article,
     user:author,
     followButtonViewModel:followButtonViewModel,
+    favoriteButtonViewModel:favoriteButtonViewModel,
   )

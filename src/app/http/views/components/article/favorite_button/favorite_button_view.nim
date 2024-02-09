@@ -17,6 +17,6 @@ proc favoriteButtonView*(viewModel:FavoriteButtonViewModel):Component =
       }$else{
         Favorite Post
       }
-      ($viewModel.favoriteCount)
+      ($(viewModel.favoriteCount))
     </button>
   """
