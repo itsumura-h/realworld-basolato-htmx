@@ -4,6 +4,9 @@ import basolato/middleware
 
 
 proc setCorsHeaders*(c:Context, p:Params):Future[Response] {.async.} =
+  if c.request.httpMethod != HttpOptions:
+    return next()
+
   let allowedMethods = [
     "OPTIONS",
     "GET",
@@ -40,4 +43,4 @@ proc setSecureHeaders*(c:Context, p:Params):Future[Response] {.async.} =
     "Cache-Control": @["no-cache", "no-store", "must-revalidate"],
     "Pragma": @["no-cache"],
   }.newHttpHeaders()
-  return next(status=Http204, headers=headers)
+  return next(headers=headers)

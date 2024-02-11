@@ -31,6 +31,10 @@ import ./data_stores/queries/get_favorites_in_user/get_favorites_in_user_query
 import ./usecases/get_tag_feed/get_tag_feed_query_interface
 import ./data_stores/queries/get_tag_feed/mock_get_tag_feed_query
 import ./data_stores/queries/get_tag_feed/get_tag_feed_query
+# get setting show
+import ./usecases/get_setting/get_setting_query_interface
+import ./data_stores/queries/get_setting/mock_get_setting_query
+import ./data_stores/queries/get_setting/get_setting_query
 
 
 type DiContainer* = tuple
@@ -42,6 +46,7 @@ type DiContainer* = tuple
   getArticlesInUserQuery: IGetArticlesInUserQuery
   getFavoritesInUserQuery: IGetFavoritesInUserQuery
   getTagFeedQuery: IGetTagFeedQuery
+  getSettingQuery: IGetSettingQuery
 
 
 proc newDiContainer():DiContainer =
@@ -55,6 +60,7 @@ proc newDiContainer():DiContainer =
       getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
       getTagFeedQuery: MockGetTagFeedQuery.new(),
+      getSettingQuery: MockGetSettingQuery.new(),
     )
   else:
     return (
@@ -73,6 +79,8 @@ proc newDiContainer():DiContainer =
       getFavoritesInUserQuery: GetFavoritesInUserQuery.new(),
       # getTagFeedQuery: MockGetTagFeedQuery.new(),
       getTagFeedQuery: GetTagFeedQuery.new(),
+      # getSettingQuery: MockGetSettingQuery.new(),
+      getSettingQuery: GetSettingQuery.new(),
     )
 
 let di* = newDiContainer()
