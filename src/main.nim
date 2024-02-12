@@ -27,9 +27,9 @@ let routes = @[
       Route.get("/global-feed", home_controller.index),
       Route.get("/tag-feed/{tag:str}", home_controller.tagFeed),
 
-      Route.get("/sign-up", sign_controller.signUpPage),
-      Route.get("/sign-in", sign_controller.signInPage),
-      Route.get("/logout", sign_controller.logout),
+      Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),
+      Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
+      Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
 
       Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
 
@@ -46,7 +46,7 @@ let routes = @[
         Route.post("/logout", htmx_sign_controller.logout),
 
         Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),

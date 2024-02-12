@@ -9,6 +9,8 @@ import ../../../models/aggregates/user/vo/user_name
 import ../../../models/aggregates/user/vo/email
 import ../../../models/aggregates/user/vo/password
 import ../../../models/aggregates/user/vo/hashed_password
+import ../../../models/aggregates/user/vo/bio
+import ../../../models/aggregates/user/vo/image
 import ../../../models/aggregates/user/user_entity
 import ../../../models/aggregates/user/user_repository_interface
 
@@ -35,6 +37,8 @@ method getUserByEmail*(self:MockUserRepository, email:Email):Future[Option[User]
     UserName.new(row["name"].getStr),
     Email.new(row["email"].getStr),
     HashedPassword.new(row["password"].getStr),
+    Bio.new(row["bio"].getStr),
+    Image.new(row["image"].getStr),
   )
   return user.some()
 

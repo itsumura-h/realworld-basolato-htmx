@@ -72,7 +72,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
             hx-push-url="/users/username"
             class="nav-link"
           >
-            <img class="user-pic" src="image">
+            <img class="user-pic" src="$(viewModel.image)">
             $(viewModel.name)
           </a>
         </li>

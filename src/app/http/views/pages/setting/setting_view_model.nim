@@ -9,11 +9,10 @@ type SettingViewModel* = object
 
 proc new*(_:type SettingViewModel,
   getSettingDto:GetSettingDto,
-  successMessage="",
 ):SettingViewModel =
   let fromMessageViewModel = FormMessageViewModel.new(
     false,
-    successMessage,
+    "",
   )
   let formViewModel = FormViewModel.new(
     false,
@@ -21,6 +20,32 @@ proc new*(_:type SettingViewModel,
     getSettingDto.email,
     getSettingDto.bio,
     getSettingDto.image,
+  )
+
+  let viewModel = SettingViewModel(
+    fromMessageViewModel: fromMessageViewModel,
+    formViewModel: formViewModel,
+  )
+  return viewModel
+
+
+proc new*(_:type SettingViewModel,
+  name:string,
+  email:string,
+  bio:string,
+  image:string,
+  successMessage:string,
+):SettingViewModel =
+  let fromMessageViewModel = FormMessageViewModel.new(
+    true,
+    successMessage,
+  )
+  let formViewModel = FormViewModel.new(
+    true,
+    name,
+    email,
+    bio,
+    image,
   )
 
   let viewModel = SettingViewModel(

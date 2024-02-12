@@ -3,6 +3,8 @@ import ./vo/user_name
 import ./vo/email
 import ./vo/password
 import ./vo/hashed_password
+import ./vo/bio
+import ./vo/image
 
 
 type DraftUser* = object
@@ -27,12 +29,23 @@ type User* = object
   name*:UserName
   email*:Email
   password*:HashedPassword
+  bio*:Bio
+  image*:Image
 
 
-proc new*(_:type User, userId:UserId, userName:UserName, email:Email, password:HashedPassword):User =
+proc new*(_:type User,
+  userId:UserId,
+  userName:UserName,
+  email:Email,
+  password:HashedPassword,
+  bio:Bio,
+  image:Image,
+):User =
   return User(
     id:userId,
     name:userName,
     email:email,
     password:password,
+    bio:bio,
+    image:image,
   )

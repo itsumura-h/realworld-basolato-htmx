@@ -11,3 +11,4 @@ interfaceDefs:
     getUserByEmail:proc(self:IUserRepository, email:Email):Future[Option[User]]
     getUserById:proc(self:IUserRepository, userId:UserId):Future[Option[User]]
     create:proc(self:IUserRepository, user:DraftUser):Future[UserId]
+    update:proc(self:IUserRepository, user:User):Future[void]
