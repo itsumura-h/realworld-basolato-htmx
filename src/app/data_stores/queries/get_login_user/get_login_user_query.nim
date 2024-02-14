@@ -4,17 +4,17 @@ import std/json
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../errors
-import ../../../usecases/get_setting/get_setting_query_interface
-import ../../../usecases/get_setting/get_setting_dto
+import ../../../usecases/get_login_user/get_login_user_query_interface
+import ../../../usecases/get_login_user/get_login_user_dto
 import ../../../models/aggregates/user/vo/user_id
 
-type GetSettingQuery* = object of IGetSettingQuery
+type GetLoginUserQuery* = object of IGetLoginUserQuery
 
-proc new*(_:type GetSettingQuery): GetSettingQuery =
-  return GetSettingQuery()
+proc new*(_:type GetLoginUserQuery): GetLoginUserQuery =
+  return GetLoginUserQuery()
 
 
-method invoke*(self:GetSettingQuery, userId:UserId):Future[GetSettingDto] {.async.} =
+method invoke*(self:GetLoginUserQuery, userId:UserId):Future[LoginUserDto] {.async.} =
   let userOpt = rdb.table("user")
                     .find(userId.value)
                     .await
@@ -23,7 +23,7 @@ method invoke*(self:GetSettingQuery, userId:UserId):Future[GetSettingDto] {.asyn
 
   let userData = userOpt.get()
 
-  let dto = GetSettingDto.new(
+  let dto = LoginUserDto.new(
     userData["name"].getStr(),
     userData["email"].getStr(),
     userData["bio"].getStr(),

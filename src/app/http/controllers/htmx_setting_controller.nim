@@ -2,7 +2,7 @@ import std/json
 import basolato/controller
 import basolato/request_validation
 import ../../errors
-import ../../usecases/get_setting/get_setting_usecase
+import ../../usecases/get_login_user/get_login_user_usecase
 import ../views/pages/setting/setting_view_model
 import ../views/pages/setting/setting_view
 
@@ -13,7 +13,7 @@ import ../views/components/form_error_message/form_error_message_view
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = context.get("id").await
-  let usecase = GetSettingUsecase.new()
+  let usecase = GetLoginUserUsecase.new()
   let dto = usecase.invoke(userId).await
   let viewModel = SettingViewModel.new(dto)
   let view = htmxSettingView(viewModel)
@@ -25,11 +25,11 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
   v.required("image_url")
   v.required("name")
   v.required("email")
+  v.required("password")
   v.email("email")
   if v.hasErrors:
     var errorMessages:seq[string]
     let errors = %v.errors
-    echo "errors ", errors.pretty()
     for (key, rows) in errors.pairs:
       for row in rows.items:
         errorMessages.add(row.getStr())
@@ -41,7 +41,6 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
     }.newHttpHeaders()
     return render(view, header)
 
-  echo params.getAll().pretty()
   let userId = context.get("id").await
   let image = params.getStr("image_url")
   let name = params.getStr("name")
