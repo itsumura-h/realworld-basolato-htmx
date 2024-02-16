@@ -1,7 +1,9 @@
 # framework
 import basolato
+import basolato/middleware/session_from_cookie_middleware
+import basolato/middleware/check_csrf_token_middleware
 # middleware
-import ./app/http/middlewares/session_middleware
+# import ./app/http/middlewares/session_middleware
 import ./app/http/middlewares/auth_middleware
 import ./app/http/middlewares/set_headers_middleware
 import ./app/http/middlewares/should_login_middleware
@@ -62,8 +64,8 @@ let routes = @[
 
       ])
     ])
-    .middleware(session_middleware.sessionFromCookie)
-    .middleware(auth_middleware.checkCsrfToken),
+    .middleware(checkCsrfToken)
+    .middleware(sessionFromCookie),
 
     Route.group("/api", @[
       # Route.get("/index", welcome_controller.indexApi),

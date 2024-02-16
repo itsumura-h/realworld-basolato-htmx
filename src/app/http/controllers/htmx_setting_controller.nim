@@ -25,7 +25,7 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
   v.required("image_url")
   v.required("name")
   v.required("email")
-  v.required("password")
+  # v.required("password")
   v.email("email")
   if v.hasErrors:
     var errorMessages:seq[string]

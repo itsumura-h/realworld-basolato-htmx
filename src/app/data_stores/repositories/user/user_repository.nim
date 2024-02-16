@@ -67,20 +67,21 @@ method create(self:UserRepository, user:DraftUser):Future[UserId] {.async.} =
     "id":user.id.value,
     "name":user.name.value,
     "email":user.email.value,
-    "password":user.password.hashed(),
+    "password":user.password.hashed().value,
     "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss"),
   }).await
   return user.id
 
 
 method update(self:UserRepository, user:User) {.async.} =
-  rdb.table("user")
-      .where("id", "=", user.id.value)
-      .update(%*{
+  let val = %*{
         "name": user.name.value,
         "email": user.email.value,
         "password": user.password.value,
         "bio": user.bio.value,
         "image": user.image.value,
-      })
+      }
+  rdb.table("user")
+      .where("id", "=", user.id.value)
+      .update(val)
       .await
