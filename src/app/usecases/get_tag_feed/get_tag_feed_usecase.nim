@@ -9,13 +9,13 @@ type GetTagFeedUsecase* = object
   query:IGetTagFeedQuery
 
 
-proc new*(_:type GetTagFeedUsecase):GetTagFeedUsecase =
+proc init*(_:type GetTagFeedUsecase):GetTagFeedUsecase =
   return GetTagFeedUsecase(
     query:di.getTagFeedQuery
   )
 
 
 proc invoke*(self:GetTagFeedUsecase, tagName:string, page:int):Future[TagFeedDto] {.async.} =
-  let tagName = TagName.new(tagName)
+  let tagName = TagName.init(tagName)
   var dto = self.query.invoke(tagName, page).await
   return dto

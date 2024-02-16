@@ -15,23 +15,23 @@ type UpdateUserUsecase* = object
   repository:IUserRepository
   service:UserService
 
-proc new*(_:type UpdateUserUsecase):UpdateUserUsecase =
+proc init*(_:type UpdateUserUsecase):UpdateUserUsecase =
   return UpdateUserUsecase(
     repository: di.userRepository,
-    service: UserService.new()
+    service: UserService.init()
   )
 
 
 proc invoke*(self:UpdateUserUsecase, id, name, email, password, bio, image:string) {.async.} =
-  let id = UserId.new(id)
-  let name = UserName.new(name)
-  let email = Email.new(email)
-  let password = Password.new(password).hashed()
-  let bio = Bio.new(bio)
-  let image = Image.new(image)
+  let id = UserId.init(id)
+  let name = UserName.init(name)
+  let email = Email.init(email)
+  let password = Password.init(password).hashed()
+  let bio = Bio.init(bio)
+  let image = Image.init(image)
 
   if not self.service.isExistsUser(id).await:
     raise newException(DomainError, "user is not found")
 
-  let user = User.new(id, name, email, password, bio, image)
+  let user = User.init(id, name, email, password, bio, image)
   self.repository.update(user).await

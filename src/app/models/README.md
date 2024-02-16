@@ -19,7 +19,7 @@ Value object difines a behaviour of value.
 type UserName* = ref object
   value:string
 
-proc new*(_:type UserName, value:string):UserName =
+proc init*(_:type UserName, value:string):UserName =
   if isEmptyOrWhitespace(value):
     raise newException(Exception, "Name can't be blank")
   if value.len == 0:
@@ -44,7 +44,7 @@ type User* = ref object
   email*: Email
   password*: Password
 
-proc new*(typ:type User, id:UserId, name:UserName, email:Email, password:Password):User =
+proc init*(typ:type User, id:UserId, name:UserName, email:Email, password:Password):User =
   return User(
     id:id,
     name:name,

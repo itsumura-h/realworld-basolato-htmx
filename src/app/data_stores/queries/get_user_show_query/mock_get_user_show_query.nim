@@ -7,7 +7,7 @@ import ../../../usecases/get_user_show/get_user_show_dto
 
 type MockGetUserShowQuery* = object of IGetUserShowQuery
 
-proc new*(_:type MockGetUserShowQuery):MockGetUserShowQuery =
+proc init*(_:type MockGetUserShowQuery):MockGetUserShowQuery =
   return MockGetUserShowQuery()
 
 

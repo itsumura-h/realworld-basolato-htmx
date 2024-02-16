@@ -17,7 +17,7 @@ import ../../../models/aggregates/user/user_repository_interface
 
 type UserRepository* = object of IUserRepository
 
-proc new*(_:type UserRepository):UserRepository =
+proc init*(_:type UserRepository):UserRepository =
   return UserRepository()
 
 
@@ -31,13 +31,13 @@ method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.a
     return none(User)
 
   let row = rowOpt.get()
-  let user = User.new(
-    UserId.new(row["id"].getStr),
-    UserName.new(row["name"].getStr),
-    Email.new(row["email"].getStr),
-    HashedPassword.new(row["password"].getStr),
-    Bio.new(row["bio"].getStr),
-    Image.new(row["image"].getStr),
+  let user = User.init(
+    UserId.init(row["id"].getStr),
+    UserName.init(row["name"].getStr),
+    Email.init(row["email"].getStr),
+    HashedPassword.init(row["password"].getStr),
+    Bio.init(row["bio"].getStr),
+    Image.init(row["image"].getStr),
   )
   return user.some()
 
@@ -51,13 +51,13 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
     return none(User)
 
   let row = rowOpt.get()
-  let user = User.new(
-    UserId.new(row["id"].getStr),
-    UserName.new(row["name"].getStr),
-    Email.new(row["email"].getStr),
-    HashedPassword.new(row["password"].getStr),
-    Bio.new(row["bio"].getStr),
-    Image.new(row["image"].getStr),
+  let user = User.init(
+    UserId.init(row["id"].getStr),
+    UserName.init(row["name"].getStr),
+    Email.init(row["email"].getStr),
+    HashedPassword.init(row["password"].getStr),
+    Bio.init(row["bio"].getStr),
+    Image.init(row["image"].getStr),
   )
   return user.some()
 

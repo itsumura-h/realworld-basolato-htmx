@@ -7,31 +7,31 @@ import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 type MockGetFavoritesInUserQuery* = object of IGetFavoritesInUserQuery
 
-proc new*(_:type MockGetFavoritesInUserQuery):MockGetFavoritesInUserQuery =
+proc init*(_:type MockGetFavoritesInUserQuery):MockGetFavoritesInUserQuery =
   return MockGetFavoritesInUserQuery()
 
 
 method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesInUserDto] {.async.} =
-  let user = UserDto.new("user-1")
+  let user = UserDto.init("user-1")
   
-  let author = AuthorDto.new(
+  let author = AuthorDto.init(
     "author",
     "Author",
     ""
   )
 
   let tags = @[
-    TagDto.new("tag1"),
-    TagDto.new("tag2"),
+    TagDto.init("tag1"),
+    TagDto.init("tag2"),
   ]
 
   let favoritedUsers = @[
-    FavoritedUserDto.new("user1"),
-    FavoritedUserDto.new("user2"),
+    FavoritedUserDto.init("user1"),
+    FavoritedUserDto.init("user2"),
   ]
 
   let articles = @[
-    ArticleDto.new(
+    ArticleDto.init(
       "article-1",
       "Article 1",
       "description1",
@@ -40,7 +40,7 @@ method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavori
       tags,
       favoritedUsers
     ),
-    ArticleDto.new(
+    ArticleDto.init(
       "article-2",
       "Article 2",
       "description2",
@@ -51,7 +51,7 @@ method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavori
     ),
   ]
 
-  let dto = GetFavoritesInUserDto.new(
+  let dto = GetFavoritesInUserDto.init(
     user,
     articles
   )

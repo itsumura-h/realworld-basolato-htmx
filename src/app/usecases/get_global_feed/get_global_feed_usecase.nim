@@ -5,18 +5,18 @@ import ./get_global_feed_dto
 
 type GetGlobalFeedUsecase* = object
 
-proc new*(_:type GetGlobalFeedUsecase):GetGlobalFeedUsecase =
+proc init*(_:type GetGlobalFeedUsecase):GetGlobalFeedUsecase =
   return GetGlobalFeedUsecase()
 
 
 proc invoke*(self:GetGlobalFeedUsecase, page:int):Future[GlobalFeedDto] {.async.} =
-  let getArticlesWithAuthorQuery = GetArticlesWithAuthorQuery.new()
+  let getArticlesWithAuthorQuery = GetArticlesWithAuthorQuery.init()
   let articlesWithAuthor = getArticlesWithAuthorQuery.invoke(page).await
 
-  let getGlobalFeedPaginatorQuery = GetGlobalFeedPaginatorQuery.new()
+  let getGlobalFeedPaginatorQuery = GetGlobalFeedPaginatorQuery.init()
   let globalFeedPaginator = getGlobalFeedPaginatorQuery.invoke(page).await
 
-  let globalFeedDto = GlobalFeedDto.new(
+  let globalFeedDto = GlobalFeedDto.init(
     articlesWithAuthor,
     globalFeedPaginator
   )

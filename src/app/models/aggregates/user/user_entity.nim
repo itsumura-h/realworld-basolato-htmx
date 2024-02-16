@@ -14,8 +14,8 @@ type DraftUser* = object
   password*:Password
 
 
-proc new*(_:type DraftUser, userName:UserName, email:Email, password:Password):DraftUser =
-  let userId = UserId.new(userName)
+proc init*(_:type DraftUser, userName:UserName, email:Email, password:Password):DraftUser =
+  let userId = UserId.init(userName)
   return DraftUser(
     id:userId,
     name:userName,
@@ -33,7 +33,7 @@ type User* = object
   image*:Image
 
 
-proc new*(_:type User,
+proc init*(_:type User,
   userId:UserId,
   userName:UserName,
   email:Email,

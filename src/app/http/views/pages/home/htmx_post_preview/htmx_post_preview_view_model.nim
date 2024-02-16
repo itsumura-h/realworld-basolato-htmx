@@ -7,7 +7,7 @@ import ../../../../../usecases/get_tag_feed/get_tag_feed_dto
 type Tag* = object
   name*:string
 
-proc new*(_:type Tag, name:string):Tag =
+proc init*(_:type Tag, name:string):Tag =
   return Tag(
     name:name
   )
@@ -18,7 +18,7 @@ type User* = object
   name*:string
   image*:string
 
-proc new*(_:type User, id:string, name:string, image:string):User =
+proc init*(_:type User, id:string, name:string, image:string):User =
   let user = User(
     id:id,
     name:name,
@@ -36,7 +36,7 @@ type Article* = object
   user*:User
   tags*:seq[Tag]
 
-proc new*(_:type Article,
+proc init*(_:type Article,
   id:string,
   title:string,
   description:string,
@@ -62,7 +62,7 @@ type Paginator* = object
   current*:int
   lastPage*:int
 
-proc new*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator =
+proc init*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator =
   return Paginator(
     hasPages:hasPages,
     current:current,
@@ -75,20 +75,20 @@ type HtmxPostPreviewViewModel* = object
   paginator*:Paginator
   feedNavbarItems*:seq[FeedNavbar]
 
-proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPostPreviewViewModel =
+proc init*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in globalFeedDto.articlesWithAuthor:
-    let user = User.new(
+    let user = User.init(
       id = row.author.id,
       name = row.author.name,
       image = row.author.image
     )
     var tags:seq[Tag]
     for row in row.tags:
-      let tag = Tag.new(row.name)
+      let tag = Tag.init(row.name)
       tags.add(tag)
 
-    let article = Article.new(
+    let article = Article.init(
       id = row.id,
       title = row.title,
       description = row.description,
@@ -100,7 +100,7 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
     articles.add(article)
 
   let feedNavbarItems = @[
-    FeedNavbar.new(
+    FeedNavbar.init(
       title = "Global Feed",
       isActive = true,
       hxGetUrl = "/htmx/home/global-feed",
@@ -108,7 +108,7 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
     )
   ]
 
-  let paginator = Paginator.new(
+  let paginator = Paginator.init(
     hasPages = globalFeedDto.globalFeedPaginator.hasPages,
     current = globalFeedDto.globalFeedPaginator.current,
     lastPage = globalFeedDto.globalFeedPaginator.lastPage
@@ -121,20 +121,20 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
   )
 
 
-proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string):HtmxPostPreviewViewModel =
+proc init*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in tagFeedDto.articlesWithAuthor:
-    let user = User.new(
+    let user = User.init(
       id = row.author.id,
       name = row.author.name,
       image = row.author.image
     )
     var tags:seq[Tag]
     for row in row.tags:
-      let tag = Tag.new(row.name)
+      let tag = Tag.init(row.name)
       tags.add(tag)
 
-    let article = Article.new(
+    let article = Article.init(
       id = row.id,
       title = row.title,
       description = row.description,
@@ -146,13 +146,13 @@ proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string
     articles.add(article)
 
   let feedNavbarItems = @[
-    FeedNavbar.new(
+    FeedNavbar.init(
       title = "Global Feed",
       isActive = false,
       hxGetUrl = "/htmx/home/global-feed",
       hxPushUrl = "/"
     ),
-    FeedNavbar.new(
+    FeedNavbar.init(
       title = tagName,
       isActive = true,
       hxGetUrl = "/htmx/tag-feed",
@@ -160,7 +160,7 @@ proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string
     ),
   ]
 
-  let paginator = Paginator.new(
+  let paginator = Paginator.init(
     hasPages = tagFeedDto.paginator.hasPages,
     current = tagFeedDto.paginator.current,
     lastPage = tagFeedDto.paginator.lastPage

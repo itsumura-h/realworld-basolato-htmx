@@ -3,7 +3,7 @@ type PopularTagDto* = object
   name*:string
   popularCount*:int
 
-proc new*(_:type PopularTagDto, id:int, name:string, popularCount:int):PopularTagDto =
+proc init*(_:type PopularTagDto, id:int, name:string, popularCount:int):PopularTagDto =
   return PopularTagDto(
     id:id,
     name:name,

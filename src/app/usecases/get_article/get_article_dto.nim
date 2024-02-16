@@ -5,7 +5,7 @@ type TagDto* = object
   articleId*:string
   tagName*:string
 
-proc new*(_:type TagDto, tagId:int, articleId:string, tagName:string):TagDto =
+proc init*(_:type TagDto, tagId:int, articleId:string, tagName:string):TagDto =
   return TagDto(
     tagId:tagId,
     articleId:articleId,
@@ -24,7 +24,7 @@ type ArticleDto* = object
   isFavorited*:bool
   favoriteCount*:int
 
-proc new*(_:type ArticleDto,
+proc init*(_:type ArticleDto,
   id:string,
   title:string,
   description:string,
@@ -53,7 +53,7 @@ type UserDto* = object
   image*:string
   followerCount*:int
 
-proc new*(_:type UserDto, id, name, image:string, followerCount:int):UserDto =
+proc init*(_:type UserDto, id, name, image:string, followerCount:int):UserDto =
   return UserDto(
     id:id,
     name:name,
@@ -66,7 +66,7 @@ type GetArticleDto* = object
   article*:ArticleDto
   user*:UserDto
 
-proc new*(_:type GetArticleDto, article:ArticleDto, user:UserDto):GetArticleDto =
+proc init*(_:type GetArticleDto, article:ArticleDto, user:UserDto):GetArticleDto =
   return GetArticleDto(
     article:article,
     user:user

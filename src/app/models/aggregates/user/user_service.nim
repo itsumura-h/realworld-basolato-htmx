@@ -12,7 +12,7 @@ import ./user_repository_interface
 type UserService* = object
   repository: IUserRepository
 
-proc new*(_:type UserService):UserService =
+proc init*(_:type UserService):UserService =
   return UserService(
     repository: di.userRepository
   )

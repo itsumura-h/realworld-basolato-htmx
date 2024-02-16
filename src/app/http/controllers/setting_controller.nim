@@ -7,9 +7,9 @@ import ./libs/create_application_view_model
 
 proc index*(context:Context, parmas:Params):Future[Response] {.async.} =
   let userId = context.get("id").await
-  let usecase = GetLoginUserUsecase.new()
+  let usecase = GetLoginUserUsecase.init()
   let dto = usecase.invoke(userId).await
-  let viewModel = SettingViewModel.new(dto)
+  let viewModel = SettingViewModel.init(dto)
   let appViewModel = createApplicationViewModel(context, "Setting ― Conduit").await
   let view = settingView(appViewModel, viewModel)
   return render(view)

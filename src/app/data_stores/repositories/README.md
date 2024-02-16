@@ -8,7 +8,7 @@ The task of `Repository` is CRUD for `aggregate`.
 ```nim
 type UserRepository* = ref object
 
-proc new*(_:type UserRepository):UserRdbRepository =
+proc init*(_:type UserRepository):UserRdbRepository =
   return UserRdbRepository()
 
 implements UserRepository, IUserRepository:
@@ -17,11 +17,11 @@ implements UserRepository, IUserRepository:
     if not userOpt.isSome:
       raise newException(Exception, "user is not found")
     let user = userOpt.get
-    return User.new(
+    return User.init(
       id,
-      Name.new(user["name"].getStr),
-      Email.new(user["email"].getStr),
-      Password.new(user["password"].getStr),
+      Name.init(user["name"].getStr),
+      Email.init(user["email"].getStr),
+      Password.init(user["password"].getStr),
     )
 
   proc insert*(self:UserRdbRepository, user:User):Future[int] {.async.} =

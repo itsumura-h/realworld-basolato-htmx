@@ -10,7 +10,7 @@ import ../../../usecases/get_user_show/get_user_show_dto
 
 type GetUserShowQuery* = object of IGetUserShowQuery
 
-proc new*(_:type GetUserShowQuery):GetUserShowQuery =
+proc init*(_:type GetUserShowQuery):GetUserShowQuery =
   return GetUserShowQuery()
 
 
@@ -35,7 +35,7 @@ method invoke*(self:GetUserShowQuery, userId:UserId, loginUserId:Option[UserId])
     isFollowed = follow > 0
 
 
-  let dto = GetUserShowDto.new(
+  let dto = GetUserShowDto.init(
     user["id"].getStr(),
     user["name"].getStr(),
     user["bio"].getStr(),

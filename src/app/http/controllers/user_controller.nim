@@ -17,11 +17,11 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isSelf = isLogin and loginUserId == userId
   let loadFavorites = false
   try:
-    let usecase = GetUserShowUsecase.new()
+    let usecase = GetUserShowUsecase.init()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
     let title = &"{dto.id} ― Cnduit"
     let appViewModel = createApplicationViewModel(context, title).await
-    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let viewModel = UserShowViewModel.init(dto, isSelf, loadFavorites)
     let view = userShowView(appViewModel, viewModel)
     return render(view)
   except IdNotFoundError:
@@ -36,11 +36,11 @@ proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
   let isSelf = isLogin and loginUserId == userId
   let loadFavorites = true
   try:
-    let usecase = GetUserShowUsecase.new()
+    let usecase = GetUserShowUsecase.init()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
     let title = &"Articles favorited by {dto.id} ― Cnduit"
     let appViewModel = createApplicationViewModel(context, title).await
-    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let viewModel = UserShowViewModel.init(dto, isSelf, loadFavorites)
     let view = userShowView(appViewModel, viewModel)
     return render(view)
   except IdNotFoundError:

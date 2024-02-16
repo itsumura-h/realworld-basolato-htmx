@@ -9,25 +9,25 @@ import ../../../models/aggregates/user/vo/user_id
 
 type MockGetArticleQuery* = object of IGetArticleQuery
 
-proc new*(_:type MockGetArticleQuery):MockGetArticleQuery =
+proc init*(_:type MockGetArticleQuery):MockGetArticleQuery =
   return MockGetArticleQuery()
 
 
 method invoke*(self:MockGetArticleQuery, articleId:ArticleId, loginUserId:Option[UserId]):Future[GetArticleDto] {.async.} =
   let tags = @[
-    TagDto.new(
+    TagDto.init(
       1,
       articleId.value,
       "tag name 1"
     ),
-    TagDto.new(
+    TagDto.init(
       2,
       articleId.value,
       "tag name 2"
     ),
   ]
 
-  let article = ArticleDto.new(
+  let article = ArticleDto.init(
     id = articleId.value,
     title = "titie",
     description = "description",
@@ -37,13 +37,13 @@ method invoke*(self:MockGetArticleQuery, articleId:ArticleId, loginUserId:Option
     isFavorited = false,
     favoriteCount = 5,
   )
-  let user = UserDto.new(
+  let user = UserDto.init(
     "user-name",
     "user name",
     "",
     5
   )
-  let dto = GetArticleDto.new(
+  let dto = GetArticleDto.init(
     article,
     user
   )

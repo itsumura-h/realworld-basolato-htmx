@@ -7,7 +7,7 @@ import ../../usecases/get_global_feed/get_global_feed_dto
 
 type GetArticlesWithAuthorQuery* = object
 
-proc new*(_:type GetArticlesWithAuthorQuery):GetArticlesWithAuthorQuery =
+proc init*(_:type GetArticlesWithAuthorQuery):GetArticlesWithAuthorQuery =
   return GetArticlesWithAuthorQuery()
 
 
@@ -38,7 +38,7 @@ proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuth
                           .count()
                           .await
 
-    let author = AuthorDto.new(
+    let author = AuthorDto.init(
       id = row["author_id"].getStr(),
       name = row["name"].getStr(),
       image = row["image"].getStr(),
@@ -63,7 +63,7 @@ proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuth
       else:
         newSeq[TagDto]()
 
-    let article = ArticleWithAuthorDto.new(
+    let article = ArticleWithAuthorDto.init(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
       description = row["description"].getStr(),

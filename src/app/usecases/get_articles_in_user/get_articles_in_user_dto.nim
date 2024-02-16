@@ -6,7 +6,7 @@ type AuthorDto* = object
   name*:string
   image*:string
 
-proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
+proc init*(_:type AuthorDto, id, name, image:string):AuthorDto =
   return AuthorDto(
     id:id,
     name:name,
@@ -17,7 +17,7 @@ proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
 type TagDto* = object
   name*:string
 
-proc new*(_:type TagDto, name:string):TagDto =
+proc init*(_:type TagDto, name:string):TagDto =
   return TagDto(
     name:name
   )
@@ -26,7 +26,7 @@ proc new*(_:type TagDto, name:string):TagDto =
 type FavoritedUserDto* = object
   id*:string
 
-proc new*(_:type FavoritedUserDto, id:string):FavoritedUserDto =
+proc init*(_:type FavoritedUserDto, id:string):FavoritedUserDto =
   return FavoritedUserDto(
     id:id
   )
@@ -41,7 +41,7 @@ type ArticleDto* = object
   tags*:seq[TagDto]
   favoritedUsers*:seq[FavoritedUserDto]
 
-proc new*(_:type ArticleDto,
+proc init*(_:type ArticleDto,
   id:string,
   title:string,
   description:string,
@@ -66,7 +66,7 @@ proc new*(_:type ArticleDto,
 type GetArticlesInUserDto* = object
   articles*:seq[ArticleDto]
 
-proc new*(_:type GetArticlesInUserDto, articles:seq[ArticleDto]):GetArticlesInUserDto =
+proc init*(_:type GetArticlesInUserDto, articles:seq[ArticleDto]):GetArticlesInUserDto =
   return GetArticlesInUserDto(
     articles:articles
   )

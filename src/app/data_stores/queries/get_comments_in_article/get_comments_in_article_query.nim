@@ -13,7 +13,7 @@ import ../../../usecases/get_comments_in_article/get_comments_in_article_query_i
 
 type GetCommentsInArticleQuery* = object of IGetCommentsInArticleQuery
 
-proc new*(_:type GetCommentsInArticleQuery):GetCommentsInArticleQuery =
+proc init*(_:type GetCommentsInArticleQuery):GetCommentsInArticleQuery =
   return GetCommentsInArticleQuery()
 
 
@@ -35,12 +35,12 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
     else:
       raise newException(IdNotFoundError, &"articleId {articleId} is not found")
 
-  let author = UserDto.new(
+  let author = UserDto.init(
     articleData["author_id"].getStr,
     articleData["name"].getStr,
     articleData["image"].getStr,
   )
-  let article = ArticleDto.new(
+  let article = ArticleDto.init(
     articleData["id"].getStr,
     author
   )
@@ -61,12 +61,12 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
   
   let comments = commentsData.map(
     proc(row:JsonNode):CommentDto =
-      let user = UserDto.new(
+      let user = UserDto.init(
         row["userId"].getStr,
         row["name"].getStr,
         row["image"].getStr,
       )
-      let comment = CommentDto.new(
+      let comment = CommentDto.init(
         user,
         row["body"].getStr,
         row["created_at"].getStr().parse("yyyy-MM-dd hh:mm:ss")
@@ -74,7 +74,7 @@ method invoke*(self:GetCommentsInArticleQuery, articleId:string):Future[GetComme
       return comment
   )
 
-  let dto = GetCommentsInArticleDto.new(
+  let dto = GetCommentsInArticleDto.init(
     comments,
     article
   )

@@ -16,8 +16,8 @@ type DiContainer* = tuple
 
 proc newDiContainer():DiContainer =
   return (
-    userRepository: UserRepository.new().toInterface(),
-    todoQuery: TodoQuery.new().toInterface(),
+    userRepository: UserRepository.init().toInterface(),
+    todoQuery: TodoQuery.init().toInterface(),
   )
 
 let di* = newDiContainer()

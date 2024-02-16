@@ -5,7 +5,7 @@ import ./user_name
 type UserId* = object
   value*:string
 
-proc new*(_:type UserId, value:string):UserId =
+proc init*(_:type UserId, value:string):UserId =
   if value.len == 0:
     raise newException(DomainError, "id is empty")
 
@@ -13,6 +13,6 @@ proc new*(_:type UserId, value:string):UserId =
     value:value
   )
 
-proc new*(_:type UserId, userName:UserName):UserId =
+proc init*(_:type UserId, userName:UserName):UserId =
   let value = userName.value.replace(".", "").replace(" ", "-")
   return UserId(value:value)

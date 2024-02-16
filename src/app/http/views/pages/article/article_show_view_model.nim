@@ -10,7 +10,7 @@ type Tag* = object
   articleId*:string
   tagName*:string
 
-proc new*(_:type Tag, tagId:int, articleId:string, tagName:string):Tag =
+proc init*(_:type Tag, tagId:int, articleId:string, tagName:string):Tag =
   return Tag(
     tagId:tagId,
     articleId:articleId,
@@ -26,7 +26,7 @@ type Article* = object
   createdAt*:string = "1970 January 1st"
   tags*:seq[Tag]
 
-proc new*(_:type Article, id, title, description, body:string, createdAt:DateTime, tags:seq[Tag]):Article =
+proc init*(_:type Article, id, title, description, body:string, createdAt:DateTime, tags:seq[Tag]):Article =
   let createdAt = createdAt.format("MMMM d")
 
   return Article(
@@ -44,7 +44,7 @@ type User* = object
   name*:string
   image*:string
 
-proc new*(_:type User, id, name, image:string):User =
+proc init*(_:type User, id, name, image:string):User =
   return User(
     id:id,
     name:name,
@@ -58,16 +58,16 @@ type ArticleShowViewModel* = object
   followButtonViewModel*:FollowButtonViewModel
   favoriteButtonViewModel*:FavoriteButtonViewModel
 
-proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):ArticleShowViewModel =
+proc init*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
     proc(tag:TagDto):Tag =
-      return Tag.new(
+      return Tag.init(
         tag.tagId,
         tag.articleId,
         tag.tagName
       )
   )
-  let article = Article.new(
+  let article = Article.init(
     dto.article.id,
     dto.article.title,
     dto.article.description,
@@ -75,20 +75,20 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):Ar
     dto.article.createdAt,
     tags,
   )
-  let author = User.new(
+  let author = User.init(
     dto.user.id,
     dto.user.name,
     dto.user.image,
   )
 
-  let followButtonViewModel = FollowButtonViewModel.new(
+  let followButtonViewModel = FollowButtonViewModel.init(
     dto.user.name,
     false,
     dto.user.id == loginUserId,
     dto.user.followerCount,
   )
 
-  let favoriteButtonViewModel = FavoriteButtonViewModel.new(
+  let favoriteButtonViewModel = FavoriteButtonViewModel.init(
     dto.article.isFavorited,
     dto.article.id,
     false,

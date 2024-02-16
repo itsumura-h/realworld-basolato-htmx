@@ -9,7 +9,7 @@ import ../views/pages/home/home_view
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let appViewModel = createApplicationViewModel(context, "conduit").await
-  let viewModel = HomeViewModel.new()
+  let viewModel = HomeViewModel.init()
   let view = homeView(appViewModel, viewModel)
   return render(view)
 
@@ -24,7 +24,7 @@ proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
   let hasPage = page > 1
   let feedType = "tag"
   let tagName = params.getStr("tag")
-  let viewModel = HomeViewModel.new(
+  let viewModel = HomeViewModel.init(
     feedType,
     tagName,
     hasPage,

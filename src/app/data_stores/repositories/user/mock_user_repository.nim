@@ -18,7 +18,7 @@ let rdb = testRdb
 
 type MockUserRepository* = object of IUserRepository
 
-proc new*(_:type MockUserRepository):MockUserRepository =
+proc init*(_:type MockUserRepository):MockUserRepository =
   return MockUserRepository()
 
 
@@ -32,13 +32,13 @@ method getUserByEmail*(self:MockUserRepository, email:Email):Future[Option[User]
     return none(User)
 
   let row = rowOpt.get()
-  let user = User.new(
-    UserId.new(row["id"].getStr),
-    UserName.new(row["name"].getStr),
-    Email.new(row["email"].getStr),
-    HashedPassword.new(row["password"].getStr),
-    Bio.new(row["bio"].getStr),
-    Image.new(row["image"].getStr),
+  let user = User.init(
+    UserId.init(row["id"].getStr),
+    UserName.init(row["name"].getStr),
+    Email.init(row["email"].getStr),
+    HashedPassword.init(row["password"].getStr),
+    Bio.init(row["bio"].getStr),
+    Image.init(row["image"].getStr),
   )
   return user.some()
 

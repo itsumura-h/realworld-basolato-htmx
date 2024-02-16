@@ -12,7 +12,7 @@ import ../../../models/aggregates/user/vo/user_id
 
 type GetArticleQuery* = object of IGetArticleQuery
 
-proc new*(_:type GetArticleQuery):GetArticleQuery =
+proc init*(_:type GetArticleQuery):GetArticleQuery =
   return GetArticleQuery()
 
 
@@ -75,7 +75,7 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId, loginUserId:Option[Use
                           .count()
                           .await
 
-  let article = ArticleDto.new(
+  let article = ArticleDto.init(
     id = articleId.value,
     title = articleData["title"].getStr(),
     description = articleData["description"].getStr(),
@@ -91,14 +91,14 @@ method invoke*(self:GetArticleQuery, articleId:ArticleId, loginUserId:Option[Use
                         .count()
                         .await
 
-  let user = UserDto.new(
+  let user = UserDto.init(
     id = articleData["authorId"].getStr(),
     name = articleData["name"].getStr(),
     image = articleData["image"].getStr(),
     followerCount = followerCount,
   )
 
-  let dto = GetArticleDto.new(
+  let dto = GetArticleDto.init(
     article = article,
     user = user
   )

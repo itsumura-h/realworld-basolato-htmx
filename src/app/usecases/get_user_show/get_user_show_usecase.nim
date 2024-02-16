@@ -14,21 +14,21 @@ type GetUserShowUsecase* = object
   query:IGetUserShowQuery
 
 
-proc new*(_:type GetUserShowUsecase):GetUserShowUsecase =
+proc init*(_:type GetUserShowUsecase):GetUserShowUsecase =
   return GetUserShowUsecase(
-    service:UserService.new(),
+    service:UserService.init(),
     query: di.getUserShowQuery
   )
 
 
 proc invoke*(self:GetUserShowUsecase, userId:string, loginUserId:Option[string]):Future[GetUserShowDto] {.async.} =
-  let userId = UserId.new(userId)
+  let userId = UserId.init(userId)
   if not self.service.isExistsUser(userId).await:
     raise newException(IdNotFoundError, &"user id {userId} is not found")
 
   let loginUserId =
     if loginUserId.isSome():
-      UserId.new(loginUserId.get()).some()
+      UserId.init(loginUserId.get()).some()
     else:
       none(UserId)
 

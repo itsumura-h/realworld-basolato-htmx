@@ -8,7 +8,7 @@ import ../../usecases/get_popular_tags/get_popular_tags_dto
 
 type GetPopularTagsQuery* = object
 
-proc new*(_:type GetPopularTagsQuery):GetPopularTagsQuery =
+proc init*(_:type GetPopularTagsQuery):GetPopularTagsQuery =
   return GetPopularTagsQuery()
 
 
@@ -28,7 +28,7 @@ proc invoke*(self:GetPopularTagsQuery, count:int):Future[seq[PopularTagDto]] {.a
   var tags:seq[PopularTagDto]
   for row in tagsJson:
     tags.add(
-      PopularTagDto.new(
+      PopularTagDto.init(
         row["id"].getInt(),
         row["name"].getStr(),
         row["popularCount"].getInt(),

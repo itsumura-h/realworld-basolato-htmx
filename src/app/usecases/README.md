@@ -17,20 +17,20 @@ type SigninUsecase* = ref object
   repository: IUserRepository
   service: UserService
 
-proc new*(typ:type SigninUsecase):SigninUsecase =
+proc init*(typ:type SigninUsecase):SigninUsecase =
   return SigninUsecase(
     repository: di.userRepository,
-    service: UserService.new(di.userRepository)
+    service: UserService.init(di.userRepository)
   )
 
 proc run*(self:SigninUsecase, email, password:string):Future[JsonNode] {.async.} =
-  let email = Email.new(email)
+  let email = Email.init(email)
   let userOpt = await self.repository.getUserByEmail(email)
   let errorMsg = "user is not found"
   if not userOpt.isSome():
     raise newException(Exception, errorMsg)
   let user = userOpt.get
-  let password = Password.new(password)
+  let password = Password.init(password)
   if self.service.isMatchPassword(password, user):
     return %*{
       "id": $user.id,

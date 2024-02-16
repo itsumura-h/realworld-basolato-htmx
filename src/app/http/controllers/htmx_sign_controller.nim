@@ -13,7 +13,7 @@ import ../../usecases/login_usecase
 proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
   let oldName = params.old("username")
   let oldEmail = params.old("email")
-  let viewModel = SignUpViewModel.new(oldName, oldEmail)
+  let viewModel = SignUpViewModel.init(oldName, oldEmail)
   let view = htmxSignUpView(viewModel)
   return render(view)
 
@@ -32,7 +32,7 @@ proc signUp*(context:Context, params:Params):Future[Response] {.async.} =
   let email = params.getStr("email")
   let password = params.getStr("password")
 
-  let usecase = CreateUserUsecase.new()
+  let usecase = CreateUserUsecase.init()
   let id = usecase.invoke(name, email, password).await
   context.login().await
   context.set("id", id).await
@@ -45,7 +45,7 @@ proc signUp*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
   let oldEmail = params.old("email")
-  let viewModel = SignInViewModel.new(oldEmail)
+  let viewModel = SignInViewModel.init(oldEmail)
   let view = htmxSignInView(viewModel)
   return render(view)
 
@@ -63,7 +63,7 @@ proc signIn*(context:Context, params:Params):Future[Response] {.async.} =
   let email = params.getStr("email")
   let password = params.getStr("password")
 
-  let usecase = LoginUsecase.new()
+  let usecase = LoginUsecase.init()
   let (id, name) = usecase.invoke(email, password).await 
   context.login().await
   context.set("id", id).await
