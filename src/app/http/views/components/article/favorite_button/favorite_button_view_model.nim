@@ -1,4 +1,4 @@
-type FavoriteButtonViewModel* = object
+type FavoriteButtonViewModel*  = object
   isFavorited*:bool
   articleId*:string
   oobSwap*:bool

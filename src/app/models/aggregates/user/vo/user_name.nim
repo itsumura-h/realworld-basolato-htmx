@@ -1,6 +1,6 @@
 import ../../../../errors
 
-type UserName* = object
+type UserName*  = object
   value*:string
 
 proc init*(_:type UserName, value:string):UserName =

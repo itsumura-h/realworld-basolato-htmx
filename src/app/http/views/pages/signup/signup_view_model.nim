@@ -1,4 +1,4 @@
-type SignUpViewModel* = object
+type SignUpViewModel*  = object
   oldName*:string
   oldEmail*:string
 

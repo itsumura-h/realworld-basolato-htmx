@@ -9,7 +9,7 @@ import ./get_article_query_interface
 import ./get_article_dto
 
 
-type GetArticleUsecase* = object
+type GetArticleUsecase*  = object
   query:IGetArticleQuery
   repository:IArticleRepository
 

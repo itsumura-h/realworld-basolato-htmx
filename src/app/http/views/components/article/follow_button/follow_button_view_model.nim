@@ -1,4 +1,4 @@
-type FollowButtonViewModel* = object
+type FollowButtonViewModel*  = object
   userName*:string
   oobSwap*:bool
   isFollowed*:bool

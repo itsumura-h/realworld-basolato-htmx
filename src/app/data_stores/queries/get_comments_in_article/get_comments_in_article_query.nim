@@ -11,7 +11,7 @@ import ../../../usecases/get_comments_in_article/get_comments_in_article_dto
 import ../../../usecases/get_comments_in_article/get_comments_in_article_query_interface
 
 
-type GetCommentsInArticleQuery* = object of IGetCommentsInArticleQuery
+type GetCommentsInArticleQuery*  = object of IGetCommentsInArticleQuery
 
 proc init*(_:type GetCommentsInArticleQuery):GetCommentsInArticleQuery =
   return GetCommentsInArticleQuery()

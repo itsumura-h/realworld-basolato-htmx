@@ -3,7 +3,7 @@ import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 import ../../components/user/follow_button/follow_button_view_model
 
 
-type User* = object
+type User*  = object
   id*:string
   name*:string
   bio*:string
@@ -20,7 +20,7 @@ proc init*(_:type User, id:string, name:string, bio:string, image:string, isSelf
   )
 
 
-type UserShowViewModel* = object
+type UserShowViewModel*  = object
   user*:User
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool

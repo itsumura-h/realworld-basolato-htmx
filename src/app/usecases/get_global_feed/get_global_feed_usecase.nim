@@ -3,7 +3,7 @@ import ../../data_stores/queries/get_articles_with_author_query
 import ../../data_stores/queries/get_global_feed_paginator_query
 import ./get_global_feed_dto
 
-type GetGlobalFeedUsecase* = object
+type GetGlobalFeedUsecase*  = object
 
 proc init*(_:type GetGlobalFeedUsecase):GetGlobalFeedUsecase =
   return GetGlobalFeedUsecase()

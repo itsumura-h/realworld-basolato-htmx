@@ -5,7 +5,7 @@ import ./get_articles_in_user_query_interface
 import ./get_articles_in_user_dto
 
 
-type GetArticlesInUserUsecase* = object
+type GetArticlesInUserUsecase*  = object
   query:IGetArticlesInUserQuery
 
 proc init*(_:type GetArticlesInUserUsecase):GetArticlesInUserUsecase =

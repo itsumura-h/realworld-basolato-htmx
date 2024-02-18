@@ -1,4 +1,4 @@
-type FeedNavbar* = object
+type FeedNavbar*  = object
   title*:string
   isActive*:bool
   hxGetUrl*:string

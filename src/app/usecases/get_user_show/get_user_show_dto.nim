@@ -1,4 +1,4 @@
-type GetUserShowDto* = object
+type GetUserShowDto*  = object
   id*:string
   name*:string
   bio*:string

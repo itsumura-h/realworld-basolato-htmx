@@ -4,7 +4,7 @@ import ../../../../../usecases/get_global_feed/get_global_feed_dto
 import ../../../../../usecases/get_tag_feed/get_tag_feed_dto
 
 
-type Tag* = object
+type Tag*  = object
   name*:string
 
 proc init*(_:type Tag, name:string):Tag =
@@ -13,7 +13,7 @@ proc init*(_:type Tag, name:string):Tag =
   )
 
 
-type User* = object
+type User*  = object
   id*:string
   name*:string
   image*:string
@@ -27,7 +27,7 @@ proc init*(_:type User, id:string, name:string, image:string):User =
   return user
 
 
-type Article* = object
+type Article*  = object
   id*:string
   title*:string
   description*:string
@@ -57,7 +57,7 @@ proc init*(_:type Article,
   return artilce
 
 
-type Paginator* = object
+type Paginator*  = object
   hasPages*:bool
   current*:int
   lastPage*:int
@@ -70,7 +70,7 @@ proc init*(_:type Paginator, hasPages:bool, current:int, lastPage:int):Paginator
   )
 
 
-type HtmxPostPreviewViewModel* = object
+type HtmxPostPreviewViewModel*  = object
   articles*:seq[Article]
   paginator*:Paginator
   feedNavbarItems*:seq[FeedNavbar]

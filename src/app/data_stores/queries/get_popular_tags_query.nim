@@ -6,7 +6,7 @@ from ../../../config/database import rdb
 import ../../usecases/get_popular_tags/get_popular_tags_dto
 
 
-type GetPopularTagsQuery* = object
+type GetPopularTagsQuery*  = object
 
 proc init*(_:type GetPopularTagsQuery):GetPopularTagsQuery =
   return GetPopularTagsQuery()

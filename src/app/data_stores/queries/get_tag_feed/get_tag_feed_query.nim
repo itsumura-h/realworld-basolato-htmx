@@ -7,7 +7,7 @@ import ../../../models/aggregates/article/vo/tag_name
 from ../../../../config/database import rdb
 
 
-type GetTagFeedQuery* = object of IGetTagFeedQuery
+type GetTagFeedQuery*  = object of IGetTagFeedQuery
 
 proc init*(_:type GetTagFeedQuery):GetTagFeedQuery =
   return GetTagFeedQuery()

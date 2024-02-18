@@ -1,4 +1,4 @@
-type UserFeedNavbar* = object
+type UserFeedNavbar*  = object
   title*:string
   isActive*:bool
   url*:string
@@ -13,7 +13,7 @@ proc init*(_:type UserFeedNavbar, title:string, isActive:bool, url:string, hxGet
   )
 
 
-type FeedNavigationViewModel* = object
+type FeedNavigationViewModel*  = object
   feedNavbarItems*:seq[UserFeedNavbar]
 
 proc init*(_:type FeedNavigationViewModel, feedNavbarItems:seq[UserFeedNavbar]):FeedNavigationViewModel =

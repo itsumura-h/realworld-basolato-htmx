@@ -7,7 +7,7 @@ import ../../components/user/favorite_button/favorite_button_view_model
 import ../../components/user/feed_navigation/feed_navigation_view_model
 
 
-type Author* = object
+type Author*  = object
   id*:string
   name*:string
   image*:string
@@ -20,7 +20,7 @@ proc init*(_:type Author, id, name, image:string):Author =
   )
 
 
-type Tag* = object
+type Tag*  = object
   name*:string
 
 proc init*(_:type Tag, name:string):Tag =
@@ -29,7 +29,7 @@ proc init*(_:type Tag, name:string):Tag =
   )
 
 
-type FavoritedUser* = object
+type FavoritedUser*  = object
   id*:string
 
 proc init*(_:type FavoritedUser, id:string):FavoritedUser =
@@ -38,7 +38,7 @@ proc init*(_:type FavoritedUser, id:string):FavoritedUser =
   )
 
 
-type Article* = object
+type Article*  = object
   id*:string
   title*:string
   description*:string
@@ -85,7 +85,7 @@ proc init*(_:type Article,
 
 
 
-type HtmxUserFeedViewModel* = object
+type HtmxUserFeedViewModel*  = object
   articles*:seq[Article]
   feedNavigationViewModel*:FeedNavigationViewModel
 

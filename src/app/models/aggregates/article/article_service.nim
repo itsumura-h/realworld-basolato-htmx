@@ -3,7 +3,7 @@ import ./article_repository_interface
 import ./vo/article_id
 
 
-type ArticleService* = object
+type ArticleService*  = object
   repository:IArticleRepository
 
 proc init*(_:type ArticleService, repository:IArticleRepository):ArticleService =

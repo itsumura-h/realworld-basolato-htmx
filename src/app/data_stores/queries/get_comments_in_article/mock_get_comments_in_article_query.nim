@@ -4,7 +4,7 @@ import ../../../usecases/get_comments_in_article/get_comments_in_article_dto
 import ../../../usecases/get_comments_in_article/get_comments_in_article_query_interface
 
 
-type MockGetCommentsInArticleQuery* = object of IGetCommentsInArticleQuery
+type MockGetCommentsInArticleQuery*  = object of IGetCommentsInArticleQuery
 
 proc init*(_:type MockGetCommentsInArticleQuery):MockGetCommentsInArticleQuery =
   return MockGetCommentsInArticleQuery()

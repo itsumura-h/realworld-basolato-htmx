@@ -5,7 +5,7 @@ import ../../../usecases/get_favorites_in_user/get_favorites_in_user_query_inter
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 
-type MockGetFavoritesInUserQuery* = object of IGetFavoritesInUserQuery
+type MockGetFavoritesInUserQuery*  = object of IGetFavoritesInUserQuery
 
 proc init*(_:type MockGetFavoritesInUserQuery):MockGetFavoritesInUserQuery =
   return MockGetFavoritesInUserQuery()

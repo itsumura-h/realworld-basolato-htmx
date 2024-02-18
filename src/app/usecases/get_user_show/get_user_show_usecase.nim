@@ -9,7 +9,7 @@ import ./get_user_show_dto
 import ./get_user_show_query_interface
 
 
-type GetUserShowUsecase* = object
+type GetUserShowUsecase*  = object
   service:UserService
   query:IGetUserShowQuery
 

@@ -1,4 +1,4 @@
-type NavbarViewModel* = object
+type NavbarViewModel*  = object
   isLogin*: bool
   name*:string
   image*:string

@@ -1,4 +1,4 @@
-type FormErrorMessageViewModel* = object
+type FormErrorMessageViewModel*  = object
   errors*:seq[string]
 
 

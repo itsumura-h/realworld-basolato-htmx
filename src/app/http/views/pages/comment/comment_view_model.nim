@@ -2,7 +2,7 @@ import std/times
 import ../../../../usecases/get_comments_in_article/get_comments_in_article_dto
 
 
-type User* = object
+type User*  = object
   id*:string
   name*:string
   image*:string
@@ -15,7 +15,7 @@ proc init*(_:type User, id, name, image:string):User =
   ) 
 
 
-type Article* = object
+type Article*  = object
   id*:string
   user*:User
 
@@ -26,7 +26,7 @@ proc init*(_:type Article, id:string, user:User):Article =
   )
 
 
-type Comment* = object
+type Comment*  = object
   user*:User
   body*:string
   createdAt*:string
@@ -40,7 +40,7 @@ proc init*(_:type Comment, user:User, body:string, createdAt:DateTime):Comment =
   )
 
 
-type CommentViewModel* = object
+type CommentViewModel*  = object
   comments*:seq[Comment]
   article*:Article
   isLogin*:bool

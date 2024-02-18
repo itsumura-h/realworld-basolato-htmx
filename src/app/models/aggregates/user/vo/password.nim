@@ -3,7 +3,7 @@ import ../../../../errors
 import ./hashed_password
 
 
-type Password* = object
+type Password*  = object
   value*:string
 
 proc init*(_:type Password, value:string):Password =

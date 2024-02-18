@@ -7,7 +7,7 @@ import ./vo/user_id
 
 
 interfaceDefs:
-  type IUserRepository* = object of RootObj
+  type IUserRepository*  = object of RootObj
     getUserByEmail:proc(self:IUserRepository, email:Email):Future[Option[User]]
     getUserById:proc(self:IUserRepository, userId:UserId):Future[Option[User]]
     create:proc(self:IUserRepository, user:DraftUser):Future[UserId]

@@ -5,7 +5,7 @@ import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interfa
 import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
 
 
-type MockGetArticlesInUserQuery* = object of IGetArticlesInUserQuery
+type MockGetArticlesInUserQuery*  = object of IGetArticlesInUserQuery
 
 proc init*(_:type MockGetArticlesInUserQuery):MockGetArticlesInUserQuery =
   return MockGetArticlesInUserQuery()

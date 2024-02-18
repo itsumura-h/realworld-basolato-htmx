@@ -1,6 +1,6 @@
 import ../../form_success_message/form_success_message_view_model
 
-type FormMessageViewModel* = object
+type FormMessageViewModel*  = object
   oobSwap*:bool
   formSuccessMessageViewModel*:FormSuccessMessageViewModel
 

@@ -7,7 +7,7 @@ import ./vo/bio
 import ./vo/image
 
 
-type DraftUser* = object
+type DraftUser*  = object
   id*:UserId
   name*:UserName
   email*:Email
@@ -24,7 +24,7 @@ proc init*(_:type DraftUser, userName:UserName, email:Email, password:Password):
   )
 
 
-type User* = object
+type User*  = object
   id*:UserId
   name*:UserName
   email*:Email

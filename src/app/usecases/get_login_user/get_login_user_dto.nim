@@ -1,4 +1,4 @@
-type LoginUserDto* = object
+type LoginUserDto*  = object
   name*:string
   email*:string
   bio*:string

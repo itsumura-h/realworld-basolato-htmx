@@ -1,6 +1,6 @@
 import std/times
 
-type UserDto* = object
+type UserDto*  = object
   id*:string
   name*:string
   image*:string
@@ -13,7 +13,7 @@ proc init*(_:type UserDto, id, name, image:string):UserDto =
   )
 
 
-type ArticleDto* = object
+type ArticleDto*  = object
   id*:string
   user*:UserDto
 
@@ -24,7 +24,7 @@ proc init*(_:type ArticleDto, id:string, user:UserDto):ArticleDto =
   )
 
 
-type CommentDto* = object
+type CommentDto*  = object
   user*:UserDto
   body*:string
   createdAt*:DateTime
@@ -37,7 +37,7 @@ proc init*(_:type CommentDto, user:UserDto, body:string, createdAt:DateTime):Com
   )
 
 
-type GetCommentsInArticleDto* = object
+type GetCommentsInArticleDto*  = object
   comments*:seq[CommentDto]
   article*:ArticleDto
 

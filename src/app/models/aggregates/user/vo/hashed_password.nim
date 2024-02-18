@@ -1,7 +1,7 @@
 import ../../../../errors
 
 
-type HashedPassword* = object
+type HashedPassword*  = object
   value*:string
 
 proc init*(_:type HashedPassword, value:string):HashedPassword =

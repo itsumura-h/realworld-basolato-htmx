@@ -5,7 +5,7 @@ from ../../../../config/database import rdb
 import ../../../usecases/get_global_feed/get_global_feed_dto
 
 
-type GetGlobalFeedQuery* = object
+type GetGlobalFeedQuery*  = object
 
 proc init*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
   return GetGlobalFeedQuery()

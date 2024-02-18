@@ -1,7 +1,7 @@
 import ../../../../../usecases/get_popular_tags/get_popular_tags_dto
 
 
-type Tag* = object
+type Tag*  = object
   id*:int
   name*:string
   popularCount*:int
@@ -14,7 +14,7 @@ proc init*(_:type Tag, id:int, name:string, popularCount:int):Tag =
   )
 
 
-type HtmxTagItemListViewModel* = object
+type HtmxTagItemListViewModel*  = object
   tags*:seq[Tag]
 
 proc init*(_:type HtmxTagItemListViewModel, tagDtoList:seq[PopularTagDto]):HtmxTagItemListViewModel =

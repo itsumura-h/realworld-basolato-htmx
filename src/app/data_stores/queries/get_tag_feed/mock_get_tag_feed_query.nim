@@ -4,7 +4,7 @@ import ../../../usecases/get_tag_feed/get_tag_feed_dto
 import ../../../models/aggregates/article/vo/tag_name
 
 
-type MockGetTagFeedQuery* = object of IGetTagFeedQuery
+type MockGetTagFeedQuery*  = object of IGetTagFeedQuery
 
 proc init*(_:type MockGetTagFeedQuery):MockGetTagFeedQuery =
   return MockGetTagFeedQuery()

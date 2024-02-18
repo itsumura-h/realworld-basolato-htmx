@@ -10,7 +10,7 @@ import ../../../models/aggregates/article/vo/article_id
 import ../../../models/aggregates/user/vo/user_id
 
 
-type GetArticleQuery* = object of IGetArticleQuery
+type GetArticleQuery*  = object of IGetArticleQuery
 
 proc init*(_:type GetArticleQuery):GetArticleQuery =
   return GetArticleQuery()

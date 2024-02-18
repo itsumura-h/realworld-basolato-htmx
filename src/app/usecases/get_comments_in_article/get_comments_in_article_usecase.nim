@@ -3,7 +3,7 @@ import ./get_comments_in_article_dto
 import ./get_comments_in_article_query_interface
 
 
-type GetCommentsInArticleUsecase* = object
+type GetCommentsInArticleUsecase*  = object
   query:IGetCommentsInArticleQuery
 
 proc init*(_:type GetCommentsInArticleUsecase, query:IGetCommentsInArticleQuery):GetCommentsInArticleUsecase =

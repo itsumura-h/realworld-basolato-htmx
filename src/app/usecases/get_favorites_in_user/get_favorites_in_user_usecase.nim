@@ -5,7 +5,7 @@ import ./get_favorites_in_user_dto
 import ../../models/aggregates/user/vo/user_id
 
 
-type GetFavoritesInUserUsecase* = object
+type GetFavoritesInUserUsecase*  = object
   query: IGetFavoritesInUserQuery
 
 proc init*(_:type GetFavoritesInUserUsecase):GetFavoritesInUserUsecase =

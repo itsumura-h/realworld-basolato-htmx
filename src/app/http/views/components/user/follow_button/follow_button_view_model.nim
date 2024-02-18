@@ -1,4 +1,4 @@
-type FollowButtonViewModel* = object
+type FollowButtonViewModel*  = object
   userName*: string
   isFollowed*: bool
   followerCount*: int

@@ -3,7 +3,7 @@ import ../../../models/aggregates/article/article_repository_interface
 import ../../../models/aggregates/article/vo/article_id
 
 
-type MockArticleRepository* = object of IArticleRepository
+type MockArticleRepository*  = object of IArticleRepository
 
 proc init*(_:type MockArticleRepository):MockArticleRepository =
   return MockArticleRepository()

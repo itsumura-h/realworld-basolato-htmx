@@ -1,12 +1,12 @@
 import std/times
 
 
-type TagDto* = object
+type TagDto*  = object
   id*:int
   name*:string
 
 
-type AuthorDto* = object
+type AuthorDto*  = object
   id*:string
   name*:string
   image*:string
@@ -19,7 +19,7 @@ proc init*(_:type AuthorDto, id, name, image:string):AuthorDto =
   )
 
 
-type ArticleWithAuthorDto* = object
+type ArticleWithAuthorDto*  = object
   id*:string
   title*:string
   description*:string
@@ -49,7 +49,7 @@ proc init*(_:type ArticleWithAuthorDto,
   )
 
 
-type PaginatorDto* = object
+type PaginatorDto*  = object
   hasPages*:bool
   current*:int
   lastPage*:int
@@ -63,7 +63,7 @@ proc init*(_:type PaginatorDto, hasPages:bool, current:int, lastPage:int):Pagina
 
 
 
-type TagFeedDto* = object
+type TagFeedDto*  = object
   articlesWithAuthor*:seq[ArticleWithAuthorDto]
   paginator*:PaginatorDto
 

@@ -16,7 +16,7 @@ import ../../../models/aggregates/user/user_repository_interface
 
 let rdb = testRdb
 
-type MockUserRepository* = object of IUserRepository
+type MockUserRepository*  = object of IUserRepository
 
 proc init*(_:type MockUserRepository):MockUserRepository =
   return MockUserRepository()

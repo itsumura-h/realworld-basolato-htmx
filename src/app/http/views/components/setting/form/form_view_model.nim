@@ -1,4 +1,4 @@
-type User* = object
+type User*  = object
   name*:string
   email*:string
   bio*:string
@@ -13,7 +13,7 @@ proc init*(_:type User, name:string, email:string, bio:string, image:string): Us
   )
 
 
-type FormViewModel* = object
+type FormViewModel*  = object
   oobSwap*:bool
   user*:User
 

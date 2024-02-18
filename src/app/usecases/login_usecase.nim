@@ -9,7 +9,7 @@ import ../models/aggregates/user/vo/user_id
 import ../models/aggregates/user/vo/email
 import ../models/aggregates/user/vo/password
 
-type LoginUsecase* = object
+type LoginUsecase*  = object
   repository:IUserRepository
 
 proc init*(_:type LoginUsecase):LoginUsecase =

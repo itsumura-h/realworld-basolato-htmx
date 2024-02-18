@@ -1,6 +1,6 @@
 import ../../../../errors
 
-type TagName* = object
+type TagName*  = object
   value*:string
 
 proc init*(_:type TagName, value:string):TagName =

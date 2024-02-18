@@ -4,7 +4,7 @@ from ../../../config/database import rdb
 import ../../usecases/get_global_feed/get_global_feed_dto
 
 
-type GetGlobalFeedPaginatorQuery* = object
+type GetGlobalFeedPaginatorQuery*  = object
 
 proc init*(_:type GetGlobalFeedPaginatorQuery):GetGlobalFeedPaginatorQuery =
   return GetGlobalFeedPaginatorQuery()

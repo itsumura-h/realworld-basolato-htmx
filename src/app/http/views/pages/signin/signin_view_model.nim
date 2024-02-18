@@ -1,4 +1,4 @@
-type SignInViewModel* = object
+type SignInViewModel*  = object
   oldEmail*:string
 
 proc init*(_:type SignInViewModel, oldEmail:string): SignInViewModel =

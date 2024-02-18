@@ -4,7 +4,7 @@ type FeedType* = enum
   global = "global"
 
 
-type HomeViewModel* = object
+type HomeViewModel*  = object
   feedType*:FeedType
   tagName*:string
   hasPage*:bool

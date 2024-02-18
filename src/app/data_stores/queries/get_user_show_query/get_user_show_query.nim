@@ -8,7 +8,7 @@ import ../../../usecases/get_user_show/get_user_show_query_interface
 import ../../../usecases/get_user_show/get_user_show_dto
 
 
-type GetUserShowQuery* = object of IGetUserShowQuery
+type GetUserShowQuery*  = object of IGetUserShowQuery
 
 proc init*(_:type GetUserShowQuery):GetUserShowQuery =
   return GetUserShowQuery()

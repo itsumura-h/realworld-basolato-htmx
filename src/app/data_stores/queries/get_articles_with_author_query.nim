@@ -5,7 +5,7 @@ from ../../../config/database import rdb
 import ../../usecases/get_global_feed/get_global_feed_dto
 
 
-type GetArticlesWithAuthorQuery* = object
+type GetArticlesWithAuthorQuery*  = object
 
 proc init*(_:type GetArticlesWithAuthorQuery):GetArticlesWithAuthorQuery =
   return GetArticlesWithAuthorQuery()

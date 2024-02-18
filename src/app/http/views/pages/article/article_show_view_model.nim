@@ -5,7 +5,7 @@ import ../../components/article/follow_button/follow_button_view_model
 import ../../components/article/favorite_button/favorite_button_view_model
 
 
-type Tag* = object
+type Tag*  = object
   tagId*:int
   articleId*:string
   tagName*:string
@@ -18,7 +18,7 @@ proc init*(_:type Tag, tagId:int, articleId:string, tagName:string):Tag =
   )
 
 
-type Article* = object
+type Article*  = object
   id*:string
   title*:string
   description*:string
@@ -39,7 +39,7 @@ proc init*(_:type Article, id, title, description, body:string, createdAt:DateTi
   )
 
 
-type User* = object
+type User*  = object
   id*:string
   name*:string
   image*:string
@@ -52,7 +52,7 @@ proc init*(_:type User, id, name, image:string):User =
   )
 
 
-type ArticleShowViewModel* = object
+type ArticleShowViewModel*  = object
   article*:Article
   user*:User
   followButtonViewModel*:FollowButtonViewModel

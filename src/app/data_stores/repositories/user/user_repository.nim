@@ -15,7 +15,7 @@ import ../../../models/aggregates/user/user_entity
 import ../../../models/aggregates/user/user_repository_interface
 
 
-type UserRepository* = object of IUserRepository
+type UserRepository*  = object of IUserRepository
 
 proc init*(_:type UserRepository):UserRepository =
   return UserRepository()

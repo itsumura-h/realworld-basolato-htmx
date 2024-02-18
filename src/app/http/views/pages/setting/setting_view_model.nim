@@ -3,7 +3,7 @@ import ../../components/setting/form_message/form_message_view_model
 import ../../components/setting/form/form_view_model
 
 
-type SettingViewModel* = object
+type SettingViewModel*  = object
   fromMessageViewModel*:FormMessageViewModel
   formViewModel*:FormViewModel
 

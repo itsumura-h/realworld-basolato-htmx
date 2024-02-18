@@ -7,7 +7,7 @@ import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interfa
 import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
 
 
-type GetArticlesInUserQuery* = object of IGetArticlesInUserQuery
+type GetArticlesInUserQuery*  = object of IGetArticlesInUserQuery
 
 proc init*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
   return GetArticlesInUserQuery()

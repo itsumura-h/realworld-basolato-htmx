@@ -8,7 +8,7 @@ import ../../../usecases/get_login_user/get_login_user_query_interface
 import ../../../usecases/get_login_user/get_login_user_dto
 import ../../../models/aggregates/user/vo/user_id
 
-type GetLoginUserQuery* = object of IGetLoginUserQuery
+type GetLoginUserQuery*  = object of IGetLoginUserQuery
 
 proc init*(_:type GetLoginUserQuery): GetLoginUserQuery =
   return GetLoginUserQuery()

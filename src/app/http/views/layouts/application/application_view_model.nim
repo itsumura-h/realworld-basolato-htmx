@@ -3,7 +3,7 @@ import ../navbar/navbar_view_model
 import ../../../../usecases/get_login_user/get_login_user_dto
 
 
-type ApplicationViewModel* = object
+type ApplicationViewModel*  = object
   title*:string
   navbarViewModel*:NavbarViewModel
 

@@ -11,7 +11,7 @@ import ../models/aggregates/user/user_entity
 import ../models/aggregates/user/user_repository_interface
 import ../models/aggregates/user/user_service
 
-type UpdateUserUsecase* = object
+type UpdateUserUsecase*  = object
   repository:IUserRepository
   service:UserService
 

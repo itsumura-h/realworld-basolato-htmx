@@ -3,7 +3,7 @@ import ../../data_stores/queries/get_popular_tags_query
 import ./get_popular_tags_dto
 
 
-type GetPopularTagsUsecase* = object
+type GetPopularTagsUsecase*  = object
 
 proc init*(_:type GetPopularTagsUsecase):GetPopularTagsUsecase =
   return GetPopularTagsUsecase()

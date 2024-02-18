@@ -1,4 +1,4 @@
-type PopularTagDto* = object
+type PopularTagDto*  = object
   id*:int
   name*:string
   popularCount*:int

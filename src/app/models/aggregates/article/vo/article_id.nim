@@ -1,6 +1,6 @@
 import ../../../../errors
 
-type ArticleId* = object
+type ArticleId*  = object
   value*:string
 
 proc init*(_:type ArticleId, value:string):ArticleId =

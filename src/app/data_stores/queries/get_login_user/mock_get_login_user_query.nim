@@ -5,7 +5,7 @@ import ../../../usecases/get_login_user/get_login_user_dto
 import ../../../models/aggregates/user/vo/user_id
 
 
-type MockGetLoginUserQuery* = object of IGetLoginUserQuery
+type MockGetLoginUserQuery*  = object of IGetLoginUserQuery
 
 proc init*(_:type MockGetLoginUserQuery): MockGetLoginUserQuery =
   return MockGetLoginUserQuery()

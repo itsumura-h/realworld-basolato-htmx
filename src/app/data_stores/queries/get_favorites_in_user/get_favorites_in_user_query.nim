@@ -8,7 +8,7 @@ import ../../../usecases/get_favorites_in_user/get_favorites_in_user_query_inter
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 
-type GetFavoritesInUserQuery* = object of IGetFavoritesInUserQuery
+type GetFavoritesInUserQuery*  = object of IGetFavoritesInUserQuery
 
 proc init*(_:type GetFavoritesInUserQuery):GetFavoritesInUserQuery =
   return GetFavoritesInUserQuery()

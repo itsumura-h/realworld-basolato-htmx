@@ -9,7 +9,7 @@ import ./vo/hashed_password
 import ./user_repository_interface
 
 
-type UserService* = object
+type UserService*  = object
   repository: IUserRepository
 
 proc init*(_:type UserService):UserService =
