@@ -5,22 +5,22 @@ import ../../models/aggregates/article/article_service
 import ../../models/aggregates/article/article_repository_interface
 import ../../models/aggregates/user/vo/user_id
 import ../../errors
-import ./get_article_query_interface
-import ./get_article_dto
+import ./get_article_in_feed_query_interface
+import ./get_article_in_feed_dto
 
 
-type GetArticleUsecase*  = object
-  query:IGetArticleQuery
+type GetArticleInFeedUsecase*  = object
+  query:IGetArticleInFeedQuery
   repository:IArticleRepository
 
-proc init*(_:type GetArticleUsecase, query:IGetArticleQuery, repository:IArticleRepository):GetArticleUsecase =
-  return GetArticleUsecase(
+proc init*(_:type GetArticleInFeedUsecase, query:IGetArticleInFeedQuery, repository:IArticleRepository):GetArticleInFeedUsecase =
+  return GetArticleInFeedUsecase(
     query:query,
     repository:repository
   )
 
 
-proc invoke*(self:GetArticleUsecase, articleId:string, loginUserId:string):Future[GetArticleDto] {.async.} =
+proc invoke*(self:GetArticleInFeedUsecase, articleId:string, loginUserId:string):Future[GetArticleInFeedDto] {.async.} =
   let articleId = ArticleId.init(articleId)
   let loginUserId =
     if loginUserId.len > 0:

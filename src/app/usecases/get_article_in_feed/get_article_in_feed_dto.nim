@@ -1,11 +1,11 @@
 import std/times
 
 type TagDto*  = object
-  tagId*:int
+  tagId*:string
   articleId*:string
   tagName*:string
 
-proc init*(_:type TagDto, tagId:int, articleId:string, tagName:string):TagDto =
+proc init*(_:type TagDto, tagId:string, articleId:string, tagName:string):TagDto =
   return TagDto(
     tagId:tagId,
     articleId:articleId,
@@ -62,12 +62,12 @@ proc init*(_:type UserDto, id, name, image:string, followerCount:int):UserDto =
   )
 
 
-type GetArticleDto*  = object
+type GetArticleInFeedDto*  = object
   article*:ArticleDto
   user*:UserDto
 
-proc init*(_:type GetArticleDto, article:ArticleDto, user:UserDto):GetArticleDto =
-  return GetArticleDto(
+proc init*(_:type GetArticleInFeedDto, article:ArticleDto, user:UserDto):GetArticleInFeedDto =
+  return GetArticleInFeedDto(
     article:article,
     user:user
   )

@@ -2,11 +2,11 @@ import ../../../../../usecases/get_popular_tags/get_popular_tags_dto
 
 
 type Tag*  = object
-  id*:int
+  id*:string
   name*:string
   popularCount*:int
 
-proc init*(_:type Tag, id:int, name:string, popularCount:int):Tag =
+proc init*(_:type Tag, id:string, name:string, popularCount:int):Tag =
   return Tag(
     id:id,
     name:name,

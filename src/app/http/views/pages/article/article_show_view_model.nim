@@ -1,16 +1,16 @@
 import std/times
 import std/sequtils
-import ../../../../usecases/get_article/get_article_dto
+import ../../../../usecases/get_article_in_feed/get_article_in_feed_dto
 import ../../components/article/follow_button/follow_button_view_model
 import ../../components/article/favorite_button/favorite_button_view_model
 
 
 type Tag*  = object
-  tagId*:int
+  tagId*:string
   articleId*:string
   tagName*:string
 
-proc init*(_:type Tag, tagId:int, articleId:string, tagName:string):Tag =
+proc init*(_:type Tag, tagId:string, articleId:string, tagName:string):Tag =
   return Tag(
     tagId:tagId,
     articleId:articleId,
@@ -58,7 +58,7 @@ type ArticleShowViewModel*  = object
   followButtonViewModel*:FollowButtonViewModel
   favoriteButtonViewModel*:FavoriteButtonViewModel
 
-proc init*(_:type ArticleShowViewModel, dto:GetArticleDto, loginUserId:string):ArticleShowViewModel =
+proc init*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
     proc(tag:TagDto):Tag =
       return Tag.init(

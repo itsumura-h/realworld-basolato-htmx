@@ -8,9 +8,9 @@ import ./models/aggregates/article/article_repository_interface
 import ./data_stores/repositories/article/mock_article_repository
 import ./data_stores/repositories/article/article_repository
 # get article
-import ./usecases/get_article/get_article_query_interface
-import ./data_stores/queries/get_article/mock_get_article_query
-import ./data_stores/queries/get_article/get_article_query
+import ./usecases/get_article_in_feed/get_article_in_feed_query_interface
+import ./data_stores/queries/get_article_in_feed/mock_get_article_in_feed_query
+import ./data_stores/queries/get_article_in_feed/get_article_in_feed_query
 # get comments in article
 import ./usecases/get_comments_in_article/get_comments_in_article_query_interface
 import ./data_stores/queries/get_comments_in_article/mock_get_comments_in_article_query
@@ -40,7 +40,7 @@ import ./data_stores/queries/get_login_user/get_login_user_query
 type DiContainer* = tuple
   userRepository: IUserRepository
   articleRepository: IArticleRepository
-  getArticleQuery: IGetArticleQuery
+  getArticleInFeedQuery: IGetArticleInFeedQuery
   getCommentsInArticleQuery:IGetCommentsInArticleQuery
   getUserShowQuery: IGetUserShowQuery
   getArticlesInUserQuery: IGetArticlesInUserQuery
@@ -54,7 +54,7 @@ proc newDiContainer():DiContainer =
     return (
       userRepository: MockUserRepository.init(),
       articleRepository: MockArticleRepository.init(),
-      getArticleQuery: MockGetArticleQuery.init(),
+      getArticleInFeedQuery: MockGetArticleInFeedQuery.init(),
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.init(),
       getUserShowQuery: MockGetUserShowQuery.init(),
       getArticlesInUserQuery: MockGetArticlesInUserQuery.init(),
@@ -67,8 +67,8 @@ proc newDiContainer():DiContainer =
       userRepository: UserRepository.init(),
       articleRepository: MockArticleRepository.init(),
       # articleRepository: ArticleRepository.init(),
-      # getArticleQuery: MockGetArticleQuery.init(),
-      getArticleQuery: GetArticleQuery.init(),
+      # getArticleInFeedQuery: MockGetArticleInFeedQuery.init(),
+      getArticleInFeedQuery: GetArticleInFeedQuery.init(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.init(),
       getCommentsInArticleQuery:GetCommentsInArticleQuery.init(),
       # getUserShowQuery: MockGetUserShowQuery.init(),
