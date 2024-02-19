@@ -57,7 +57,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[GlobalFeedDto] {.async.} 
         rdb.select(
               "tag_article_map.tag_id as tagId",
               "tag_article_map.article_id as articleId",
-              "tag.tag_name as tagName",
+              "tag.name as tagName",
             )
             .table("tag_article_map")
             .join("tag", "tag.id", "=", "tag_article_map.tag_id")

@@ -16,11 +16,11 @@ proc invoke*(self:GetPopularTagsQuery, count:int):Future[seq[PopularTagDto]] {.a
   let sql = &"""
     SELECT
       "tag"."id",
-      "tag_name" as "name",
+      "tag"."name",
       COUNT("id") as "popularCount"
     FROM "tag"
     JOIN "tag_article_map" ON "tag"."id" = "tag_article_map"."tag_id"
-    GROUP BY "tag"."id"
+    GROUP BY "tag"."id", "tag"."name"
     ORDER BY "popularCount" DESC
     LIMIT {count}
   """
@@ -29,7 +29,7 @@ proc invoke*(self:GetPopularTagsQuery, count:int):Future[seq[PopularTagDto]] {.a
   for row in tagsJson:
     tags.add(
       PopularTagDto.init(
-        row["id"].getInt(),
+        row["id"].getStr(),
         row["name"].getStr(),
         row["popularCount"].getInt(),
       )

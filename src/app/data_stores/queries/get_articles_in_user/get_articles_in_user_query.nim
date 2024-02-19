@@ -40,7 +40,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
     for row in tagsData:
       tags.add(
         TagDto.init(
-          row["tag_name"].getStr()
+          row["tag_id"].getStr()
         )
       )
     

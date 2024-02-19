@@ -46,7 +46,7 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
     for row in tagsData:
       tags.add(
         TagDto.init(
-          row["tag_name"].getStr()
+          row["tag_id"].getStr()
         )
       )
     

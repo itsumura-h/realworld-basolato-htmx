@@ -16,7 +16,7 @@ proc init*(_:type GetTagFeedQuery):GetTagFeedQuery =
 method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDto] {.async.} =
   let total = rdb.table("tag_article_map")
                   .join("tag", "tag.id", "=", "tag_article_map.tag_id")
-                  .where("tag.tag_name", "=", tagName.value)
+                  .where("tag.name", "=", tagName.value)
                   .count()
                   .await
   const display = 5
@@ -37,7 +37,7 @@ method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDt
                         .join("tag_article_map", "tag_article_map.article_id", "=", "article.id")
                         .join("tag", "tag.id", "=", "tag_article_map.tag_id")
                         .join("user", "user.id", "=", "article.author_id")
-                        .where("tag.tag_name", "=", tagName.value)
+                        .where("tag.name", "=", tagName.value)
                         .offset(offset)
                         .limit(display)
                         .get()
@@ -66,7 +66,7 @@ method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDt
       if articleTagCount > 0:
         rdb.select(
               "tag_article_map.tag_id as id",
-              "tag.tag_name as name",
+              "tag.name",
             )
             .table("tag_article_map")
             .join("tag", "tag.id", "=", "tag_article_map.tag_id")

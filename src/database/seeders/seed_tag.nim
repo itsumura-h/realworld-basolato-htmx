@@ -23,6 +23,9 @@ proc tag*(rdb:PostgresConnections) {.async.} =
 
   var jTags:seq[JsonNode]
   for tag in tags:
-    jTags.add(%*{"tag_name": tag})
+    jTags.add(%*{
+      "id": tag.toLowerAscii(),
+      "name": tag
+    })
   
   rdb.table("tag").insert(jTags).await

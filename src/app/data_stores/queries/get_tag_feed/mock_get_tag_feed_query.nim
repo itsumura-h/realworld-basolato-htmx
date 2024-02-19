@@ -12,8 +12,8 @@ proc init*(_:type MockGetTagFeedQuery):MockGetTagFeedQuery =
 
 method invoke*(self:MockGetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDto] {.async.} =
   let tags = @[
-    TagDto(id:1, name:"tag1"),
-    TagDto(id:2, name:"tag2"),
+    TagDto(id:"tag1", name:"tag1"),
+    TagDto(id:"tag2", name:"tag2"),
   ]
 
   let author1 = AuthorDto.init("author-1", "Author 1", "")

@@ -31,8 +31,8 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
       Column.timestamps()
     ),
     table("tag",
-      Column.increments("id"),
-      Column.string("tag_name").unique(),
+      Column.string("id").unique(),
+      Column.string("name"),
     ),
 
     table("user_user_map",
@@ -44,7 +44,7 @@ proc createTable*(rdb:PostgresConnections) {.async.} =
       Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE).index(),
     ),
     table("tag_article_map",
-      Column.foreign("tag_id").reference("id").onTable("tag").onDelete(CASCADE).index(),
+      Column.strForeign("tag_id").reference("id").onTable("tag").onDelete(CASCADE).index(),
       Column.strForeign("article_id").reference("id").onTable("article").onDelete(CASCADE).index(),
     )
   )

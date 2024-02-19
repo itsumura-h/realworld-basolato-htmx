@@ -53,7 +53,7 @@ proc invoke*(self:GetArticlesWithAuthorQuery, page=1):Future[seq[ArticleWithAuth
       if articleTagCount > 0:
         rdb.select(
               "tag_article_map.tag_id as id",
-              "tag.tag_name as name",
+              "tag.name",
             )
             .table("tag_article_map")
             .join("tag", "tag.id", "=", "tag_article_map.tag_id")

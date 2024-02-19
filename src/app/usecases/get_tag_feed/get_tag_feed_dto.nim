@@ -2,7 +2,7 @@ import std/times
 
 
 type TagDto*  = object
-  id*:int
+  id*:string
   name*:string
 
 

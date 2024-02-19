@@ -32,7 +32,7 @@ proc createTable*(rdb:SqliteConnections) {.async.} =
     ),
     table("tag",
       Column.increments("id"),
-      Column.string("tag_name").unique(),
+      Column.string("tag_id").unique(),
     ),
 
     table("user_user_map",
