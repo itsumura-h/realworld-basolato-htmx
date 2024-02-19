@@ -35,6 +35,10 @@ import ./data_stores/queries/get_tag_feed/get_tag_feed_query
 import ./usecases/get_login_user/get_login_user_query_interface
 import ./data_stores/queries/get_login_user/mock_get_login_user_query
 import ./data_stores/queries/get_login_user/get_login_user_query
+# get article in editor
+import ./usecases/get_article_in_editor/get_article_in_editor_query_interface
+import ./data_stores/queries/get_article_in_editor/mock_get_article_in_editor_query
+import ./data_stores/queries/get_article_in_editor/get_article_in_editor_query
 
 
 type DiContainer* = tuple
@@ -47,6 +51,7 @@ type DiContainer* = tuple
   getFavoritesInUserQuery: IGetFavoritesInUserQuery
   getTagFeedQuery: IGetTagFeedQuery
   getLoginUserQuery: IGetLoginUserQuery
+  getArticleInEditorQuery: IGetArticleInEditorQuery
 
 
 proc newDiContainer():DiContainer =
@@ -61,6 +66,7 @@ proc newDiContainer():DiContainer =
       getFavoritesInUserQuery: MockGetFavoritesInUserQuery.init(),
       getTagFeedQuery: MockGetTagFeedQuery.init(),
       getLoginUserQuery: MockGetLoginUserQuery.init(),
+      getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
     )
   else:
     return (
@@ -81,6 +87,8 @@ proc newDiContainer():DiContainer =
       getTagFeedQuery: GetTagFeedQuery.init(),
       # getLoginUserQuery: MockGetLoginUserQuery.init(),
       getLoginUserQuery: GetLoginUserQuery.init(),
+      getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
+      # getArticleInEditorQuery: GetArticleInEditorQuery.new(),
     )
 
 let di* = newDiContainer()

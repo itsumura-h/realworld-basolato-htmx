@@ -4,7 +4,7 @@ import basolato/controller
 import basolato/view
 import ../../di_container
 
-import ../../usecases/get_article/get_article_usecase
+import ../../usecases/get_article_in_feed/get_article_in_feed_usecase
 import ../views/pages/article/article_show_view_model
 import ../views/pages/article/article_show_view
 
@@ -16,9 +16,9 @@ import ../views/pages/comment/comment_wrapper_view
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
   let loginUserId = context.get("loginUserId").await
-  let query = di.getArticleQuery
+  let query = di.getArticleInFeedQuery
   let repository = di.articleRepository
-  let usecase = GetArticleUsecase.init(query, repository)
+  let usecase = GetArticleInFeedUsecase.init(query, repository)
   let dto = usecase.invoke(articleId, loginUserId).await
   let viewModel = ArticleShowViewModel.init(dto, loginUserId)
   let view = htmxArticleShowView(viewModel)

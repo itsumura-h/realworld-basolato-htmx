@@ -14,6 +14,7 @@ import ./app/http/controllers/article_controller
 import ./app/http/controllers/user_controller
 import ./app/http/controllers/sign_controller
 import ./app/http/controllers/setting_controller
+import ./app/http/controllers/editor_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
 import ./app/http/controllers/htmx_article_controller
@@ -39,6 +40,8 @@ let routes = @[
 
       Route.get("/users/{userId:str}", user_controller.show),
       Route.get("/users/{userId:str}/favorites", user_controller.favorites),
+
+      Route.get("/editor", editor_controller.index).middleware(should_login_middleware.shouldLogin),
 
       Route.group("/htmx", @[
         Route.get("/sign-up", htmx_sign_controller.signUpPage),
