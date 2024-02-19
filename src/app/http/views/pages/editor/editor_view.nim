@@ -25,6 +25,7 @@ proc impl(viewModel:EditorViewModel):Component =
 
               hx-target="#app-body"
             >
+              $(csrfToken())
               <fieldset class="form-group">
                 <input type="text" name="title" class="form-control form-control-lg" placeholder="Post Title"
                   $if viewModel.article.isSome(){
@@ -61,3 +62,6 @@ proc impl(viewModel:EditorViewModel):Component =
 
 proc editorView*(appViewModel:ApplicationViewModel, viewModel:EditorViewModel):string =
   $applicationView(appViewModel, impl(viewModel))
+
+proc htmxEditorView*(viewModel:EditorViewModel):string =
+  $impl(viewModel)

@@ -5,7 +5,6 @@ import ../views/pages/editor/editor_view
 
 
 proc create*(context:Context, params:Params):Future[Response] {.async.} =
-  let appViewModel = createApplicationViewModel(context, "Editor ―Conduit").await
   let viewModel = EditorViewModel.new()
-  let view = editorView(appViewModel, viewModel)
+  let view = htmxEditorView(viewModel)
   return render(view)
