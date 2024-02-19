@@ -9,11 +9,11 @@ proc createApplicationViewModel*(context:Context, title:string):Future[Applicati
   let isLogin = context.isLogin().await
   if isLogin:
     let id = context.get("id").await
-    let loginUserId = UserId.init(id)
+    let loginUserId = UserId.new(id)
     let query = di.getLoginUserQuery
     let userDto = query.invoke(loginUserId).await
-    let viewModel = ApplicationViewModel.init(title, userDto)
+    let viewModel = ApplicationViewModel.new(title, userDto)
     return viewModel
   else:
-    let viewModel = ApplicationViewModel.init(title)
+    let viewModel = ApplicationViewModel.new(title)
     return viewModel

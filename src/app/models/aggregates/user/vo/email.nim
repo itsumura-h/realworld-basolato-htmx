@@ -5,7 +5,7 @@ type Email*  = object
   value:string
 
 
-proc init*(_:type Email, value:string):Email =
+proc new*(_:type Email, value:string):Email =
   if value.len == 0:
     raise newException(DomainError, "email is empty")
 

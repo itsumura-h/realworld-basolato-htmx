@@ -5,7 +5,7 @@ import ../../../models/aggregates/article/vo/article_id
 
 type MockArticleRepository*  = object of IArticleRepository
 
-proc init*(_:type MockArticleRepository):MockArticleRepository =
+proc new*(_:type MockArticleRepository):MockArticleRepository =
   return MockArticleRepository()
 
 

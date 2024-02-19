@@ -9,7 +9,7 @@ from ../../../../config/database import rdb
 
 type GetTagFeedQuery*  = object of IGetTagFeedQuery
 
-proc init*(_:type GetTagFeedQuery):GetTagFeedQuery =
+proc new*(_:type GetTagFeedQuery):GetTagFeedQuery =
   return GetTagFeedQuery()
 
 
@@ -51,7 +51,7 @@ method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDt
                           .count()
                           .await
 
-    let author = AuthorDto.init(
+    let author = AuthorDto.new(
       id = row["userId"].getStr(),
       name = row["name"].getStr(),
       image = row["image"].getStr(),
@@ -76,7 +76,7 @@ method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDt
       else:
         newSeq[TagDto]()
 
-    let article = ArticleWithAuthorDto.init(
+    let article = ArticleWithAuthorDto.new(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
       description = row["description"].getStr(),
@@ -88,13 +88,13 @@ method invoke*(self:GetTagFeedQuery, tagName:TagName, page:int):Future[TagFeedDt
 
     articles.add(article)
 
-  let paginator = PaginatorDto.init(
+  let paginator = PaginatorDto.new(
     hasPages=hasPages,
     current=page,
     lastPage=lastPage
   )
 
-  let viewModel = TagFeedDto.init(
+  let viewModel = TagFeedDto.new(
     articles,
     paginator,
   )

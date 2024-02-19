@@ -4,7 +4,7 @@ type FavoriteButtonViewModel*  = object
   isCurrentUser*: bool
   favoriteCount*: int
 
-proc init*(_:type FavoriteButtonViewModel,
+proc new*(_:type FavoriteButtonViewModel,
   isFavorited: bool,
   articleId: string,
   isCurrentUser: bool,

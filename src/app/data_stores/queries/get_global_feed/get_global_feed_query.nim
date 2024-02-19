@@ -7,7 +7,7 @@ import ../../../usecases/get_global_feed/get_global_feed_dto
 
 type GetGlobalFeedQuery*  = object
 
-proc init*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
+proc new*(_:type GetGlobalFeedQuery):GetGlobalFeedQuery =
   return GetGlobalFeedQuery()
 
 
@@ -41,7 +41,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[GlobalFeedDto] {.async.} 
                           .count()
                           .await
 
-    let author = AuthorDto.init(
+    let author = AuthorDto.new(
       id = row["userId"].getStr(),
       name = row["name"].getStr(),
       image = row["image"].getStr(),
@@ -67,7 +67,7 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[GlobalFeedDto] {.async.} 
       else:
         newSeq[TagDto]()
 
-    let article = ArticleWithAuthorDto.init(
+    let article = ArticleWithAuthorDto.new(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
       description = row["description"].getStr(),
@@ -79,13 +79,13 @@ proc invoke*(self:GetGlobalFeedQuery, page:int):Future[GlobalFeedDto] {.async.} 
 
     articles.add(article)
 
-  let paginator = PaginatorDto.init(
+  let paginator = PaginatorDto.new(
     hasPages=hasPages,
     current=page,
     lastPage=lastPage
   )
 
-  let viewModel = GlobalFeedDto.init(
+  let viewModel = GlobalFeedDto.new(
     articles,
     paginator,
   )

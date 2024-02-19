@@ -23,9 +23,9 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isSelf = isLogin and loginUserId == userId
   let loadFavorites = false
   try:
-    let usecase = GetUserShowUsecase.init()
+    let usecase = GetUserShowUsecase.new()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
-    let viewModel = UserShowViewModel.init(dto, isSelf, loadFavorites)
+    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
     let view = htmxUserShowView(viewModel)
     return render(view)
   except IdNotFoundError:
@@ -36,9 +36,9 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = params.getStr("userId")
   let loginUserId = context.get("loginUserId").await
   try:
-    let usecase = GetArticlesInUserUsecase.init()
+    let usecase = GetArticlesInUserUsecase.new()
     let dto = usecase.invoke(userId).await
-    let viewModel = HtmxUserFeedViewModel.init(dto, loginUserId)
+    let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
     let view = htmxUserFeedView(viewModel)
     return render(view)
   except IdNotFoundError:
@@ -49,9 +49,9 @@ proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = params.getStr("userId")
   let loginUserId = context.get("loginUserId").await
   try:
-    let usecase = GetFavoritesInUserUsecase.init()
+    let usecase = GetFavoritesInUserUsecase.new()
     let dto = usecase.invoke(userId).await
-    let viewModel = HtmxUserFeedViewModel.init(dto, loginUserId)
+    let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
     let view = htmxUserFeedView(viewModel)
     return render(view)
   except IdNotFoundError:

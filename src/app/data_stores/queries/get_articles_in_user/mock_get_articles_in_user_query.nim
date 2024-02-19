@@ -7,29 +7,29 @@ import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
 
 type MockGetArticlesInUserQuery*  = object of IGetArticlesInUserQuery
 
-proc init*(_:type MockGetArticlesInUserQuery):MockGetArticlesInUserQuery =
+proc new*(_:type MockGetArticlesInUserQuery):MockGetArticlesInUserQuery =
   return MockGetArticlesInUserQuery()
 
 
 method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticlesInUserDto] {.async.} =
-  let author = AuthorDto.init(
+  let author = AuthorDto.new(
     "author",
     "Author",
     ""
   )
 
   let tags = @[
-    TagDto.init("tag1"),
-    TagDto.init("tag2"),
+    TagDto.new("tag1"),
+    TagDto.new("tag2"),
   ]
 
   let favoritedUsers = @[
-    FavoritedUserDto.init("user1"),
-    FavoritedUserDto.init("user2"),
+    FavoritedUserDto.new("user1"),
+    FavoritedUserDto.new("user2"),
   ]
 
   let articles = @[
-    ArticleDto.init(
+    ArticleDto.new(
       "article-1",
       "Article 1",
       "description1",
@@ -38,7 +38,7 @@ method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticle
       tags,
       favoritedUsers
     ),
-    ArticleDto.init(
+    ArticleDto.new(
       "article-2",
       "Article 2",
       "description2",
@@ -49,5 +49,5 @@ method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticle
     ),
   ]
 
-  let dto = GetArticlesInUserDto.init(articles)
+  let dto = GetArticlesInUserDto.new(articles)
   return dto

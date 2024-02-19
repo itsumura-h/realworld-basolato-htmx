@@ -11,7 +11,7 @@ type AuthorDto*  = object
   name*:string
   image*:string
 
-proc init*(_:type AuthorDto, id, name, image:string):AuthorDto =
+proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
   return AuthorDto(
     id:id,
     name:name,
@@ -28,7 +28,7 @@ type ArticleWithAuthorDto*  = object
   author*:AuthorDto
   tags*:seq[TagDto]
 
-proc init*(_:type ArticleWithAuthorDto,
+proc new*(_:type ArticleWithAuthorDto,
   id:string,
   title:string,
   description:string,
@@ -54,7 +54,7 @@ type PaginatorDto*  = object
   current*:int
   lastPage*:int
 
-proc init*(_:type PaginatorDto, hasPages:bool, current:int, lastPage:int):PaginatorDto =
+proc new*(_:type PaginatorDto, hasPages:bool, current:int, lastPage:int):PaginatorDto =
   return PaginatorDto(
     hasPages:hasPages,
     current:current,
@@ -67,7 +67,7 @@ type TagFeedDto*  = object
   articlesWithAuthor*:seq[ArticleWithAuthorDto]
   paginator*:PaginatorDto
 
-proc init*(_:type TagFeedDto,
+proc new*(_:type TagFeedDto,
   articlesWithAuthor:seq[ArticleWithAuthorDto],
   paginator:PaginatorDto
 ):TagFeedDto =

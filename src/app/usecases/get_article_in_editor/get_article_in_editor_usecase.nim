@@ -15,12 +15,12 @@ proc new*(_:type GetArticleInEditorUsecase): GetArticleInEditorUsecase =
   let repository = di.articleRepository
   return GetArticleInEditorUsecase(
     query: di.getArticleInEditorQuery,
-    service: ArticleService.init(repository)
+    service: ArticleService.new(repository)
   )
 
 
 proc invoke*(self:GetArticleInEditorUsecase, articleId:string):Future[ArticleInEditorDto] {.async.} =
-  let articleId = ArticleId.init(articleId)
+  let articleId = ArticleId.new(articleId)
 
   if not self.service.isExistsArticle(articleId).await:
     raise newException(DomainError, "Article not found")

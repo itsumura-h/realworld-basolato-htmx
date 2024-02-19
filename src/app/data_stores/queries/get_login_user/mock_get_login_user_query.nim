@@ -7,12 +7,12 @@ import ../../../models/aggregates/user/vo/user_id
 
 type MockGetLoginUserQuery*  = object of IGetLoginUserQuery
 
-proc init*(_:type MockGetLoginUserQuery): MockGetLoginUserQuery =
+proc new*(_:type MockGetLoginUserQuery): MockGetLoginUserQuery =
   return MockGetLoginUserQuery()
 
 
 method invoke*(self: MockGetLoginUserQuery, id:UserId):Future[LoginUserDto] {.async.} =
-  return LoginUserDto.init(
+  return LoginUserDto.new(
     "Namw 1",
     "name1@example.com",
     "bio",

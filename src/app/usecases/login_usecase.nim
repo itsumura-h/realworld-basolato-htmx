@@ -12,14 +12,14 @@ import ../models/aggregates/user/vo/password
 type LoginUsecase*  = object
   repository:IUserRepository
 
-proc init*(_:type LoginUsecase):LoginUsecase =
+proc new*(_:type LoginUsecase):LoginUsecase =
   return LoginUsecase(
     repository:di.userRepository
   )
 
 proc invoke*(self:LoginUsecase, email, password:string):Future[(string, string)] {.async.} =
-  let email = Email.init(email)
-  let password = Password.init(password)
+  let email = Email.new(email)
+  let password = Password.new(password)
 
   let loginUserOpt = self.repository.getUserByEmail(email).await
   if not loginUserOpt.isSome():
@@ -27,7 +27,7 @@ proc invoke*(self:LoginUsecase, email, password:string):Future[(string, string)]
 
   let user = loginUserOpt.get
 
-  let service = UserService.init()
+  let service = UserService.new()
   if not service.isMatchPassword(password, user.password):
     raise newException(DomainError, "Invalid password")
 

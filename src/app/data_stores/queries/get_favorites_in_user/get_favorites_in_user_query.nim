@@ -10,13 +10,13 @@ import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
 
 type GetFavoritesInUserQuery*  = object of IGetFavoritesInUserQuery
 
-proc init*(_:type GetFavoritesInUserQuery):GetFavoritesInUserQuery =
+proc new*(_:type GetFavoritesInUserQuery):GetFavoritesInUserQuery =
   return GetFavoritesInUserQuery()
 
 
 method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesInUserDto] {.async.} =
   let userData = rdb.table("user").find(userId.value).await.get()
-  let user = UserDto.init(userData["id"].getStr())
+  let user = UserDto.new(userData["id"].getStr())
 
   let articlesData = rdb.select(
                         "article.id",
@@ -45,7 +45,7 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
                     .await
     for row in tagsData:
       tags.add(
-        TagDto.init(
+        TagDto.new(
           row["tag_id"].getStr()
         )
       )
@@ -58,19 +58,19 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
                                 .await
     for row in favoritedUsersData:
       favoritedUsers.add(
-        FavoritedUserDto.init(
+        FavoritedUserDto.new(
           row["id"].getStr(),
         )
       )
 
-    let author = AuthorDto.init(
+    let author = AuthorDto.new(
       articleData["author_id"].getStr(),
       articleData["name"].getStr(),
       articleData["image"].getStr(),
     )
 
     articles.add(
-      ArticleDto.init(
+      ArticleDto.new(
         articleData["id"].getStr(),
         articleData["title"].getStr(),
         articleData["description"].getStr(),
@@ -81,7 +81,7 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
       )
     )
 
-  let dto = GetFavoritesInUserDto.init(
+  let dto = GetFavoritesInUserDto.new(
     user,
     articles
   )

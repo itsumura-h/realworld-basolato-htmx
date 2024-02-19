@@ -15,11 +15,11 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let loginUserId = context.get("loginUserId").await
   let query = di.getArticleInFeedQuery
   let repository = di.articleRepository
-  let usecase = GetArticleInFeedUsecase.init(query, repository)
+  let usecase = GetArticleInFeedUsecase.new(query, repository)
   try:
     let dto = usecase.invoke(articleId, loginUserId).await
     let appViewModel = createApplicationViewModel(context, dto.article.title).await
-    let viewModel = ArticleShowViewModel.init(dto, loginUserId)
+    let viewModel = ArticleShowViewModel.new(dto, loginUserId)
     let view = articleShowPageView(appViewModel, viewModel)
     return render(view)
   except IdNotFoundError:

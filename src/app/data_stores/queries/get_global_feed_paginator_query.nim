@@ -6,7 +6,7 @@ import ../../usecases/get_global_feed/get_global_feed_dto
 
 type GetGlobalFeedPaginatorQuery*  = object
 
-proc init*(_:type GetGlobalFeedPaginatorQuery):GetGlobalFeedPaginatorQuery =
+proc new*(_:type GetGlobalFeedPaginatorQuery):GetGlobalFeedPaginatorQuery =
   return GetGlobalFeedPaginatorQuery()
 
 
@@ -15,7 +15,7 @@ proc invoke*(self:GetGlobalFeedPaginatorQuery, page:int):Future[PaginatorDto] {.
   const display = 5
   let lastPage = total div display
   let hasPages = lastPage > 1
-  let paginator = PaginatorDto.init(
+  let paginator = PaginatorDto.new(
     hasPages=hasPages,
     current=page,
     lastPage=lastPage

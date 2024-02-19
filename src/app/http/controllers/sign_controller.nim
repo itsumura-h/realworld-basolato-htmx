@@ -12,7 +12,7 @@ proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
   let appViewModel = createApplicationViewModel(context, "Sign Up ― Conduit").await
   let oldName = params.old("username")
   let oldEmail = params.old("email")
-  let viewModel = SignUpViewModel.init(oldName, oldEmail)
+  let viewModel = SignUpViewModel.new(oldName, oldEmail)
   let view = signUpView(appViewModel, viewModel)
   return render(view)
 
@@ -20,7 +20,7 @@ proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
   let appViewModel = createApplicationViewModel(context, "Sign In ― Conduit").await
   let oldEmail = params.old("email")
-  let viewModel = SignInViewModel.init(oldEmail)
+  let viewModel = SignInViewModel.new(oldEmail)
   let view = signInView(appViewModel, viewModel)
   return render(view)
 

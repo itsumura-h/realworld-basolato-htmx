@@ -12,7 +12,7 @@ import ../../../models/aggregates/user/vo/user_id
 
 type GetArticleInFeedQuery*  = object of IGetArticleInFeedQuery
 
-proc init*(_:type GetArticleInFeedQuery):GetArticleInFeedQuery =
+proc new*(_:type GetArticleInFeedQuery):GetArticleInFeedQuery =
   return GetArticleInFeedQuery()
 
 
@@ -75,7 +75,7 @@ method invoke*(self:GetArticleInFeedQuery, articleId:ArticleId, loginUserId:Opti
                           .count()
                           .await
 
-  let article = ArticleDto.init(
+  let article = ArticleDto.new(
     id = articleId.value,
     title = articleData["title"].getStr(),
     description = articleData["description"].getStr(),
@@ -91,14 +91,14 @@ method invoke*(self:GetArticleInFeedQuery, articleId:ArticleId, loginUserId:Opti
                         .count()
                         .await
 
-  let user = UserDto.init(
+  let user = UserDto.new(
     id = articleData["authorId"].getStr(),
     name = articleData["name"].getStr(),
     image = articleData["image"].getStr(),
     followerCount = followerCount,
   )
 
-  let dto = GetArticleInFeedDto.init(
+  let dto = GetArticleInFeedDto.new(
     article = article,
     user = user
   )

@@ -12,20 +12,20 @@ import ../models/aggregates/user/vo/password
 type CreateUserUsecase*  = object
   repository:IUserRepository
 
-proc init*(_:type CreateUserUsecase):CreateUserUsecase =
+proc new*(_:type CreateUserUsecase):CreateUserUsecase =
   return CreateUserUsecase(
     repository:di.userRepository
   )
 
 proc invoke*(self:CreateUserUsecase, userName, email, password:string):Future[string] {.async.} =
-  let userName = UserName.init(userName)
-  let email = Email.init(email)
-  let password = Password.init(password)
+  let userName = UserName.new(userName)
+  let email = Email.new(email)
+  let password = Password.new(password)
 
-  let service = UserService.init()
+  let service = UserService.new()
   if not service.isEmailUnique(email).await:
     raise newException(DomainError, "email is deprecated")
 
-  let user = DraftUser.init(userName, email, password)
+  let user = DraftUser.new(userName, email, password)
   let id = self.repository.create(user).await
   return id.value

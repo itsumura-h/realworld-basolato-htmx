@@ -4,7 +4,7 @@ type User*  = object
   bio*:string
   image*:string
 
-proc init*(_:type User, name:string, email:string, bio:string, image:string): User =
+proc new*(_:type User, name:string, email:string, bio:string, image:string): User =
   return User(
     name: name,
     email: email,
@@ -17,8 +17,8 @@ type FormViewModel*  = object
   oobSwap*:bool
   user*:User
 
-proc init*(_:type FormViewModel, oobSwap:bool, name:string, email:string, bio:string, image:string): FormViewModel =
-  let user = User.init(name, email, bio, image)
+proc new*(_:type FormViewModel, oobSwap:bool, name:string, email:string, bio:string, image:string): FormViewModel =
+  let user = User.new(name, email, bio, image)
   return FormViewModel(
     user: user,
     oobSwap: oobSwap

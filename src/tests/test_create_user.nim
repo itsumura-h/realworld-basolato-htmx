@@ -25,7 +25,7 @@ suite("create user"):
     let email = "test1@example.com"
     let password = "test1Password"
 
-    let usecase = CreateUserUsecase.init()
+    let usecase = CreateUserUsecase.new()
     usecase.invoke(name, email, password).waitFor()
 
   test("deprecate"):
@@ -33,7 +33,7 @@ suite("create user"):
     let email = "test1@example.com"
     let password = "test1Password"
 
-    let usecase = CreateUserUsecase.init()
+    let usecase = CreateUserUsecase.new()
     
     expect(DomainError):
       usecase.invoke(name, email, password).waitFor()

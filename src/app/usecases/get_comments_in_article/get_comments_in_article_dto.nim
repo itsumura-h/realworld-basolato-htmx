@@ -5,7 +5,7 @@ type UserDto*  = object
   name*:string
   image*:string
 
-proc init*(_:type UserDto, id, name, image:string):UserDto =
+proc new*(_:type UserDto, id, name, image:string):UserDto =
   return UserDto(
     id:id,
     name:name,
@@ -17,7 +17,7 @@ type ArticleDto*  = object
   id*:string
   user*:UserDto
 
-proc init*(_:type ArticleDto, id:string, user:UserDto):ArticleDto =
+proc new*(_:type ArticleDto, id:string, user:UserDto):ArticleDto =
   return ArticleDto(
     id:id,
     user:user
@@ -29,7 +29,7 @@ type CommentDto*  = object
   body*:string
   createdAt*:DateTime
 
-proc init*(_:type CommentDto, user:UserDto, body:string, createdAt:DateTime):CommentDto =
+proc new*(_:type CommentDto, user:UserDto, body:string, createdAt:DateTime):CommentDto =
   return CommentDto(
     user:user,
     body:body,
@@ -41,7 +41,7 @@ type GetCommentsInArticleDto*  = object
   comments*:seq[CommentDto]
   article*:ArticleDto
 
-proc init*(_:type GetCommentsInArticleDto, comments:seq[CommentDto], article:ArticleDto):GetCommentsInArticleDto =
+proc new*(_:type GetCommentsInArticleDto, comments:seq[CommentDto], article:ArticleDto):GetCommentsInArticleDto =
   return GetCommentsInArticleDto(
     comments:comments,
     article:article

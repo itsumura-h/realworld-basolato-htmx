@@ -41,7 +41,7 @@ proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let email = userParam["email"].getStr()
   let password = userParam["password"].getStr()
 
-  let usecase = CreateUserUsecase.init()
+  let usecase = CreateUserUsecase.new()
   let id = usecase.invoke(name, email, password).await
 
   return render(id)

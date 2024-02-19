@@ -6,7 +6,7 @@ type GetUserShowDto*  = object
   isFollowed*:bool
   followerCount*:int
 
-proc init*(_:type GetUserShowDto,
+proc new*(_:type GetUserShowDto,
   id:string,
   name:string,
   bio:string,

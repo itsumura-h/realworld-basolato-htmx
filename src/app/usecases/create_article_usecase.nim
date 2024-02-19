@@ -21,9 +21,9 @@ proc new*(_:type CreateArticleUsecase):CreateArticleUsecase =
 
 
 proc invoke*(self:CreateArticleUsecase, userId, title, description, body:string) {.async.} =
-  let title = Title.init(title)
-  let description = Description.init(description)
-  let body = Body.init(body)
-  let userId = UserId.init(userId)
-  let article = DraftArticle.init(title, description, body, userId)
+  let title = Title.new(title)
+  let description = Description.new(description)
+  let body = Body.new(body)
+  let userId = UserId.new(userId)
+  let article = DraftArticle.new(title, description, body, userId)
   self.repository.create(article).await

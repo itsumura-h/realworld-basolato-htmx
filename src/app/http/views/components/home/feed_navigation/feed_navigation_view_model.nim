@@ -4,7 +4,7 @@ type FeedNavbar*  = object
   hxGetUrl*:string
   hxPushUrl*:string
 
-proc init*(_:type FeedNavbar,
+proc new*(_:type FeedNavbar,
   title:string,
   isActive:bool,
   hxGetUrl:string,

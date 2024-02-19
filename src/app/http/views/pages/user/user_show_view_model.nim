@@ -10,7 +10,7 @@ type User*  = object
   image*:string
   isSelf*:bool
 
-proc init*(_:type User, id:string, name:string, bio:string, image:string, isSelf:bool):User =
+proc new*(_:type User, id:string, name:string, bio:string, image:string, isSelf:bool):User =
   return User(
     id:id,
     name:name,
@@ -25,8 +25,8 @@ type UserShowViewModel*  = object
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool
 
-proc init*(_:type UserShowViewModel, dto:GetUserShowDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
-  let user = User.init(
+proc new*(_:type UserShowViewModel, dto:GetUserShowDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
+  let user = User.new(
     dto.id,
     dto.name,
     dto.bio,
@@ -34,7 +34,7 @@ proc init*(_:type UserShowViewModel, dto:GetUserShowDto, isSelf:bool, loadFavori
     isSelf
   )
 
-  let followButtonViewModel = FollowButtonViewModel.init(
+  let followButtonViewModel = FollowButtonViewModel.new(
     dto.name,
     dto.isFollowed,
     dto.followerCount

@@ -6,7 +6,7 @@ import ./vo/article_id
 type ArticleService*  = object
   repository:IArticleRepository
 
-proc init*(_:type ArticleService, repository:IArticleRepository):ArticleService =
+proc new*(_:type ArticleService, repository:IArticleRepository):ArticleService =
   return ArticleService(
     repository:repository
   )

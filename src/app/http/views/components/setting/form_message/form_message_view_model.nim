@@ -4,8 +4,8 @@ type FormMessageViewModel*  = object
   oobSwap*:bool
   formSuccessMessageViewModel*:FormSuccessMessageViewModel
 
-proc init*(_:type FormMessageViewModel, oobSwap:bool, message:string): FormMessageViewModel =
-  let formSuccessMessageViewModel = FormSuccessMessageViewModel.init(message)
+proc new*(_:type FormMessageViewModel, oobSwap:bool, message:string): FormMessageViewModel =
+  let formSuccessMessageViewModel = FormSuccessMessageViewModel.new(message)
   let viewModel = FormMessageViewModel(
     oobSwap: oobSwap,
     formSuccessMessageViewModel: formSuccessMessageViewModel

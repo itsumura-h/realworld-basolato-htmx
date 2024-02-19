@@ -12,7 +12,7 @@ type Author*  = object
   name*:string
   image*:string
 
-proc init*(_:type Author, id, name, image:string):Author =
+proc new*(_:type Author, id, name, image:string):Author =
   return Author(
     id:id,
     name:name,
@@ -23,7 +23,7 @@ proc init*(_:type Author, id, name, image:string):Author =
 type Tag*  = object
   name*:string
 
-proc init*(_:type Tag, name:string):Tag =
+proc new*(_:type Tag, name:string):Tag =
   return Tag(
     name:name
   )
@@ -32,7 +32,7 @@ proc init*(_:type Tag, name:string):Tag =
 type FavoritedUser*  = object
   id*:string
 
-proc init*(_:type FavoritedUser, id:string):FavoritedUser =
+proc new*(_:type FavoritedUser, id:string):FavoritedUser =
   return FavoritedUser(
     id:id
   )
@@ -48,7 +48,7 @@ type Article*  = object
   favoritedUsers*:seq[FavoritedUser]
   favoriteButtonViewModel*:FavoriteButtonViewModel
 
-proc init*(_:type Article,
+proc new*(_:type Article,
   id:string,
   title:string,
   description:string,
@@ -64,7 +64,7 @@ proc init*(_:type Article,
       isFavorited = true
       break
   
-  let favoriteButtonViewModel = FavoriteButtonViewModel.init(
+  let favoriteButtonViewModel = FavoriteButtonViewModel.new(
     isFavorited,
     id,
     loginUserId == author.id,
@@ -89,10 +89,10 @@ type HtmxUserFeedViewModel*  = object
   articles*:seq[Article]
   feedNavigationViewModel*:FeedNavigationViewModel
 
-proc init*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
   let articles = dto.articles.map(
     proc(article:ArticleDto):Article =
-      let author = Author.init(
+      let author = Author.new(
         article.author.id,
         article.author.name,
         article.author.image,
@@ -100,15 +100,15 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:s
 
       let tags = article.tags.map(
         proc(tag:TagDto):Tag =
-          return Tag.init(tag.name)
+          return Tag.new(tag.name)
       )
 
       let favoritedUsers = article.favoritedUsers.map(
         proc(favoritedUser:FavoritedUserDto):FavoritedUser =
-          FavoritedUser.init(favoritedUser.id)
+          FavoritedUser.new(favoritedUser.id)
       )
 
-      let article = Article.init(
+      let article = Article.new(
         article.id,
         article.title,
         article.description,
@@ -123,13 +123,13 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:s
   )
 
   let feedNavbarItems = @[
-    UserFeedNavbar.init(
+    UserFeedNavbar.new(
       "My Articles",
       true,
       "/users/" & dto.articles[0].author.id,
       &"/htmx/users/{dto.articles[0].author.id}/articles",
     ),
-    UserFeedNavbar.init(
+    UserFeedNavbar.new(
       "Favorited Articles",
       false,
       &"/users/{dto.articles[0].author.id}/favorites",
@@ -137,7 +137,7 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:s
     )
   ]
 
-  let feedNavigationViewModel = FeedNavigationViewModel.init(feedNavbarItems)
+  let feedNavigationViewModel = FeedNavigationViewModel.new(feedNavbarItems)
   
   
   return HtmxUserFeedViewModel(
@@ -147,10 +147,10 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:s
 
 
 
-proc init*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
   let articles = dto.articles.map(
     proc(article:get_favorites_in_user_dto.ArticleDto):Article =
-      let author = Author.init(
+      let author = Author.new(
         article.author.id,
         article.author.name,
         article.author.image,
@@ -158,15 +158,15 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:
 
       let tags = article.tags.map(
         proc(tag:get_favorites_in_user_dto.TagDto):Tag =
-          return Tag.init(tag.name)
+          return Tag.new(tag.name)
       )
 
       let favoritedUsers = article.favoritedUsers.map(
         proc(favoritedUser:get_favorites_in_user_dto.FavoritedUserDto):FavoritedUser =
-          FavoritedUser.init(favoritedUser.id)
+          FavoritedUser.new(favoritedUser.id)
       )
 
-      let article = Article.init(
+      let article = Article.new(
         article.id,
         article.title,
         article.description,
@@ -181,13 +181,13 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:
   )
 
   let feedNavbarItems = @[
-    UserFeedNavbar.init(
+    UserFeedNavbar.new(
       "My Articles",
       false,
       "/users/" & dto.user.id,
       &"/htmx/users/{dto.user.id}/articles",
     ),
-    UserFeedNavbar.init(
+    UserFeedNavbar.new(
       "Favorited Articles",
       true,
       &"/users/{dto.user.id}/favorites",
@@ -195,7 +195,7 @@ proc init*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:
     )
   ]
 
-  let feedNavigationViewModel = FeedNavigationViewModel.init(feedNavbarItems)
+  let feedNavigationViewModel = FeedNavigationViewModel.new(feedNavbarItems)
   
   
   return HtmxUserFeedViewModel(

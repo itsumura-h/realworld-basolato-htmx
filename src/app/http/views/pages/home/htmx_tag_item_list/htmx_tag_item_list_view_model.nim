@@ -6,7 +6,7 @@ type Tag*  = object
   name*:string
   popularCount*:int
 
-proc init*(_:type Tag, id:string, name:string, popularCount:int):Tag =
+proc new*(_:type Tag, id:string, name:string, popularCount:int):Tag =
   return Tag(
     id:id,
     name:name,
@@ -17,10 +17,10 @@ proc init*(_:type Tag, id:string, name:string, popularCount:int):Tag =
 type HtmxTagItemListViewModel*  = object
   tags*:seq[Tag]
 
-proc init*(_:type HtmxTagItemListViewModel, tagDtoList:seq[PopularTagDto]):HtmxTagItemListViewModel =
+proc new*(_:type HtmxTagItemListViewModel, tagDtoList:seq[PopularTagDto]):HtmxTagItemListViewModel =
   var tags:seq[Tag]
   for row in tagDtoList:
-    let tag = Tag.init(
+    let tag = Tag.new(
       id = row.id,
       name = row.name,
       popularCount = row.popularCount

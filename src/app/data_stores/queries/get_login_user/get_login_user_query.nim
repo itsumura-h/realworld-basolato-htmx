@@ -10,7 +10,7 @@ import ../../../models/aggregates/user/vo/user_id
 
 type GetLoginUserQuery*  = object of IGetLoginUserQuery
 
-proc init*(_:type GetLoginUserQuery): GetLoginUserQuery =
+proc new*(_:type GetLoginUserQuery): GetLoginUserQuery =
   return GetLoginUserQuery()
 
 
@@ -23,7 +23,7 @@ method invoke*(self:GetLoginUserQuery, userId:UserId):Future[LoginUserDto] {.asy
 
   let userData = userOpt.get()
 
-  let dto = LoginUserDto.init(
+  let dto = LoginUserDto.new(
     userData["name"].getStr(),
     userData["email"].getStr(),
     userData["bio"].getStr(),

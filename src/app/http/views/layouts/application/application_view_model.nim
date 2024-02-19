@@ -7,18 +7,18 @@ type ApplicationViewModel*  = object
   title*:string
   navbarViewModel*:NavbarViewModel
 
-proc init*(_:type ApplicationViewModel, title:string, user:LoginUserDto):ApplicationViewModel =
+proc new*(_:type ApplicationViewModel, title:string, user:LoginUserDto):ApplicationViewModel =
   ## if login
-  let navbarViewModel = NavbarViewModel.init(true, user.name, user.image)
+  let navbarViewModel = NavbarViewModel.new(true, user.name, user.image)
   return ApplicationViewModel(
     title:title,
     navbarViewModel:navbarViewModel
   )
 
 
-proc init*(_:type ApplicationViewModel, title:string):ApplicationViewModel =
+proc new*(_:type ApplicationViewModel, title:string):ApplicationViewModel =
   ## if not login
-  let navbarViewModel = NavbarViewModel.init(false, "", "")
+  let navbarViewModel = NavbarViewModel.new(false, "", "")
   return ApplicationViewModel(
     title:title,
     navbarViewModel:navbarViewModel

@@ -6,7 +6,7 @@ import ./get_comments_in_article_query_interface
 type GetCommentsInArticleUsecase*  = object
   query:IGetCommentsInArticleQuery
 
-proc init*(_:type GetCommentsInArticleUsecase, query:IGetCommentsInArticleQuery):GetCommentsInArticleUsecase =
+proc new*(_:type GetCommentsInArticleUsecase, query:IGetCommentsInArticleQuery):GetCommentsInArticleUsecase =
   return GetCommentsInArticleUsecase(
     query:query
   )

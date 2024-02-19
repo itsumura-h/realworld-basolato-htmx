@@ -16,13 +16,13 @@ type DraftArticle* = object
   updatedAt*:DateTime
 
 
-proc init*(_:type DraftArticle,
+proc new*(_:type DraftArticle,
   title:Title,
   description:Description,
   body:Body,
   userId:UserId
 ): DraftArticle =
-  let articleId = ArticleId.init(title)
+  let articleId = ArticleId.new(title)
   let now = now().utc()
   return DraftArticle(
     articleId: articleId,

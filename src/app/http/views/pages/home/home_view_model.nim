@@ -10,7 +10,7 @@ type HomeViewModel*  = object
   hasPage*:bool
   page*:int
 
-proc init*(_:type HomeViewModel, feedType="global", tagName="", hasPage=false, page=0): HomeViewModel =
+proc new*(_:type HomeViewModel, feedType="global", tagName="", hasPage=false, page=0): HomeViewModel =
   let feedType =
     if feedType == "personal":
       FeedType.personal

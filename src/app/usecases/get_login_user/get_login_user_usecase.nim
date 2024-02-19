@@ -7,13 +7,13 @@ import ./get_login_user_query_interface
 type GetLoginUserUsecase*  = object
   query:IGetLoginUserQuery
 
-proc init*(_:type GetLoginUserUsecase): GetLoginUserUsecase =
+proc new*(_:type GetLoginUserUsecase): GetLoginUserUsecase =
   return GetLoginUserUsecase(
     query: di.getLoginUserQuery
   )
 
 
 proc invoke*(self: GetLoginUserUsecase, userId:string):Future[LoginUserDto] {.async.} =
-  let userId = UserId.init(userId)
+  let userId = UserId.new(userId)
   let dto = self.query.invoke(userId).await
   return dto

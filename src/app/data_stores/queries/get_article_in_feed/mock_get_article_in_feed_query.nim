@@ -9,25 +9,25 @@ import ../../../models/aggregates/user/vo/user_id
 
 type MockGetArticleInFeedQuery*  = object of IGetArticleInFeedQuery
 
-proc init*(_:type MockGetArticleInFeedQuery):MockGetArticleInFeedQuery =
+proc new*(_:type MockGetArticleInFeedQuery):MockGetArticleInFeedQuery =
   return MockGetArticleInFeedQuery()
 
 
 method invoke*(self:MockGetArticleInFeedQuery, articleId:ArticleId, loginUserId:Option[UserId]):Future[GetArticleInFeedDto] {.async.} =
   let tags = @[
-    TagDto.init(
+    TagDto.new(
       "tag-name-1",
       articleId.value,
       "tag name 1"
     ),
-    TagDto.init(
+    TagDto.new(
       "tag-name-2",
       articleId.value,
       "tag name 2"
     ),
   ]
 
-  let article = ArticleDto.init(
+  let article = ArticleDto.new(
     id = articleId.value,
     title = "titie",
     description = "description",
@@ -37,13 +37,13 @@ method invoke*(self:MockGetArticleInFeedQuery, articleId:ArticleId, loginUserId:
     isFavorited = false,
     favoriteCount = 5,
   )
-  let user = UserDto.init(
+  let user = UserDto.new(
     "user-name",
     "user name",
     "",
     5
   )
-  let dto = GetArticleInFeedDto.init(
+  let dto = GetArticleInFeedDto.new(
     article,
     user
   )

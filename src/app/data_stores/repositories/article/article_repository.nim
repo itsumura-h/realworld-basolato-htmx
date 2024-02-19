@@ -11,7 +11,7 @@ import ../../../models/aggregates/article/article_entity
 
 type ArticleRepository = object of IArticleRepository
 
-proc init*(_:type ArticleRepository):ArticleRepository =
+proc new*(_:type ArticleRepository):ArticleRepository =
   return ArticleRepository()
 
 

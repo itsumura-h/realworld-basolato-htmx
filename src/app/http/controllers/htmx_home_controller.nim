@@ -17,7 +17,7 @@ import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
-  let viewModel = HomeViewModel.init()
+  let viewModel = HomeViewModel.new()
   let view = htmxHomeView(viewModel)
   return render(view)
 
@@ -28,9 +28,9 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
-  let usecase = GetGlobalFeedUsecase.init()
+  let usecase = GetGlobalFeedUsecase.new()
   let dto = usecase.invoke(page).await
-  let viewModel = HtmxPostPreviewViewModel.init(dto)
+  let viewModel = HtmxPostPreviewViewModel.new(dto)
   let view = htmxPostPreviewView(viewModel)
   return render(view)
 
@@ -42,16 +42,16 @@ proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
-  let usecase = GetTagFeedUsecase.init()
+  let usecase = GetTagFeedUsecase.new()
   let dto = usecase.invoke(tagName, page).await
-  let viewModel = HtmxPostPreviewViewModel.init(dto, tagName)
+  let viewModel = HtmxPostPreviewViewModel.new(dto, tagName)
   let view = htmxPostPreviewView(viewModel)
   return render(view)
 
 
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
-  let usecase = GetPopularTagsUsecase.init()
+  let usecase = GetPopularTagsUsecase.new()
   let tagsDto = usecase.invoke().await
-  let viewModel = HtmxTagItemListViewModel.init(tagsDto)
+  let viewModel = HtmxTagItemListViewModel.new(tagsDto)
   let view = htmxTagListView(viewModel)
   return render(view)

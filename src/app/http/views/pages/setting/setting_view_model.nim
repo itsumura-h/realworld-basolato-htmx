@@ -7,14 +7,14 @@ type SettingViewModel*  = object
   fromMessageViewModel*:FormMessageViewModel
   formViewModel*:FormViewModel
 
-proc init*(_:type SettingViewModel,
+proc new*(_:type SettingViewModel,
   getLoginUserDto:LoginUserDto,
 ):SettingViewModel =
-  let fromMessageViewModel = FormMessageViewModel.init(
+  let fromMessageViewModel = FormMessageViewModel.new(
     false,
     "",
   )
-  let formViewModel = FormViewModel.init(
+  let formViewModel = FormViewModel.new(
     false,
     getLoginUserDto.name,
     getLoginUserDto.email,
@@ -29,18 +29,18 @@ proc init*(_:type SettingViewModel,
   return viewModel
 
 
-proc init*(_:type SettingViewModel,
+proc new*(_:type SettingViewModel,
   name:string,
   email:string,
   bio:string,
   image:string,
   successMessage:string,
 ):SettingViewModel =
-  let fromMessageViewModel = FormMessageViewModel.init(
+  let fromMessageViewModel = FormMessageViewModel.new(
     true,
     successMessage,
   )
-  let formViewModel = FormViewModel.init(
+  let formViewModel = FormViewModel.new(
     true,
     name,
     email,

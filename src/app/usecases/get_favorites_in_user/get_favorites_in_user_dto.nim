@@ -4,7 +4,7 @@ import std/times
 type UserDto*  = object
   id*:string
 
-proc init*(_:type UserDto, id:string):UserDto =
+proc new*(_:type UserDto, id:string):UserDto =
   return UserDto(
     id:id
   )
@@ -15,7 +15,7 @@ type AuthorDto*  = object
   name*:string
   image*:string
 
-proc init*(_:type AuthorDto, id, name, image:string):AuthorDto =
+proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
   return AuthorDto(
     id:id,
     name:name,
@@ -26,7 +26,7 @@ proc init*(_:type AuthorDto, id, name, image:string):AuthorDto =
 type TagDto*  = object
   name*:string
 
-proc init*(_:type TagDto, name:string):TagDto =
+proc new*(_:type TagDto, name:string):TagDto =
   return TagDto(
     name:name
   )
@@ -35,7 +35,7 @@ proc init*(_:type TagDto, name:string):TagDto =
 type FavoritedUserDto*  = object
   id*:string
 
-proc init*(_:type FavoritedUserDto, id:string):FavoritedUserDto =
+proc new*(_:type FavoritedUserDto, id:string):FavoritedUserDto =
   return FavoritedUserDto(
     id:id
   )
@@ -50,7 +50,7 @@ type ArticleDto*  = object
   tags*:seq[TagDto]
   favoritedUsers*:seq[FavoritedUserDto]
 
-proc init*(_:type ArticleDto,
+proc new*(_:type ArticleDto,
   id:string,
   title:string,
   description:string,
@@ -76,7 +76,7 @@ type GetFavoritesInUserDto*  = object
   user*:UserDto
   articles*:seq[ArticleDto]
 
-proc init*(_:type GetFavoritesInUserDto, user:UserDto, articles:seq[ArticleDto]):GetFavoritesInUserDto =
+proc new*(_:type GetFavoritesInUserDto, user:UserDto, articles:seq[ArticleDto]):GetFavoritesInUserDto =
   return GetFavoritesInUserDto(
     user:user,
     articles:articles

@@ -13,9 +13,9 @@ import ../views/components/form_error_message/form_error_message_view
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = context.get("id").await
-  let usecase = GetLoginUserUsecase.init()
+  let usecase = GetLoginUserUsecase.new()
   let dto = usecase.invoke(userId).await
-  let viewModel = SettingViewModel.init(dto)
+  let viewModel = SettingViewModel.new(dto)
   let view = htmxSettingView(viewModel)
   return render(view)
 
@@ -33,7 +33,7 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
     for (key, rows) in errors.pairs:
       for row in rows.items:
         errorMessages.add(row.getStr())
-    let viewModel = FormErrorMessageViewModel.init(errorMessages)
+    let viewModel = FormErrorMessageViewModel.new(errorMessages)
     let view = formErrorMessageView(viewModel)
     let header = {
       "HX-Reswap": "innerHTML show:top",
@@ -49,13 +49,13 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
   let password = params.getStr("password")
   
   try:
-    let usecase = UpdateUserUsecase.init()
+    let usecase = UpdateUserUsecase.new()
     usecase.invoke(userId, name, email, password, bio, image).await
-    let viewModel = SettingViewModel.init(name, email, bio, image, "Successfully updated")
+    let viewModel = SettingViewModel.new(name, email, bio, image, "Successfully updated")
     let view = htmxSettingView(viewModel)
     return render(view)
   except IdNotFoundError:
-    let viewModel = FormErrorMessageViewModel.init(@[getCurrentExceptionMsg()])
+    let viewModel = FormErrorMessageViewModel.new(@[getCurrentExceptionMsg()])
     let view = formErrorMessageView(viewModel)
     let header = {
       "HX-Reswap": "innerHTML show:top",
@@ -63,7 +63,7 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
     }.newHttpHeaders()
     return render(view, header)
   except DomainError:
-    let viewModel = FormErrorMessageViewModel.init(@[getCurrentExceptionMsg()])
+    let viewModel = FormErrorMessageViewModel.new(@[getCurrentExceptionMsg()])
     let view = formErrorMessageView(viewModel)
     let header = {
       "HX-Reswap": "innerHTML show:top",

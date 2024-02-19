@@ -9,7 +9,7 @@ import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
 
 type GetArticlesInUserQuery*  = object of IGetArticlesInUserQuery
 
-proc init*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
+proc new*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
   return GetArticlesInUserQuery()
 
 
@@ -39,7 +39,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
                     .await
     for row in tagsData:
       tags.add(
-        TagDto.init(
+        TagDto.new(
           row["tag_id"].getStr()
         )
       )
@@ -52,12 +52,12 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
                                 .await
     for row in favoritedUsersData:
       favoritedUsers.add(
-        FavoritedUserDto.init(
+        FavoritedUserDto.new(
           row["id"].getStr(),
         )
       )
 
-    let author = AuthorDto.init(
+    let author = AuthorDto.new(
       articleData["author_id"].getStr(),
       articleData["name"].getStr(),
       articleData["image"].getStr(),
@@ -65,7 +65,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
 
     for articleData in articlesData:
       articles.add(
-        ArticleDto.init(
+        ArticleDto.new(
           articleData["id"].getStr(),
           articleData["title"].getStr(),
           articleData["description"].getStr(),
@@ -76,7 +76,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
         )
       )
 
-  let dto = GetArticlesInUserDto.init(
+  let dto = GetArticlesInUserDto.new(
     articles
   )
   return dto

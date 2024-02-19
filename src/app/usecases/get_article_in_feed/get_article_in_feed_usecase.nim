@@ -13,7 +13,7 @@ type GetArticleInFeedUsecase*  = object
   query:IGetArticleInFeedQuery
   repository:IArticleRepository
 
-proc init*(_:type GetArticleInFeedUsecase, query:IGetArticleInFeedQuery, repository:IArticleRepository):GetArticleInFeedUsecase =
+proc new*(_:type GetArticleInFeedUsecase, query:IGetArticleInFeedQuery, repository:IArticleRepository):GetArticleInFeedUsecase =
   return GetArticleInFeedUsecase(
     query:query,
     repository:repository
@@ -21,13 +21,13 @@ proc init*(_:type GetArticleInFeedUsecase, query:IGetArticleInFeedQuery, reposit
 
 
 proc invoke*(self:GetArticleInFeedUsecase, articleId:string, loginUserId:string):Future[GetArticleInFeedDto] {.async.} =
-  let articleId = ArticleId.init(articleId)
+  let articleId = ArticleId.new(articleId)
   let loginUserId =
     if loginUserId.len > 0:
-      UserId.init(loginUserId).some()
+      UserId.new(loginUserId).some()
     else:
       none(UserId)
-  let service = ArticleService.init(self.repository)
+  let service = ArticleService.new(self.repository)
   if not service.isExistsArticle(articleId).await:
     raise newException(IdNotFoundError, "article is not found")
   let dto = self.query.invoke(articleId, loginUserId).await

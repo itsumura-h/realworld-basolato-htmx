@@ -8,13 +8,13 @@ import ../../models/aggregates/user/vo/user_id
 type GetFavoritesInUserUsecase*  = object
   query: IGetFavoritesInUserQuery
 
-proc init*(_:type GetFavoritesInUserUsecase):GetFavoritesInUserUsecase =
+proc new*(_:type GetFavoritesInUserUsecase):GetFavoritesInUserUsecase =
   return GetFavoritesInUserUsecase(
     query: di.getFavoritesInUserQuery
   )
 
 
 proc invoke*(self:GetFavoritesInUserUsecase, userId: string): Future[GetFavoritesInUserDto] {.async.} =
-  let userId = UserId.init(userId)
+  let userId = UserId.new(userId)
   let dto = self.query.invoke(userId).await
   return dto

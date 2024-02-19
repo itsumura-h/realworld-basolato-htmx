@@ -4,7 +4,7 @@ type FollowButtonViewModel*  = object
   isFollowed*:bool
   followerCount*:int
 
-proc init*(_:type FollowButtonViewModel, userName:string, oobSwap:bool, isFollowed:bool, followerCount:int): FollowButtonViewModel =
+proc new*(_:type FollowButtonViewModel, userName:string, oobSwap:bool, isFollowed:bool, followerCount:int): FollowButtonViewModel =
   return FollowButtonViewModel(
     userName:userName,
     oobSwap:oobSwap,
