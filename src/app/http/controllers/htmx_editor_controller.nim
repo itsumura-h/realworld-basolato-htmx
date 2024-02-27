@@ -2,6 +2,7 @@ import std/httpcore
 import std/tables
 import std/strutils
 import std/strformat
+import std/json
 import basolato/controller
 import basolato/request_validation
 import basolato/core/logger
@@ -43,7 +44,10 @@ proc store*(context:Context, params:Params):Future[Response] {.async.} =
   let title = params.getStr("title")
   let description = params.getStr("description")
   let body = params.getStr("body")
-  let tags = params.getStr("tags").split(" ")
+  let tagsJson = params.getStr("tags").parseJson()
+  var tags:seq[string]
+  for tag in tagsJson.items:
+    tags.add(tag["value"].getStr)
 
   try:
     let usecase = CreateArticleUsecase.new()
@@ -114,12 +118,16 @@ proc edit*(context:Context, params:Params):Future[Response] {.async.} =
     }.newHttpHeaders()
     return render(view, header)
   
+  echo params.getAll().pretty()
   let authorId = context.get("id").await
   let articleId = params.getStr("articleId")
   let title = params.getStr("title")
   let description = params.getStr("description")
   let body = params.getStr("body")
-  let tags = params.getStr("tags").split(" ")
+  let tagsJson = params.getStr("tags").parseJson()
+  var tags:seq[string]
+  for tag in tagsJson.items:
+    tags.add(tag["value"].getStr)
 
   try:
     let usecase = UpdateArticleUsecase.new()

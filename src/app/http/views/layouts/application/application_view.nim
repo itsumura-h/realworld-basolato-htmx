@@ -28,6 +28,38 @@ proc applicationView*(viewModel:ApplicationViewModel, body:Component):Component 
       </div>
 
       $(footerView())
+
+      <script src="/js/tagify.js"></script>
+      <script>
+        var isTagify = null;
+
+        document.body.addEventListener('htmx:configRequest', function(evt) {
+          evt.detail.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
+        })
+
+        window.addEventListener('DOMContentLoaded', function() {
+          renderTagify();
+        });
+
+        document.body.addEventListener("htmx:afterSwap", function(evt) {
+          renderTagify();
+        });
+
+        function renderTagify() {
+          const input = document.querySelector('input[name=tags]');
+          const tagify = document.querySelector('tags[class="tagify  form-control tagify--outside"]');
+
+          if (input && !tagify) {
+            new Tagify(input, {
+              whitelist: [],
+              dropdown: {
+                position: "input",
+                enabled : 0 // always opens dropdown when input gets focus
+              }
+            })
+          }
+        }
+      </script>
     </body>
     </html>
   """
