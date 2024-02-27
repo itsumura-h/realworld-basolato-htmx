@@ -1,4 +1,5 @@
 import std/options
+import std/strutils
 import std/sequtils
 import ../../../../usecases/get_article_in_editor/get_article_in_editor_dto
 
@@ -30,18 +31,18 @@ proc new*(_:type EditorViewModel): EditorViewModel =
   return EditorViewModel(article:article)
 
 
-proc new*(_:type EditorViewModel, article: ArticleInEditorDto): EditorViewModel =
-  let tags = article.tags.map(
+proc new*(_:type EditorViewModel, articleDto: ArticleInEditorDto): EditorViewModel =
+  let tags = articleDto.tags.map(
     proc(tag: TagDto):string =
       return tag.name
   )
   let tagStr = tags.join(" ")
 
   let article = Article.new(
-    id = article.articleId,
-    title = article.title,
-    description = article.description,
-    body = article.body,
+    id = articleDto.articleId,
+    title = articleDto.title,
+    description = articleDto.description,
+    body = articleDto.body,
     tags = tagStr
   )
 

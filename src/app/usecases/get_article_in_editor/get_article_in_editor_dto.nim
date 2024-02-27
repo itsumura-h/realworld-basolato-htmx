@@ -19,4 +19,10 @@ proc new*(_:type ArticleInEditorDto,
   body:string,
   tags:seq[TagDto]
 ): ArticleInEditorDto =
-  return ArticleInEditorDto(articleId: articleId, title: title, description: description, body: body, tags: tags)
+  return ArticleInEditorDto(
+    articleId: articleId,
+    title: title,
+    description: description,
+    body: body,
+    tags: tags
+  )
