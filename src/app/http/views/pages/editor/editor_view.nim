@@ -18,9 +18,10 @@ proc impl(viewModel:EditorViewModel):Component =
             <form method="post"
 
               $if viewModel.article.isSome(){
-                hx-delete="/htmx/editor/$( viewModel.article.get().id )"
+                ${ let article = viewModel.article.get() }
+                hx-post="/htmx/editor/$( article.id )"
               }$else{
-                hx-delete=""
+                hx-post="/htmx/editor"
               }
 
               hx-target="#app-body"
@@ -41,7 +42,7 @@ proc impl(viewModel:EditorViewModel):Component =
                 >
               </fieldset>
               <fieldset class="form-group">
-                <textarea rows="8" name="content" class="form-control" placeholder="Write your post (in markdown)">$if viewModel.article.isSome(){$(viewModel.article.get().body)}</textarea>
+                <textarea rows="8" name="body" class="form-control" placeholder="Write your post (in markdown)">$if viewModel.article.isSome(){$(viewModel.article.get().body)}</textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input type="text" name="tags" class="form-control tagify--outside" placeholder="Enter tags"

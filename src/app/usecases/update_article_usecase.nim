@@ -1,6 +1,5 @@
 import std/asyncdispatch
 import std/sequtils
-import std/strformat
 import ../models/aggregates/article/article_entity
 import ../models/aggregates/user/vo/user_id
 import ../models/aggregates/article/vo/article_id
@@ -13,20 +12,18 @@ import ../models/aggregates/article/article_repository_interface
 import ../di_container
 
 
-type CreateArticleUsecase* = object
+type UpdateArticleUsecase* = object
   repository:IArticleRepository
 
 
-proc new*(_:type CreateArticleUsecase):CreateArticleUsecase =
-  return CreateArticleUsecase(
+proc new*(_:type UpdateArticleUsecase):UpdateArticleUsecase =
+  return UpdateArticleUsecase(
     repository:di.articleRepository
   )
 
 
-proc invoke*(self:CreateArticleUsecase,
-  userId, title, description, body:string,
-  tags:seq[string]
-):Future[string]  {.async.} =
+proc invoke*(self:UpdateArticleUsecase, userId, articleId, title, description, body:string, tags:seq[string])  {.async.} =
+  let articleId = ArticleId.new(articleId)
   let title = Title.new(title)
   let description = Description.new(description)
   let body = Body.new(body)
@@ -35,6 +32,5 @@ proc invoke*(self:CreateArticleUsecase,
     proc(tagName:string):Tag =
       return Tag.new(tagName)
   )
-  let article = DraftArticle.new(title, description, body, tags, userId)
-  self.repository.create(article).await
-  return article.articleId.value
+  let article = Article.new(articleId, title, description, body, tags, userId)
+  self.repository.update(article).await

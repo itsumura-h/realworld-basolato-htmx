@@ -7,3 +7,4 @@ interfaceDefs:
   type IArticleRepository*  = object of RootObj
     isExistsArticle:proc(self:IArticleRepository, articleId:ArticleId):Future[bool]
     create:proc(self:IArticleRepository, article:DraftArticle):Future[void]
+    update:proc(self:IArticleRepository, article:Article):Future[void]

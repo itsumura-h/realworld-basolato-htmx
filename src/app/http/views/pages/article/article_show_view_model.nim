@@ -1,8 +1,11 @@
 import std/times
+import std/options
 import std/sequtils
 import ../../../../usecases/get_article_in_feed/get_article_in_feed_dto
 import ../../components/article/follow_button/follow_button_view_model
 import ../../components/article/favorite_button/favorite_button_view_model
+import ../../components/article/edit_button/edit_button_view_model
+import ../../components/article/delete_button/delete_button_view_model
 
 
 type Tag*  = object
@@ -55,8 +58,11 @@ proc new*(_:type User, id, name, image:string):User =
 type ArticleShowViewModel*  = object
   article*:Article
   user*:User
-  followButtonViewModel*:FollowButtonViewModel
-  favoriteButtonViewModel*:FavoriteButtonViewModel
+  isAuthor*:bool
+  followButtonViewModel*:Option[FollowButtonViewModel]
+  favoriteButtonViewModel*:Option[FavoriteButtonViewModel]
+  editButtonViewModel*:Option[EditButtonViewModel]
+  deleteButtonViewModel*:Option[DeleteButtonViewModel]
 
 proc new*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
@@ -81,23 +87,50 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:stri
     dto.user.image,
   )
 
-  let followButtonViewModel = FollowButtonViewModel.new(
-    dto.user.name,
-    false,
-    dto.user.id == loginUserId,
-    dto.user.followerCount,
-  )
+  let isAuthor = author.id == loginUserId
 
-  let favoriteButtonViewModel = FavoriteButtonViewModel.new(
-    dto.article.isFavorited,
-    dto.article.id,
-    false,
-    dto.article.favoriteCount,
-  )
+  let followButtonViewModel = 
+    if isAuthor:
+      none(FollowButtonViewModel)
+    else:
+      FollowButtonViewModel.new(
+        dto.user.name,
+        false,
+        dto.user.id == loginUserId,
+        dto.user.followerCount,
+      )
+      .some()
+
+  let favoriteButtonViewModel =
+    if isAuthor:
+      none(FavoriteButtonViewModel)
+    else:
+      FavoriteButtonViewModel.new(
+        dto.article.isFavorited,
+        dto.article.id,
+        false,
+        dto.article.favoriteCount,
+      )
+      .some()
+
+  let editButtonViewModel =
+    if isAuthor:
+      EditButtonViewModel.new(dto.article.id).some()
+    else:
+      none(EditButtonViewModel)
+
+  let deleteButtonViewModel =
+    if isAuthor:
+      DeleteButtonViewModel.new(dto.article.id).some()
+    else:
+      none(DeleteButtonViewModel)
 
   return ArticleShowViewModel(
     article:article,
     user:author,
+    isAuthor:isAuthor,
     followButtonViewModel:followButtonViewModel,
     favoriteButtonViewModel:favoriteButtonViewModel,
+    editButtonViewModel: editButtonViewModel,
+    deleteButtonViewModel: deleteButtonViewModel,
   )

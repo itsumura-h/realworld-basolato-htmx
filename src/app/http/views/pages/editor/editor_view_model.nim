@@ -18,7 +18,7 @@ type Article* = object
   body*: string
   tags*:string
 
-proc new*(_:type Article, id: string, title: string, description: string, body: string, tags: seq[Tag]): Article =
+proc new*(_:type Article, id, title, description, body, tags: string): Article =
   return Article(id:id, title:title, description:description, body:body, tags:tags)
 
 
@@ -32,17 +32,29 @@ proc new*(_:type EditorViewModel): EditorViewModel =
 
 proc new*(_:type EditorViewModel, article: ArticleInEditorDto): EditorViewModel =
   let tags = article.tags.map(
-    proc(tag:Tag):string =
+    proc(tag: TagDto):string =
       return tag.name
   )
   let tagStr = tags.join(" ")
 
   let article = Article.new(
-    id: article.id,
-    title: article.title,
-    description: article.description,
-    body: article.body,
-    tags: tagStr
+    id = article.articleId,
+    title = article.title,
+    description = article.description,
+    body = article.body,
+    tags = tagStr
+  )
+
+  return EditorViewModel(article:article.some())
+
+
+proc fromRequest*(_:type EditorViewModel, id, title, description, body, tags: string): EditorViewModel =
+  let article = Article.new(
+    id = id,
+    title = title,
+    description = description,
+    body = body,
+    tags = tags
   )
 
   return EditorViewModel(article:article.some())

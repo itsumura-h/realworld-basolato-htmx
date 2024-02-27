@@ -3,6 +3,7 @@ import ./vo/article_id
 import ./vo/title
 import ./vo/description
 import ./vo/body
+import ./tag_entity
 import ../user/vo/user_id
 
 
@@ -11,6 +12,7 @@ type DraftArticle* = object
   title*: Title
   description*: Description
   body*: Body
+  tags*:seq[Tag]
   userId*: UserId
   createdAt*:DateTime
   updatedAt*:DateTime
@@ -20,6 +22,7 @@ proc new*(_:type DraftArticle,
   title:Title,
   description:Description,
   body:Body,
+  tags:seq[Tag],
   userId:UserId
 ): DraftArticle =
   let articleId = ArticleId.new(title)
@@ -29,6 +32,37 @@ proc new*(_:type DraftArticle,
     title: title,
     description:description,
     body: body,
+    tags: tags,
+    userId: userId,
     createdAt: now,
+    updatedAt: now,
+  )
+
+
+type Article* = object
+  articleId*: ArticleId
+  title*: Title
+  description*: Description
+  body*: Body
+  tags*:seq[Tag]
+  userId*: UserId
+  updatedAt*:DateTime
+
+proc new*(_:type Article,
+  articleId:ArticleId,
+  title:Title,
+  description:Description,
+  body:Body,
+  tags:seq[Tag],
+  userId:UserId,
+): Article =
+  let now = now().utc()
+  return Article(
+    articleId: articleId,
+    title: title,
+    description:description,
+    body: body,
+    tags: tags,
+    userId: userId,
     updatedAt: now,
   )

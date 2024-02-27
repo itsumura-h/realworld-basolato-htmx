@@ -43,6 +43,7 @@ let routes = @[
       Route.get("/users/{userId:str}/favorites", user_controller.favorites),
 
       Route.get("/editor", editor_controller.create).middleware(should_login_middleware.shouldLogin),
+      Route.get("/editor/{articleId:str}", editor_controller.update).middleware(should_login_middleware.shouldLogin),
 
       Route.group("/htmx", @[
         Route.get("/sign-up", htmx_sign_controller.signUpPage),
@@ -67,7 +68,9 @@ let routes = @[
         Route.get("/users/{userId:str}/favorites", htmx_user_controller.favorites),
 
         Route.get("/editor", htmx_editor_controller.create).middleware(should_login_middleware.htmxShouldLogin),
-
+        Route.post("/editor", htmx_editor_controller.store).middleware(should_login_middleware.htmxShouldLogin),
+        Route.get("/editor/{articleId:str}", htmx_editor_controller.update).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/editor/{articleId:str}", htmx_editor_controller.edit).middleware(should_login_middleware.htmxShouldLogin),
       ])
     ])
     .middleware(checkCsrfToken)

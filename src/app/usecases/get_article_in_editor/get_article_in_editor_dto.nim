@@ -1,8 +1,8 @@
-type Tag* = object
+type TagDto* = object
   name*:string
 
-proc new*(_:type Tag, name:string): Tag =
-  return Tag(name: name)
+proc new*(_:type TagDto, name:string): TagDto =
+  return TagDto(name: name)
 
 
 type ArticleInEditorDto* = object
@@ -10,13 +10,13 @@ type ArticleInEditorDto* = object
   title*:string
   description*:string
   body*:string
-  tags*:seq[Tag]
+  tags*:seq[TagDto]
 
 proc new*(_:type ArticleInEditorDto,
   articleId:string,
   title:string,
   description:string,
   body:string,
-  tags:seq[Tag]
+  tags:seq[TagDto]
 ): ArticleInEditorDto =
   return ArticleInEditorDto(articleId: articleId, title: title, description: description, body: body, tags: tags)

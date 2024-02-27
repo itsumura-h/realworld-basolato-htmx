@@ -15,7 +15,7 @@ import ../views/pages/comment/comment_wrapper_view
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
-  let loginUserId = context.get("loginUserId").await
+  let loginUserId = context.get("id").await
   let query = di.getArticleInFeedQuery
   let repository = di.articleRepository
   let usecase = GetArticleInFeedUsecase.new(query, repository)

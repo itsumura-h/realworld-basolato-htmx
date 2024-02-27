@@ -1,9 +1,12 @@
+import std/options
 import basolato/view
 import ./article_show_view_model
 import ../../layouts/application/application_view_model
 import ../../layouts/application/application_view
 import ../../components/article/follow_button/follow_button_view
 import ../../components/article/favorite_button/favorite_button_view
+import ../../components/article/edit_button/edit_button_view
+import ../../components/article/delete_button/delete_button_view
 
 
 proc impl(viewModel:ArticleShowViewModel):Component =
@@ -30,13 +33,17 @@ proc impl(viewModel:ArticleShowViewModel):Component =
             </div>
 
             <!-- if author -->
+            $if viewModel.isAuthor{
               <!-- edit-button -->
+              $( editButtonView(viewModel.editButtonViewModel.get) )
               <!-- delete-button -->
-            <!-- else -->
+              $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
+            }$else{
               <!-- follow button -->
-              $(followButtonView(viewModel.followButtonViewModel))
+              $( followButtonView(viewModel.followButtonViewModel.get) )
               <!-- favorite button -->
-              $(favoriteButtonView(viewModel.favoriteButtonViewModel))
+              $( favoriteButtonView(viewModel.favoriteButtonViewModel.get) )
+            }
           </div>
 
         </div>
@@ -75,14 +82,16 @@ proc impl(viewModel:ArticleShowViewModel):Component =
             </div>
 
             <!-- if author -->
-              <!-- edit-button -->
+            $if viewModel.isAuthor{
+              $( editButtonView(viewModel.editButtonViewModel.get) )
               <!-- delete-button -->
-            <!-- else -->
+              $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
+            }$else{
               <!-- follow button -->
-              $(followButtonView(viewModel.followButtonViewModel))
+              $(followButtonView(viewModel.followButtonViewModel.get))
               <!-- favorite button -->
-              $(favoriteButtonView(viewModel.favoriteButtonViewModel))
-
+              $(favoriteButtonView(viewModel.favoriteButtonViewModel.get))
+            }
           </div>
         </div>
 

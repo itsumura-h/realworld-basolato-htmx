@@ -12,7 +12,7 @@ import ./libs/create_application_view_model
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
-  let loginUserId = context.get("loginUserId").await
+  let loginUserId = context.get("id").await
   let query = di.getArticleInFeedQuery
   let repository = di.articleRepository
   let usecase = GetArticleInFeedUsecase.new(query, repository)

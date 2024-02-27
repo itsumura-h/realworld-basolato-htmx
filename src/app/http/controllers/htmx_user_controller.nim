@@ -34,7 +34,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc articles*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = params.getStr("userId")
-  let loginUserId = context.get("loginUserId").await
+  let loginUserId = context.get("id").await
   try:
     let usecase = GetArticlesInUserUsecase.new()
     let dto = usecase.invoke(userId).await
@@ -47,7 +47,7 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = params.getStr("userId")
-  let loginUserId = context.get("loginUserId").await
+  let loginUserId = context.get("id").await
   try:
     let usecase = GetFavoritesInUserUsecase.new()
     let dto = usecase.invoke(userId).await

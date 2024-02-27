@@ -71,8 +71,8 @@ proc newDiContainer():DiContainer =
   else:
     return (
       userRepository: UserRepository.new(),
-      articleRepository: MockArticleRepository.new(),
-      # articleRepository: ArticleRepository.new(),
+      # articleRepository: MockArticleRepository.new(),
+      articleRepository: ArticleRepository.new(),
       # getArticleInFeedQuery: MockGetArticleInFeedQuery.new(),
       getArticleInFeedQuery: GetArticleInFeedQuery.new(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
@@ -87,8 +87,8 @@ proc newDiContainer():DiContainer =
       getTagFeedQuery: GetTagFeedQuery.new(),
       # getLoginUserQuery: MockGetLoginUserQuery.new(),
       getLoginUserQuery: GetLoginUserQuery.new(),
-      getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
-      # getArticleInEditorQuery: GetArticleInEditorQuery.new(),
+      # getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
+      getArticleInEditorQuery: GetArticleInEditorQuery.new(),
     )
 
 let di* = newDiContainer()

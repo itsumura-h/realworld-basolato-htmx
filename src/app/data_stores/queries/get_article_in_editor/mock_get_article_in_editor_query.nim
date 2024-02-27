@@ -12,8 +12,8 @@ proc new*(_:type MockGetArticleInEditorQuery): MockGetArticleInEditorQuery =
 
 method invoke*(self:MockGetArticleInEditorQuery, articleId:ArticleId): Future[ArticleInEditorDto] {.async.} =
   let tags = @[
-    Tag.new("tag1"),
-    Tag.new("tag2"),
+    TagDto.new("tag1"),
+    TagDto.new("tag2"),
   ]
   
   return ArticleInEditorDto.new(

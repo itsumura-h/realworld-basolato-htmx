@@ -9,3 +9,7 @@ proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let viewModel = EditorViewModel.new()
   let view = editorView(appViewModel, viewModel)
   return render(view)
+
+
+proc update*(context:Context, params:Params):Future[Response] {.async.} =
+  render("")
