@@ -13,4 +13,4 @@ proc new*(_:type ArticleService, repository:IArticleRepository):ArticleService =
 
 
 proc isExistsArticle*(self:ArticleService, articleId:ArticleId):Future[bool] {.async.} =
-  return self.repository.isExistsArticle(articleId).await
+  return self.repository.isExists(articleId).await

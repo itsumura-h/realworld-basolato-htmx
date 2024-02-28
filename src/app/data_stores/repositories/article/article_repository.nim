@@ -15,7 +15,7 @@ proc new*(_:type ArticleRepository):ArticleRepository =
   return ArticleRepository()
 
 
-method isExistsArticle*(self:ArticleRepository, articleId:ArticleId):Future[bool] {.async.} =
+method isExists*(self:ArticleRepository, articleId:ArticleId):Future[bool] {.async.} =
   let articleOpt = rdb.table("article").find(articleId.value).await
   return articleOpt.isSome()
 
@@ -109,3 +109,10 @@ method update*(self:ArticleRepository, article:Article) {.async.} =
             "article_id": article.articleId.value,
           })
           .await
+
+
+method delete*(self:ArticleRepository, articleId:ArticleId) {.async.} =
+  rdb.table("article")
+      .where("id", "=", articleId.value)  
+      .delete()
+      .await

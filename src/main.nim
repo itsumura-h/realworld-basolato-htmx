@@ -62,6 +62,7 @@ let routes = @[
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
         Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
+        Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/users/{userId:str}", htmx_user_controller.show),
         Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),

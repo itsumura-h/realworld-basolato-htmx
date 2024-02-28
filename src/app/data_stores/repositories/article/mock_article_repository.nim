@@ -9,5 +9,5 @@ proc new*(_:type MockArticleRepository):MockArticleRepository =
   return MockArticleRepository()
 
 
-method isExistsArticle*(self:MockArticleRepository, articleId:ArticleId):Future[bool] {.async.} =
+method isExists*(self:MockArticleRepository, articleId:ArticleId):Future[bool] {.async.} =
   return true

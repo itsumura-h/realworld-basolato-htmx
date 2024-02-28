@@ -1,4 +1,5 @@
 import std/asyncdispatch
+import std/strformat
 # framework
 import basolato/controller
 import basolato/view
@@ -11,6 +12,8 @@ import ../views/pages/article/article_show_view
 import ../../usecases/get_comments_in_article/get_comments_in_article_usecase
 import ../views/pages/comment/comment_view_model
 import ../views/pages/comment/comment_wrapper_view
+
+import ../../usecases/delete_article_usecase
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -34,3 +37,14 @@ proc comments*(context:Context, params:Params):Future[Response] {.async.} =
   let viewModel = CommentViewModel.new(dto, isLogin)
   let view = commentWrapperView(viewModel)
   return render(view)
+
+
+proc delete*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  let userId = context.get("id").await
+  let usecase = DeleteArticleUsecase.new()
+  usecase.invoke(articleId).await
+  let header = {
+    "HX-Redirect": &"/users/{userId}",
+  }.newHttpHeaders()
+  return render("", header)
