@@ -13,7 +13,8 @@ proc new*(_:type MockGetLoginUserQuery): MockGetLoginUserQuery =
 
 method invoke*(self: MockGetLoginUserQuery, id:UserId):Future[LoginUserDto] {.async.} =
   return LoginUserDto.new(
-    "Namw 1",
+    "name-1",
+    "Name 1",
     "name1@example.com",
     "bio",
     "imgae"

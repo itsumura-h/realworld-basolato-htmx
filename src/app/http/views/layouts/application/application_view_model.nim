@@ -9,7 +9,7 @@ type ApplicationViewModel*  = object
 
 proc new*(_:type ApplicationViewModel, title:string, user:LoginUserDto):ApplicationViewModel =
   ## if login
-  let navbarViewModel = NavbarViewModel.new(true, user.name, user.image)
+  let navbarViewModel = NavbarViewModel.new(true, user.id, user.name, user.image)
   return ApplicationViewModel(
     title:title,
     navbarViewModel:navbarViewModel
@@ -18,7 +18,7 @@ proc new*(_:type ApplicationViewModel, title:string, user:LoginUserDto):Applicat
 
 proc new*(_:type ApplicationViewModel, title:string):ApplicationViewModel =
   ## if not login
-  let navbarViewModel = NavbarViewModel.new(false, "", "")
+  let navbarViewModel = NavbarViewModel.new(false, "", "", "")
   return ApplicationViewModel(
     title:title,
     navbarViewModel:navbarViewModel

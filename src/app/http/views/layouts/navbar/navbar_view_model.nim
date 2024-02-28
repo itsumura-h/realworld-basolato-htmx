@@ -1,11 +1,13 @@
 type NavbarViewModel*  = object
   isLogin*: bool
-  name*:string
+  userId*:string
+  userName*:string
   image*:string
 
-proc new*(_:type NavbarViewModel, isLogin: bool, name:string, image:string): NavbarViewModel =
+proc new*(_:type NavbarViewModel, isLogin: bool, id:string, name:string, image:string): NavbarViewModel =
   return NavbarViewModel(
     isLogin: isLogin,
-    name:name,
+    userId:id,
+    userName:name,
     image:image
   )

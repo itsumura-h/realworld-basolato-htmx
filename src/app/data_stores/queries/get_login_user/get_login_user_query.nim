@@ -24,6 +24,7 @@ method invoke*(self:GetLoginUserQuery, userId:UserId):Future[LoginUserDto] {.asy
   let userData = userOpt.get()
 
   let dto = LoginUserDto.new(
+    userData["id"].getStr(),
     userData["name"].getStr(),
     userData["email"].getStr(),
     userData["bio"].getStr(),

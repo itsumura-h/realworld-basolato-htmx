@@ -66,14 +66,14 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
         </li>
         <li class="nav-item">
           <a id="nav-link-profile"
-            href="/users/username"
-            hx-get="/htmx/users/username"
+            href="/users/$(viewModel.userId)"
+            hx-get="/htmx/users/$(viewModel.userId)"
             hx-target="#app-body"
-            hx-push-url="/users/username"
+            hx-push-url="/users/$(viewModel.userId)"
             class="nav-link"
           >
             <img class="user-pic" src="$(viewModel.image)">
-            $(viewModel.name)
+            $(viewModel.userName)
           </a>
         </li>
       }
