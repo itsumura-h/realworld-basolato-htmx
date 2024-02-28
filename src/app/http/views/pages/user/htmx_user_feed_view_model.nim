@@ -90,14 +90,14 @@ type HtmxUserFeedViewModel*  = object
   feedNavigationViewModel*:FeedNavigationViewModel
 
 proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+  let author = Author.new(
+    dto.author.id,
+    dto.author.name,
+    dto.author.image,
+  )
+
   let articles = dto.articles.map(
     proc(article:ArticleDto):Article =
-      let author = Author.new(
-        article.author.id,
-        article.author.name,
-        article.author.image,
-      )
-
       let tags = article.tags.map(
         proc(tag:TagDto):Tag =
           return Tag.new(tag.name)
@@ -126,14 +126,14 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
     UserFeedNavbar.new(
       "My Articles",
       true,
-      "/users/" & dto.articles[0].author.id,
-      &"/htmx/users/{dto.articles[0].author.id}/articles",
+      "/users/" & dto.author.id,
+      &"/htmx/users/{dto.author.id}/articles",
     ),
     UserFeedNavbar.new(
       "Favorited Articles",
       false,
-      &"/users/{dto.articles[0].author.id}/favorites",
-      &"/htmx/users/{dto.articles[0].author.id}/favorites",
+      &"/users/{dto.author.id}/favorites",
+      &"/htmx/users/{dto.author.id}/favorites",
     )
   ]
 
@@ -184,7 +184,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:s
     UserFeedNavbar.new(
       "My Articles",
       false,
-      "/users/" & dto.user.id,
+      &"/users/{dto.user.id}",
       &"/htmx/users/{dto.user.id}/articles",
     ),
     UserFeedNavbar.new(

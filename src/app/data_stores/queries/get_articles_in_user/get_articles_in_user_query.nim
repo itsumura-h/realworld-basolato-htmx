@@ -1,6 +1,8 @@
 import std/asyncdispatch
 import std/json
+import std/options
 import allographer/query_builder
+import ../../../errors
 from ../../../../config/database import rdb
 import ../../../models/aggregates/user/vo/user_id
 import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interface
@@ -14,17 +16,28 @@ proc new*(_:type GetArticlesInUserQuery):GetArticlesInUserQuery =
 
 
 method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInUserDto] {.async.} =
+  let authorOpt = rdb.table("user")
+                    .where("id", "=", userId.value)
+                    .first()
+                    .await
+  if not authorOpt.isSome():
+    raise newException(IdNotFoundError, "Author not found")
+  let authorData = authorOpt.get()
+
+  let author = AuthorDto.new(
+    authorData["id"].getStr(),
+    authorData["name"].getStr(),
+    authorData["image"].getStr(),
+  )
+
   let articlesData = rdb.select(
                       "article.id",
                       "article.title",
                       "article.description",
                       "article.author_id",
                       "article.created_at",
-                      "user.name",
-                      "user.image",
                       )
                       .table("article")
-                      .join("user", "user.id", "=", "article.author_id")
                       .where("author_id", "=", userId.value)
                       .get()
                       .await
@@ -57,12 +70,6 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
         )
       )
 
-    let author = AuthorDto.new(
-      articleData["author_id"].getStr(),
-      articleData["name"].getStr(),
-      articleData["image"].getStr(),
-    )
-
     for articleData in articlesData:
       articles.add(
         ArticleDto.new(
@@ -70,13 +77,13 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId):Future[GetArticlesInU
           articleData["title"].getStr(),
           articleData["description"].getStr(),
           articleData["created_at"].getStr(),
-          author,
           tags,
           favoritedUsers
         )
       )
 
   let dto = GetArticlesInUserDto.new(
-    articles
+    articles,
+    author
   )
   return dto

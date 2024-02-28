@@ -34,7 +34,6 @@ method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticle
       "Article 1",
       "description1",
       "2024-01-01 12:00:00",
-      author,
       tags,
       favoritedUsers
     ),
@@ -43,11 +42,10 @@ method invoke*(self:MockGetArticlesInUserQuery, userId:UserId):Future[GetArticle
       "Article 2",
       "description2",
       "2024-01-01 12:00:00",
-      author,
       tags,
       favoritedUsers
     ),
   ]
 
-  let dto = GetArticlesInUserDto.new(articles)
+  let dto = GetArticlesInUserDto.new(articles, author)
   return dto

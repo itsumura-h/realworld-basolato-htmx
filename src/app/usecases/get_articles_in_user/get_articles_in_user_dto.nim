@@ -37,7 +37,6 @@ type ArticleDto*  = object
   title*:string
   description*:string
   createdAt*:DateTime
-  author*:AuthorDto
   tags*:seq[TagDto]
   favoritedUsers*:seq[FavoritedUserDto]
 
@@ -46,7 +45,6 @@ proc new*(_:type ArticleDto,
   title:string,
   description:string,
   createdAt:string,
-  author:AuthorDto,
   tags:seq[TagDto],
   favoritedUsers:seq[FavoritedUserDto]
 ): ArticleDto =  
@@ -56,7 +54,6 @@ proc new*(_:type ArticleDto,
     title:title,
     description:description,
     createdAt:createdAt,
-    author:author,
     tags:tags,
     favoritedUsers:favoritedUsers,
   )
@@ -65,8 +62,10 @@ proc new*(_:type ArticleDto,
 
 type GetArticlesInUserDto*  = object
   articles*:seq[ArticleDto]
+  author*:AuthorDto
 
-proc new*(_:type GetArticlesInUserDto, articles:seq[ArticleDto]):GetArticlesInUserDto =
+proc new*(_:type GetArticlesInUserDto, articles:seq[ArticleDto], author:AuthorDto):GetArticlesInUserDto =
   return GetArticlesInUserDto(
-    articles:articles
+    articles:articles,
+    author:author
   )
