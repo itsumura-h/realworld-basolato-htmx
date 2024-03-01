@@ -27,6 +27,10 @@ import ./data_stores/queries/get_articles_in_user/get_articles_in_user_query
 import ./usecases/get_favorites_in_user/get_favorites_in_user_query_interface
 import ./data_stores/queries/get_favorites_in_user/mock_get_favorites_in_user_query
 import ./data_stores/queries/get_favorites_in_user/get_favorites_in_user_query
+# get your feed
+import ./usecases/get_your_feed/get_your_feed_query_interface
+import ./data_stores/queries/get_your_feed/mock_get_your_feed_query
+import ./data_stores/queries/get_your_feed/get_your_feed_query
 # get tag feed
 import ./usecases/get_tag_feed/get_tag_feed_query_interface
 import ./data_stores/queries/get_tag_feed/mock_get_tag_feed_query
@@ -49,6 +53,7 @@ type DiContainer* = tuple
   getUserShowQuery: IGetUserShowQuery
   getArticlesInUserQuery: IGetArticlesInUserQuery
   getFavoritesInUserQuery: IGetFavoritesInUserQuery
+  getYourFeedQuery: IGetYourFeedQuery
   getTagFeedQuery: IGetTagFeedQuery
   getLoginUserQuery: IGetLoginUserQuery
   getArticleInEditorQuery: IGetArticleInEditorQuery
@@ -64,6 +69,7 @@ proc newDiContainer():DiContainer =
       getUserShowQuery: MockGetUserShowQuery.new(),
       getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
+      getYourFeedQuery: MockGetYourFeedQuery.new(),
       getTagFeedQuery: MockGetTagFeedQuery.new(),
       getLoginUserQuery: MockGetLoginUserQuery.new(),
       getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
@@ -83,6 +89,8 @@ proc newDiContainer():DiContainer =
       getArticlesInUserQuery: GetArticlesInUserQuery.new(),
       # getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
       getFavoritesInUserQuery: GetFavoritesInUserQuery.new(),
+      # getYourFeedQuery: MockGetYourFeedQuery.new(),
+      getYourFeedQuery: GetYourFeedQuery.new(),
       # getTagFeedQuery: MockGetTagFeedQuery.new(),
       getTagFeedQuery: GetTagFeedQuery.new(),
       # getLoginUserQuery: MockGetLoginUserQuery.new(),

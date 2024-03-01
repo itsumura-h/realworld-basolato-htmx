@@ -14,6 +14,9 @@ import ../../usecases/get_tag_feed/get_tag_feed_usecase
 import ../../usecases/get_popular_tags/get_popular_tags_usecase
 import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view_model
 import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view
+# your feed
+import ../../usecases/get_your_feed/get_your_feed_usecase
+
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
@@ -28,8 +31,29 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
+  let isLogin = context.isLogin().await
   let usecase = GetGlobalFeedUsecase.new()
   let dto = usecase.invoke(page).await
+  let viewModel = HtmxPostPreviewViewModel.new(dto, isLogin)
+  let view = htmxPostPreviewView(viewModel)
+  return render(view)
+
+
+proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
+
+  let userId =
+    if context.isSome("id").await:
+      context.get("id").await
+    else:
+      return render(Http403, "Forbidden")
+
+  let usecase = GetYourFeedUsecase.new()
+  let dto = usecase.invoke(userId, page).await
   let viewModel = HtmxPostPreviewViewModel.new(dto)
   let view = htmxPostPreviewView(viewModel)
   return render(view)
@@ -42,9 +66,10 @@ proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
+  let isLogin = context.isLogin().await
   let usecase = GetTagFeedUsecase.new()
   let dto = usecase.invoke(tagName, page).await
-  let viewModel = HtmxPostPreviewViewModel.new(dto, tagName)
+  let viewModel = HtmxPostPreviewViewModel.new(dto, tagName, isLogin)
   let view = htmxPostPreviewView(viewModel)
   return render(view)
 

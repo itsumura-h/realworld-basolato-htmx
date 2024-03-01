@@ -2,6 +2,7 @@ import std/times
 import ../../../components/home/feed_navigation/feed_navigation_view_model
 import ../../../../../usecases/get_global_feed/get_global_feed_dto
 import ../../../../../usecases/get_tag_feed/get_tag_feed_dto
+import ../../../../../usecases/get_your_feed/your_feed_dto
 
 
 type Tag*  = object
@@ -75,7 +76,7 @@ type HtmxPostPreviewViewModel*  = object
   paginator*:Paginator
   feedNavbarItems*:seq[FeedNavbar]
 
-proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPostPreviewViewModel =
+proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto, isLogin:bool):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in globalFeedDto.articlesWithAuthor:
     let user = User.new(
@@ -99,7 +100,7 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
     )
     articles.add(article)
 
-  let feedNavbarItems = @[
+  var feedNavbarItems = @[
     FeedNavbar.new(
       title = "Global Feed",
       isActive = true,
@@ -107,6 +108,17 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
       hxPushUrl = "/"
     )
   ]
+
+  if isLogin:
+    feedNavbarItems.insert(
+      FeedNavbar.new(
+        title = "Your Feed",
+        isActive = false,
+        hxGetUrl = "/htmx/home/your-feed",
+        hxPushUrl = "/your-feed"
+      ),
+      0
+    )
 
   let paginator = Paginator.new(
     hasPages = globalFeedDto.globalFeedPaginator.hasPages,
@@ -121,7 +133,7 @@ proc new*(_:type HtmxPostPreviewViewModel, globalFeedDto:GlobalFeedDto):HtmxPost
   )
 
 
-proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string):HtmxPostPreviewViewModel =
+proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string, isLogin:bool):HtmxPostPreviewViewModel =
   var articles:seq[Article]
   for row in tagFeedDto.articlesWithAuthor:
     let user = User.new(
@@ -145,7 +157,7 @@ proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string
     )
     articles.add(article)
 
-  let feedNavbarItems = @[
+  var feedNavbarItems = @[
     FeedNavbar.new(
       title = "Global Feed",
       isActive = false,
@@ -160,10 +172,73 @@ proc new*(_:type HtmxPostPreviewViewModel, tagFeedDto:TagFeedDto, tagName:string
     ),
   ]
 
+  if isLogin:
+    feedNavbarItems.insert(
+      FeedNavbar.new(
+        title = "Your Feed",
+        isActive = false,
+        hxGetUrl = "/htmx/home/your-feed",
+        hxPushUrl = "/your-feed"
+      ),
+      0
+    )
+
   let paginator = Paginator.new(
     hasPages = tagFeedDto.paginator.hasPages,
     current = tagFeedDto.paginator.current,
     lastPage = tagFeedDto.paginator.lastPage
+  )
+
+  return HtmxPostPreviewViewModel(
+    articles:articles,
+    paginator:paginator,
+    feedNavbarItems:feedNavbarItems
+  )
+
+
+proc new*(_:type HtmxPostPreviewViewModel, yourFeedDto:YourFeedDto):HtmxPostPreviewViewModel =
+  var articles:seq[Article]
+  for row in yourFeedDto.articlesWithAuthor:
+    let user = User.new(
+      id = row.author.id,
+      name = row.author.name,
+      image = row.author.image
+    )
+    var tags:seq[Tag]
+    for row in row.tags:
+      let tag = Tag.new(row.name)
+      tags.add(tag)
+
+    let article = Article.new(
+      id = row.id,
+      title = row.title,
+      description = row.description,
+      createdAt = row.createdAt.format("yyyy MMMM d"),
+      popularCount = row.popularCount,
+      user = user,
+      tags = tags
+    )
+    articles.add(article)
+
+  var feedNavbarItems = @[
+    FeedNavbar.new(
+      title = "Your Feed",
+      isActive = true,
+      hxGetUrl = "/htmx/home/your-feed",
+      hxPushUrl = "/your-feed"
+    ),
+    FeedNavbar.new(
+      title = "Global Feed",
+      isActive = false,
+      hxGetUrl = "/htmx/home/global-feed",
+      hxPushUrl = "/"
+    )
+  ]
+
+  let paginator = Paginator.new(
+    hasPages = yourFeedDto.feedPaginator.hasPages,
+    current = yourFeedDto.feedPaginator.current,
+    lastPage = yourFeedDto.feedPaginator.lastPage
   )
 
   return HtmxPostPreviewViewModel(

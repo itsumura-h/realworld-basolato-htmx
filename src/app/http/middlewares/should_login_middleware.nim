@@ -7,6 +7,7 @@ proc shouldLogin*(c:Context, p:Params):Future[Response] {.async.} =
     return redirect("/sign-in")
   return next()
 
+
 proc htmxShouldLogin*(c:Context, p:Params):Future[Response] {.async.} =
   if not c.isLogin().await:
     let header = {

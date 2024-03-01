@@ -57,8 +57,9 @@ let routes = @[
 
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),
-        Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
+        Route.get("/home/your-feed", htmx_home_controller.yourFeed).middleware(should_login_middleware.htmxShouldLogin),
         Route.get("/home/tag-list", htmx_home_controller.tagList),
+        Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
         Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
