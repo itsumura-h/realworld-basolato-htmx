@@ -4,7 +4,7 @@ import ./follow_button_view_model
 proc followButtonView*(viewModel:FollowButtonViewModel):Component =
   tmpli html"""
     <button class="btn btn-sm btn-outline-secondary follow-button action-btn"
-      hx-post="/htmx/users/$(viewModel.userName)/follow"
+      hx-post="/htmx/users/$(viewModel.userId)/follow"
       hx-swap="outerHTML"
     >
       $if viewModel.isFollowed{

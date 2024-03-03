@@ -14,26 +14,34 @@ proc new*(_:type GetFollowButtonInUserQuery):GetFollowButtonInUserQuery =
   return GetFollowButtonInUserQuery()
 
 
-method invoke*(self:GetFollowButtonInUserQuery, userId:UserId, loginUserId:UserId):Future[FollowButtonInUserDto] {.async.} =
+method invoke*(self:GetFollowButtonInUserQuery, userId:UserId, loginUserIdOpt:Option[UserId]):Future[FollowButtonInUserDto] {.async.} =
   let followers = rdb.table("user_user_map")
                           .where("user_id", "=", userId.value)
                           .get()
                           .await
 
   var isFollowed = false
-  for follower in followers.items:
-    if follower["follower_id"].getStr == loginUserId.value:
-      isFollowed = true
-      break
+  if loginUserIdOpt.isSome():
+    let loginUserId = loginUserIdOpt.get()
+    for follower in followers.items:
+      if follower["follower_id"].getStr == loginUserId.value:
+        isFollowed = true
+        break
 
   let user = rdb.table("user")
                 .find(userId.value)
                 .await
-  let userName =
+  let userId =
+    if user.isSome():
+      user.get()["id"].getStr
+    else:
+      ""
+
+  let userName = 
     if user.isSome():
       user.get()["name"].getStr
     else:
       ""
 
-  let dto = FollowButtonInUserDto.new(userName, isFollowed, followers.len)
+  let dto = FollowButtonInUserDto.new(userId, userName, isFollowed, followers.len)
   return dto

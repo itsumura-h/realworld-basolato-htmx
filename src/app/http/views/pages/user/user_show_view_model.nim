@@ -35,11 +35,7 @@ proc new*(_:type UserShowViewModel, dto:GetUserShowDto, followButtonDto:FollowBu
     isSelf
   )
 
-  let followButtonViewModel = FollowButtonViewModel.new(
-    followButtonDto.userName,
-    followButtonDto.isFollowed,
-    followButtonDto.followerCount
-  )
+  let followButtonViewModel = FollowButtonViewModel.new(followButtonDto)
 
   let viewModel = UserShowViewModel(
     user:user,
