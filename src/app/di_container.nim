@@ -7,6 +7,14 @@ import ./data_stores/repositories/user/mock_user_repository
 import ./models/aggregates/article/article_repository_interface
 import ./data_stores/repositories/article/mock_article_repository
 import ./data_stores/repositories/article/article_repository
+# follow relationship
+import ./models/aggregates/follow_relationship/follow_relationship_repository_interface
+import ./data_stores/repositories/follow_relationship/follow_relationship_repository
+import ./data_stores/repositories/follow_relationship/mock_follow_relationship_repository
+# get follow button in user
+import ./usecases/get_follow_button_in_user/get_follow_button_in_user_query_interface
+import ./data_stores/queries/get_follow_button_in_user/mock_get_follow_button_in_user_query
+import ./data_stores/queries/get_follow_button_in_user/get_follow_button_in_user_query
 # get article
 import ./usecases/get_article_in_feed/get_article_in_feed_query_interface
 import ./data_stores/queries/get_article_in_feed/mock_get_article_in_feed_query
@@ -48,9 +56,11 @@ import ./data_stores/queries/get_article_in_editor/get_article_in_editor_query
 type DiContainer* = tuple
   userRepository: IUserRepository
   articleRepository: IArticleRepository
+  followRelationshipRepository: IFollowRelationshipRepository
   getArticleInFeedQuery: IGetArticleInFeedQuery
   getCommentsInArticleQuery:IGetCommentsInArticleQuery
   getUserShowQuery: IGetUserShowQuery
+  getFollowButtonInUserQuery: IGetFollowButtonInUserQuery
   getArticlesInUserQuery: IGetArticlesInUserQuery
   getFavoritesInUserQuery: IGetFavoritesInUserQuery
   getYourFeedQuery: IGetYourFeedQuery
@@ -64,9 +74,11 @@ proc newDiContainer():DiContainer =
     return (
       userRepository: MockUserRepository.new(),
       articleRepository: MockArticleRepository.new(),
+      followRelationshipRepository: MockFollowRelationshipRepository.new(),
       getArticleInFeedQuery: MockGetArticleInFeedQuery.new(),
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getUserShowQuery: MockGetUserShowQuery.new(),
+      getFollowButtonInUserQuery: MockGetFollowButtonInUserQuery.new(),
       getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
       getYourFeedQuery: MockGetYourFeedQuery.new(),
@@ -80,11 +92,15 @@ proc newDiContainer():DiContainer =
       # articleRepository: MockArticleRepository.new(),
       articleRepository: ArticleRepository.new(),
       # getArticleInFeedQuery: MockGetArticleInFeedQuery.new(),
+      followRelationshipRepository: FollowRelationshipRepository.new(),
+      # followRelationshipRepository: MockFollowRelationshipRepository.new(),
       getArticleInFeedQuery: GetArticleInFeedQuery.new(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getCommentsInArticleQuery:GetCommentsInArticleQuery.new(),
       # getUserShowQuery: MockGetUserShowQuery.new(),
       getUserShowQuery: GetUserShowQuery.new(),
+      # getFollowButtonInUserQuery: MockGetFollowButtonInUserQuery.new(),
+      getFollowButtonInUserQuery: GetFollowButtonInUserQuery.new(),
       # getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getArticlesInUserQuery: GetArticlesInUserQuery.new(),
       # getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),

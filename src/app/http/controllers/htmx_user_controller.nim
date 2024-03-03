@@ -2,17 +2,19 @@ import std/options
 # framework
 import basolato/controller
 import ../../errors
+# user shoq
 import ../../usecases/get_user_show/get_user_show_usecase
 import ../views/pages/user/user_show_view_model
 import ../views/pages/user/user_show_view
-
+# user feed
 import ../../usecases/get_articles_in_user/get_articles_in_user_usecase
 import ../views/pages/user/htmx_user_feed_view
 import ../views/pages/user/htmx_user_feed_view_model
-
+# favoriteArticles
 import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
-
-
+# follow
+import ../../usecases/follow_usecase
+import ../../usecases/get_follow_button_in_user/get_follow_button_in_user_usecase
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -23,9 +25,13 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isSelf = isLogin and loginUserId == userId
   let loadFavorites = false
   try:
-    let usecase = GetUserShowUsecase.new()
-    let dto = usecase.invoke(userId, loginUserIdOpt).await
-    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let getUserShowUsecase = GetUserShowUsecase.new()
+    let userShowDto = getUserShowUsecase.invoke(userId, loginUserIdOpt).await
+
+    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
+    let followButtonDto = getFollowButtonUsecase.invoke(userId, loginUserId).await
+    
+    let viewModel = UserShowViewModel.new(userShowDto, followButtonDto, isSelf, loadFavorites)
     let view = htmxUserShowView(viewModel)
     return render(view)
   except IdNotFoundError:
@@ -45,7 +51,7 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
     return render(Http404, "")
 
 
-proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
+proc favoriteArticles*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = params.getStr("userId")
   let loginUserId = context.get("id").await
   try:
@@ -56,3 +62,17 @@ proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")
+
+
+proc follow*(context:Context, params:Params):Future[Response] {.async.} =
+  let userId = params.getStr("userId")
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FollowUsecase.new()
+    followUsecase.invoke(userId, loginUserId).await
+
+    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
+    let dto = getFollowButtonUsecase.invoke(userId, loginUserId).await
+    return render("")
+  except:
+    return render(Http400, getCurrentExceptionMsg())
