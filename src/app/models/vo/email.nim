@@ -1,9 +1,9 @@
 import basolato/core/validation
-import ../../../../errors
+import ../../errors
+
 
 type Email*  = object
   value:string
-
 
 proc new*(_:type Email, value:string):Email =
   if value.len == 0:

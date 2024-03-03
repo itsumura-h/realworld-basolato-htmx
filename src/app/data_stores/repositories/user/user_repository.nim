@@ -4,13 +4,13 @@ import std/json
 import std/times
 import allographer/query_builder
 from ../../../../config/database import rdb
-import ../../../models/aggregates/user/vo/user_id
-import ../../../models/aggregates/user/vo/user_name
-import ../../../models/aggregates/user/vo/email
-import ../../../models/aggregates/user/vo/password
-import ../../../models/aggregates/user/vo/hashed_password
-import ../../../models/aggregates/user/vo/bio
-import ../../../models/aggregates/user/vo/image
+import ../../../models/vo/user_id
+import ../../../models/vo/user_name
+import ../../../models/vo/email
+import ../../../models/vo/password
+import ../../../models/vo/hashed_password
+import ../../../models/vo/bio
+import ../../../models/vo/image
 import ../../../models/aggregates/user/user_entity
 import ../../../models/aggregates/user/user_repository_interface
 

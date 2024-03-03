@@ -1,5 +1,5 @@
 import std/strutils
-import ../../../../errors
+import ../../errors
 
 type TagId*  = object
   value*:string

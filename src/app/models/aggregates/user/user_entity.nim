@@ -1,10 +1,10 @@
-import ./vo/user_id
-import ./vo/user_name
-import ./vo/email
-import ./vo/password
-import ./vo/hashed_password
-import ./vo/bio
-import ./vo/image
+import ../../vo/user_id
+import ../../vo/user_name
+import ../../vo/email
+import ../../vo/password
+import ../../vo/hashed_password
+import ../../vo/bio
+import ../../vo/image
 
 
 type DraftUser*  = object

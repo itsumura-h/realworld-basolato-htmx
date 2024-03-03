@@ -1,4 +1,4 @@
-import ./vo/user_id
+import ../../vo/user_id
 
 type User* = object
   id*:UserId

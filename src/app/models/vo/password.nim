@@ -1,5 +1,5 @@
 import basolato/password
-import ../../../../errors
+import ../../errors
 import ./hashed_password
 
 

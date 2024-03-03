@@ -1,8 +1,8 @@
 import std/asyncdispatch
 import std/options
 import interface_implements
-import ../../models/aggregates/article/vo/article_id
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/article_id
+import ../../models/vo/user_id
 import ./get_article_in_feed_dto
 
 interfaceDefs:

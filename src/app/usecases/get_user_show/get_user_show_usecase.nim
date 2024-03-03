@@ -3,7 +3,7 @@ import std/strformat
 import std/options
 import ../../di_container
 import ../../errors
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/user_id
 import ../../models/aggregates/user/user_service
 import ./get_user_show_dto
 import ./get_user_show_query_interface

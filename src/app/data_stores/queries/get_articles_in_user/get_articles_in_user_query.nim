@@ -4,7 +4,7 @@ import std/options
 import allographer/query_builder
 import ../../../errors
 from ../../../../config/database import rdb
-import ../../../models/aggregates/user/vo/user_id
+import ../../../models/vo/user_id
 import ../../../usecases/get_articles_in_user/get_articles_in_user_query_interface
 import ../../../usecases/get_articles_in_user/get_articles_in_user_dto
 

@@ -2,13 +2,13 @@ import std/asyncdispatch
 import std/sequtils
 import std/strformat
 import ../models/aggregates/article/article_entity
-import ../models/aggregates/user/vo/user_id
-import ../models/aggregates/article/vo/article_id
-import ../models/aggregates/article/vo/title
-import ../models/aggregates/article/vo/description
-import ../models/aggregates/article/vo/body
+import ../models/vo/user_id
+import ../models/vo/article_id
+import ../models/vo/title
+import ../models/vo/description
+import ../models/vo/body
 import ../models/aggregates/article/tag_entity
-import ../models/aggregates/article/vo/tag_name
+import ../models/vo/tag_name
 import ../models/aggregates/article/article_repository_interface
 import ../di_container
 

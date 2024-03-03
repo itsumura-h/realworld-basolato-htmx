@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import ../../di_container
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/user_id
 import ./get_articles_in_user_query_interface
 import ./get_articles_in_user_dto
 

@@ -1,9 +1,9 @@
 import std/asyncdispatch
 import std/options
-import ../../models/aggregates/article/vo/article_id
+import ../../models/vo/article_id
 import ../../models/aggregates/article/article_service
 import ../../models/aggregates/article/article_repository_interface
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/user_id
 import ../../errors
 import ./get_article_in_feed_query_interface
 import ./get_article_in_feed_dto

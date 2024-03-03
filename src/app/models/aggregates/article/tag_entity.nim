@@ -1,5 +1,5 @@
-import ./vo/tag_id
-import ./vo/tag_name
+import ../../vo/tag_id
+import ../../vo/tag_name
 
 type Tag* = object
   id*: TagId

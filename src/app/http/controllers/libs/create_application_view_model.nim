@@ -2,7 +2,7 @@ import basolato/controller
 import ../../views/layouts/application/application_view_model
 import ../../../di_container
 import ../../../usecases/get_login_user/get_login_user_query_interface
-import ../../../models/aggregates/user/vo/user_id
+import ../../../models/vo/user_id
 
 
 proc createApplicationViewModel*(context:Context, title:string):Future[ApplicationViewModel] {.async.} =

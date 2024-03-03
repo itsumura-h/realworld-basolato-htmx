@@ -2,7 +2,7 @@ import std/asyncdispatch
 import ../../di_container
 import ./get_your_feed_query_interface
 import ./your_feed_dto
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/user_id
 
 
 type GetYourFeedUsecase* = object

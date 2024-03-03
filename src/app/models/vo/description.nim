@@ -1,4 +1,4 @@
-import ../../../../errors
+import ../../errors
 
 type Description* = object
   value*:string

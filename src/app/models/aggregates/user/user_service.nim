@@ -2,10 +2,10 @@ import std/asyncdispatch
 import std/options
 import basolato/password
 import ../../../di_container
-import ./vo/user_id
-import ./vo/email
-import ./vo/password
-import ./vo/hashed_password
+import ../../vo/user_id
+import ../../vo/email
+import ../../vo/password
+import ../../vo/hashed_password
 import ./user_repository_interface
 
 

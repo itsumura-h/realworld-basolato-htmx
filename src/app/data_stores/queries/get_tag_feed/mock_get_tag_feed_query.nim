@@ -1,7 +1,7 @@
 import std/asyncdispatch
 import ../../../usecases/get_tag_feed/get_tag_feed_query_interface
 import ../../../usecases/get_tag_feed/get_tag_feed_dto
-import ../../../models/aggregates/article/vo/tag_name
+import ../../../models/vo/tag_name
 
 
 type MockGetTagFeedQuery*  = object of IGetTagFeedQuery

@@ -3,8 +3,8 @@ import std/times
 import std/options
 import ../../../usecases/get_article_in_feed/get_article_in_feed_query_interface
 import ../../../usecases/get_article_in_feed/get_article_in_feed_dto
-import ../../../models/aggregates/article/vo/article_id
-import ../../../models/aggregates/user/vo/user_id
+import ../../../models/vo/article_id
+import ../../../models/vo/user_id
 
 
 type MockGetArticleInFeedQuery*  = object of IGetArticleInFeedQuery

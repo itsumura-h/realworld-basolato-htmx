@@ -1,10 +1,10 @@
 import std/times
-import ./vo/article_id
-import ./vo/title
-import ./vo/description
-import ./vo/body
+import ../../vo/article_id
+import ../../vo/title
+import ../../vo/description
+import ../../vo/body
+import ../../vo/user_id
 import ./tag_entity
-import ../user/vo/user_id
 
 
 type DraftArticle* = object

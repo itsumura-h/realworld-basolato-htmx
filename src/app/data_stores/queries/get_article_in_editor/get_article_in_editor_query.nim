@@ -7,7 +7,7 @@ import ../../../errors
 from ../../../../config/database import rdb
 import ../../../usecases/get_article_in_editor/get_article_in_editor_query_interface
 import ../../../usecases/get_article_in_editor/get_article_in_editor_dto
-import ../../../models/aggregates/article/vo/article_id
+import ../../../models/vo/article_id
 
 
 type GetArticleInEditorQuery* = object of IGetArticleInEditorQuery

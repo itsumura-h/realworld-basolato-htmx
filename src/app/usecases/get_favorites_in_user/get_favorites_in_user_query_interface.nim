@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import interface_implements
-import ../../models/aggregates/user/vo/user_id
+import ../../models/vo/user_id
 import ./get_favorites_in_user_dto
 
 

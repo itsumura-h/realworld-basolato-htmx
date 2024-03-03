@@ -3,7 +3,7 @@ import std/json
 import allographer/query_builder
 import ../../../usecases/get_tag_feed/get_tag_feed_query_interface
 import ../../../usecases/get_tag_feed/get_tag_feed_dto
-import ../../../models/aggregates/article/vo/tag_name
+import ../../../models/vo/tag_name
 from ../../../../config/database import rdb
 
 

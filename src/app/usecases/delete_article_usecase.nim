@@ -2,7 +2,7 @@ import std/asyncdispatch
 import ../di_container
 import ../errors
 import ../models/aggregates/article/article_repository_interface
-import ../models/aggregates/article/vo/article_id
+import ../models/vo/article_id
 
 
 type DeleteArticleUsecase* = object

@@ -1,5 +1,5 @@
 import std/strutils
-import ../../../../errors
+import ../../errors
 import ./tag_id
 
 type TagName*  = object

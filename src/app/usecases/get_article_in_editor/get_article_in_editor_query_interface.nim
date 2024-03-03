@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import interface_implements
-import ../../models/aggregates/article/vo/article_id
+import ../../models/vo/article_id
 import./get_article_in_editor_dto
 
 

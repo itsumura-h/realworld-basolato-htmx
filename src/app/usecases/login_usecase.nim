@@ -5,9 +5,9 @@ import ../di_container
 import ../models/aggregates/user/user_repository_interface
 import ../models/aggregates/user/user_service
 import ../models/aggregates/user/user_entity
-import ../models/aggregates/user/vo/user_id
-import ../models/aggregates/user/vo/email
-import ../models/aggregates/user/vo/password
+import ../models/vo/user_id
+import ../models/vo/email
+import ../models/vo/password
 
 type LoginUsecase*  = object
   repository:IUserRepository

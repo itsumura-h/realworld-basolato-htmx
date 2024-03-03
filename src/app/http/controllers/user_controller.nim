@@ -7,6 +7,7 @@ import ../../usecases/get_user_show/get_user_show_usecase
 import ../views/pages/user/user_show_view_model
 import ../views/pages/user/user_show_view
 import ./libs/create_application_view_model
+import ../../usecases/get_follow_button_in_user/get_follow_button_in_user_usecase
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -19,9 +20,13 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let usecase = GetUserShowUsecase.new()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
+
+    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
+    let followButtonDto = getFollowButtonUsecase.invoke(userId, loginUserId).await
+
     let title = &"{dto.id} ― Cnduit"
     let appViewModel = createApplicationViewModel(context, title).await
-    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let viewModel = UserShowViewModel.new(dto, followButtonDto, isSelf, loadFavorites)
     let view = userShowView(appViewModel, viewModel)
     return render(view)
   except IdNotFoundError:
@@ -38,9 +43,13 @@ proc favorites*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let usecase = GetUserShowUsecase.new()
     let dto = usecase.invoke(userId, loginUserIdOpt).await
+
+    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
+    let followButtonDto = getFollowButtonUsecase.invoke(userId, loginUserId).await
+
     let title = &"Articles favorited by {dto.id} ― Cnduit"
     let appViewModel = createApplicationViewModel(context, title).await
-    let viewModel = UserShowViewModel.new(dto, isSelf, loadFavorites)
+    let viewModel = UserShowViewModel.new(dto, followButtonDto, isSelf, loadFavorites)
     let view = userShowView(appViewModel, viewModel)
     return render(view)
   except IdNotFoundError:

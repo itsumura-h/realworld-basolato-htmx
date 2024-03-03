@@ -2,7 +2,7 @@ import std/asyncdispatch
 import ../../../di_container
 import ../../../usecases/get_login_user/get_login_user_query_interface
 import ../../../usecases/get_login_user/get_login_user_dto
-import ../../../models/aggregates/user/vo/user_id
+import ../../../models/vo/user_id
 
 
 type MockGetLoginUserQuery*  = object of IGetLoginUserQuery

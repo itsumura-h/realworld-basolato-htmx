@@ -2,8 +2,8 @@ import std/asyncdispatch
 import std/options
 import interface_implements
 import ./user_entity
-import ./vo/email
-import ./vo/user_id
+import ../../vo/email
+import ../../vo/user_id
 
 
 interfaceDefs:

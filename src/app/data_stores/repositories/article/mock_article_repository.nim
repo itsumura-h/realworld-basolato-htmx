@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import ../../../models/aggregates/article/article_repository_interface
-import ../../../models/aggregates/article/vo/article_id
+import ../../../models/vo/article_id
 
 
 type MockArticleRepository*  = object of IArticleRepository

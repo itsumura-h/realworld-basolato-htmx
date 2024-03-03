@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import ./article_repository_interface
-import ./vo/article_id
+import ../../vo/article_id
 
 
 type ArticleService*  = object

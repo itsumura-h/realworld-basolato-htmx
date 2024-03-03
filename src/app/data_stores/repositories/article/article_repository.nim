@@ -5,7 +5,7 @@ import std/options
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../models/aggregates/article/article_repository_interface
-import ../../../models/aggregates/article/vo/article_id
+import ../../../models/vo/article_id
 import ../../../models/aggregates/article/article_entity
 
 

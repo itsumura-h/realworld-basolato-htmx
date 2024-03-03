@@ -1,6 +1,6 @@
 import std/asyncdispatch
 import interface_implements
-import ./vo/article_id
+import ../../vo/article_id
 import ./article_entity
 
 interfaceDefs:

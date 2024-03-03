@@ -1,7 +1,7 @@
 import std/asyncdispatch
 import ../../errors
 import ../../di_container
-import ../../models/aggregates/article/vo/article_id
+import ../../models/vo/article_id
 import ../../models/aggregates/article/article_service
 import ./get_article_in_editor_query_interface
 import ./get_article_in_editor_dto
