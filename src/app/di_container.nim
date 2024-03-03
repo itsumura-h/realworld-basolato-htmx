@@ -11,6 +11,10 @@ import ./data_stores/repositories/article/article_repository
 import ./models/aggregates/follow_relationship/follow_relationship_repository_interface
 import ./data_stores/repositories/follow_relationship/follow_relationship_repository
 import ./data_stores/repositories/follow_relationship/mock_follow_relationship_repository
+# favorite
+import ./models/aggregates/favorite/favorite_repository_interface
+import ./data_stores/repositories/favorite/favorite_repository
+import ./data_stores/repositories/favorite/mock_favorite_repository
 # get follow button in user
 import ./usecases/get_follow_button_in_user/get_follow_button_in_user_query_interface
 import ./data_stores/queries/get_follow_button_in_user/mock_get_follow_button_in_user_query
@@ -53,28 +57,30 @@ import ./data_stores/queries/get_article_in_editor/mock_get_article_in_editor_qu
 import ./data_stores/queries/get_article_in_editor/get_article_in_editor_query
 
 
-type DiContainer* = tuple
-  userRepository: IUserRepository
-  articleRepository: IArticleRepository
-  followRelationshipRepository: IFollowRelationshipRepository
-  getArticleInFeedQuery: IGetArticleInFeedQuery
-  getCommentsInArticleQuery:IGetCommentsInArticleQuery
-  getUserShowQuery: IGetUserShowQuery
-  getFollowButtonInUserQuery: IGetFollowButtonInUserQuery
-  getArticlesInUserQuery: IGetArticlesInUserQuery
-  getFavoritesInUserQuery: IGetFavoritesInUserQuery
-  getYourFeedQuery: IGetYourFeedQuery
-  getTagFeedQuery: IGetTagFeedQuery
-  getLoginUserQuery: IGetLoginUserQuery
-  getArticleInEditorQuery: IGetArticleInEditorQuery
+type DiContainer* = object
+  userRepository*: IUserRepository
+  articleRepository*: IArticleRepository
+  followRelationshipRepository*: IFollowRelationshipRepository
+  favoriteRepository*: IFavoriteRepository
+  getArticleInFeedQuery*: IGetArticleInFeedQuery
+  getCommentsInArticleQuery*:IGetCommentsInArticleQuery
+  getUserShowQuery*: IGetUserShowQuery
+  getFollowButtonInUserQuery*: IGetFollowButtonInUserQuery
+  getArticlesInUserQuery*: IGetArticlesInUserQuery
+  getFavoritesInUserQuery*: IGetFavoritesInUserQuery
+  getYourFeedQuery*: IGetYourFeedQuery
+  getTagFeedQuery*: IGetTagFeedQuery
+  getLoginUserQuery*: IGetLoginUserQuery
+  getArticleInEditorQuery*: IGetArticleInEditorQuery
 
 
 proc newDiContainer():DiContainer =
   if APP_ENV == "test":
-    return (
+    return DiContainer(
       userRepository: MockUserRepository.new(),
       articleRepository: MockArticleRepository.new(),
       followRelationshipRepository: MockFollowRelationshipRepository.new(),
+      favoriteRepository: MockFavoriteRepository.new(),
       getArticleInFeedQuery: MockGetArticleInFeedQuery.new(),
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getUserShowQuery: MockGetUserShowQuery.new(),
@@ -87,13 +93,15 @@ proc newDiContainer():DiContainer =
       getArticleInEditorQuery: MockGetArticleInEditorQuery.new(),
     )
   else:
-    return (
+    return DiContainer(
       userRepository: UserRepository.new(),
       # articleRepository: MockArticleRepository.new(),
       articleRepository: ArticleRepository.new(),
       # getArticleInFeedQuery: MockGetArticleInFeedQuery.new(),
       followRelationshipRepository: FollowRelationshipRepository.new(),
       # followRelationshipRepository: MockFollowRelationshipRepository.new(),
+      favoriteRepository: FavoriteRepository.new(),
+      # favoriteRepository: MockFavoriteRepository.new(),
       getArticleInFeedQuery: GetArticleInFeedQuery.new(),
       # getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getCommentsInArticleQuery:GetCommentsInArticleQuery.new(),

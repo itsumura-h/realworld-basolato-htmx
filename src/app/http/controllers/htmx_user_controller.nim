@@ -17,6 +17,8 @@ import ../../usecases/follow_usecase
 import ../../usecases/get_follow_button_in_user/get_follow_button_in_user_usecase
 import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../http/views/components/user/follow_button/follow_button_view
+# favorite
+import ../../usecases/favorite_usecase
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -72,6 +74,22 @@ proc follow*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let followUsecase = FollowUsecase.new()
     followUsecase.invoke(userId, loginUserId).await
+
+    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
+    let dto = getFollowButtonUsecase.invoke(userId, loginUserId).await
+    let viewModel = FollowButtonViewModel.new(dto)
+    let view = followButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())
+
+
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
 
     let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
     let dto = getFollowButtonUsecase.invoke(userId, loginUserId).await
