@@ -68,7 +68,7 @@ let routes = @[
         Route.get("/users/{userId:str}", htmx_user_controller.show),
         Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
         Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
-        Route.get("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/editor", htmx_editor_controller.create).middleware(should_login_middleware.htmxShouldLogin),
         Route.post("/editor", htmx_editor_controller.store).middleware(should_login_middleware.htmxShouldLogin),
