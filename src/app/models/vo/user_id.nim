@@ -1,5 +1,5 @@
 import std/strutils
-import ../../../../errors
+import ../../errors
 import ./user_name
 
 type UserId*  = object

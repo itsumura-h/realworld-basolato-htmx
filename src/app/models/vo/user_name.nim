@@ -1,4 +1,4 @@
-import ../../../../errors
+import ../../errors
 
 type UserName*  = object
   value*:string
