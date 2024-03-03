@@ -1,5 +1,6 @@
 import std/asyncdispatch
 import std/json
+import std/options
 import allographer/query_builder
 import ../../../errors
 from ../../../../config/database import rdb
@@ -13,10 +14,27 @@ proc new*(_:type FollowRelationshipRepository):FollowRelationshipRepository =
   return FollowRelationshipRepository()
 
 
+method isExists*(self:FollowRelationshipRepository, relationship:FollowRelationship):Future[bool] {.async.} =
+  let res = rdb.table("user_user_map")
+                .where("user_id", "=", relationship.user.id.value)
+                .where("follower_id", "=", relationship.follower.id.value)
+                .first()
+                .await
+  return res.isSome()
+
+
 method create*(self:FollowRelationshipRepository, relationship:FollowRelationship) {.async.} =
   rdb.table("user_user_map")
       .insert(%*{
         "user_id": relationship.user.id.value,
         "follower_id": relationship.follower.id.value,
       })
-  .await
+      .await
+
+
+method delete*(self:FollowRelationshipRepository, relationship:FollowRelationship) {.async.} =
+  rdb.table("user_user_map")
+      .where("user_id", "=", relationship.user.id.value)
+      .where("follower_id", "=", relationship.follower.id.value)
+      .delete()
+      .await

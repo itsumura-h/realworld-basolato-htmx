@@ -20,7 +20,7 @@ import ../../usecases/get_follow_button_in_user/get_follow_button_in_user_usecas
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isLogin = context.isLogin().await
   let userId = params.getStr("userId")
-  let loginUserId = context.get("userId").await
+  let loginUserId = context.get("id").await
   let loginUserIdOpt = if loginUserId.len > 0: loginUserId.some() else: none(string)
   let isSelf = isLogin and loginUserId == userId
   let loadFavorites = false
