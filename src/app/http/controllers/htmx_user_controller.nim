@@ -19,6 +19,9 @@ import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../http/views/components/user/follow_button/follow_button_view
 # favorite
 import ../../usecases/favorite_usecase
+import ../../usecases/get_favorite_button_in_user/get_favorite_button_in_user_usecase
+import ../views/components/user/favorite_button/favorite_button_view_model
+import ../views/components/user/favorite_button/favorite_button_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -91,10 +94,10 @@ proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
     let followUsecase = FavoriteUsecase.new()
     followUsecase.invoke(articleId, loginUserId).await
 
-    let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
-    let dto = getFollowButtonUsecase.invoke(userId, loginUserId).await
-    let viewModel = FollowButtonViewModel.new(dto)
-    let view = followButtonView(viewModel)
+    let getFavoriteButtonInUserUsecase = GetFavoriteButtonInUserUsecase.new()
+    let dto = getFavoriteButtonInUserUsecase.invoke(articleId, loginUserId).await
+    let viewModel = FavoriteButtonViewModel.new(dto)
+    let view = favoriteButtonView(viewModel)
     return render(view)
   except:
     return render(Http400, getCurrentExceptionMsg())
