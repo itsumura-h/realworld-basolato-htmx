@@ -1,6 +1,6 @@
 import basolato/view
-import ../../layouts/application/application_view_model
-import ../../layouts/application/application_view
+import ../../layouts/app/app_view_model
+import ../../layouts/app/app_view
 import ./setting_view_model
 import ../../components/setting/form_message/form_message_view
 import ../../components/setting/form/form_view
@@ -34,8 +34,8 @@ proc impl(viewModel:SettingViewModel):Component =
     </div>
   """
 
-proc settingView*(appViewModel:ApplicationViewModel, viewModel:SettingViewModel):Component =
-  return applicationView(appViewModel, impl(viewModel)) 
+proc settingView*(appViewModel:AppViewModel, viewModel:SettingViewModel):Component =
+  return appView(appViewModel, impl(viewModel)) 
 
 proc htmxSettingView*(viewModel:SettingViewModel):Component =
   return impl(viewModel)

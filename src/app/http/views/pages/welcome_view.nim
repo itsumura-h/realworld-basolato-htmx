@@ -1,5 +1,5 @@
 import basolato/view
-import ../layouts/application_view
+import ../layouts/app_view
 
 
 proc impl(name:string):Component =
@@ -118,4 +118,4 @@ proc impl(name:string):Component =
 
 proc welcomeView*(name:string):Component =
   let title = "Welcome Basolato"
-  return applicationView(title, impl(name))
+  return appView(title, impl(name))

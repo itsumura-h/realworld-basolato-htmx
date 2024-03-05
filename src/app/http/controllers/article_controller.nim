@@ -7,7 +7,7 @@ import ../../errors
 import ../../usecases/get_article_in_feed/get_article_in_feed_usecase
 import ../views/pages/article/article_show_view_model
 import ../views/pages/article/article_show_view
-import ./libs/create_application_view_model
+import ./libs/create_app_view_model
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -18,7 +18,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let usecase = GetArticleInFeedUsecase.new(query, repository)
   try:
     let dto = usecase.invoke(articleId, loginUserId).await
-    let appViewModel = createApplicationViewModel(context, dto.article.title).await
+    let appViewModel = createAppViewModel(context, dto.article.title).await
     let viewModel = ArticleShowViewModel.new(dto, loginUserId)
     let view = articleShowPageView(appViewModel, viewModel)
     return render(view)

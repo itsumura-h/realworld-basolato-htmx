@@ -1,8 +1,8 @@
 import std/options
 import basolato/view
 import ./article_show_view_model
-import ../../layouts/application/application_view_model
-import ../../layouts/application/application_view
+import ../../layouts/app/app_view_model
+import ../../layouts/app/app_view
 import ../../components/article/follow_button/follow_button_view
 import ../../components/article/favorite_button/favorite_button_view
 import ../../components/article/edit_button/edit_button_view
@@ -20,14 +20,14 @@ proc impl(viewModel:ArticleShowViewModel):Component =
 
   tmpli html"""
     $(style)
-    <div class="post-page">
+    <div class="article-page">
 
       <div class="banner">
         <div class="container">
 
           <h1>$(viewModel.article.title)</h1>
 
-          <div class="post-meta">
+          <div class="article-meta">
             <a href="profile.html"><img src="$(viewModel.user.image)" /></a>
             <div class="info">
               <a href="/users/$(viewModel.user.id)"
@@ -120,5 +120,5 @@ proc impl(viewModel:ArticleShowViewModel):Component =
 proc htmxArticleShowView*(viewModel:ArticleShowViewModel):Component =
   return impl(viewModel)
 
-proc articleShowPageView*(appViewModel:ApplicationViewModel, viewModel:ArticleShowViewModel):Component =
-  return applicationView(appViewModel, impl(viewModel))
+proc articleShowPageView*(appViewModel:AppViewModel, viewModel:ArticleShowViewModel):Component =
+  return appView(appViewModel, impl(viewModel))

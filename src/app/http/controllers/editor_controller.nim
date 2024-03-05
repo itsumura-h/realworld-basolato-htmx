@@ -2,20 +2,20 @@ import basolato/controller
 import basolato/core/logger
 import ../../errors
 import ../../usecases/get_article_in_editor/get_article_in_editor_usecase
-import ./libs/create_application_view_model
+import ./libs/create_app_view_model
 import ../views/pages/editor/editor_view_model
 import ../views/pages/editor/editor_view
 
 
 proc create*(context:Context, params:Params):Future[Response] {.async.} =
-  let appViewModel = createApplicationViewModel(context, "Editor ―Conduit").await
+  let appViewModel = createAppViewModel(context, "Editor ―Conduit").await
   let viewModel = EditorViewModel.new()
   let view = editorView(appViewModel, viewModel)
   return render(view)
 
 
 proc update*(context:Context, params:Params):Future[Response] {.async.} =
-  let appViewModel = createApplicationViewModel(context, "Editor ―Conduit").await
+  let appViewModel = createAppViewModel(context, "Editor ―Conduit").await
   let articleId = params.getStr("articleId")
   try:
     let usecase = GetArticleInEditorUsecase.new()

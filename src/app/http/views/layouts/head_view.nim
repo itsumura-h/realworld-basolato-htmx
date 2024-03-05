@@ -7,7 +7,8 @@ proc headView*(title:string):Component =
       <meta name="viewport" content="width=device-width, newial-scale=1.0">
       <meta charset="UTF-8">
       <title>$(title)</title>
-      <link rel="stylesheet" href="/css/style.css">
+      <!-- <link rel="stylesheet" href="/css/style.css"> -->
+      <link rel="stylesheet" href="//demo.productionready.io/main.css">
       <link rel="stylesheet" href="/css/tagify.css">
       <script src="/js/htmx.js"></script>
 

@@ -1,6 +1,6 @@
 import basolato/view
-import ../../layouts/application/application_view_model
-import ../../layouts/application/application_view
+import ../../layouts/app/app_view_model
+import ../../layouts/app/app_view
 import ./signup_view_model
 
 proc impl(viewModel:SignUpViewModel):Component =
@@ -47,8 +47,8 @@ proc impl(viewModel:SignUpViewModel):Component =
   """
 
 
-proc signUpView*(appViewModel:ApplicationViewModel, viewModel:SignUpViewModel):Component =
-  return applicationView(appViewModel, impl(viewModel))
+proc signUpView*(appViewModel:AppViewModel, viewModel:SignUpViewModel):Component =
+  return appView(appViewModel, impl(viewModel))
 
 
 proc htmxSignUpView*(viewModel:SignUpViewModel):Component =

@@ -1,7 +1,7 @@
 import std/options
 import basolato/view
-import ../../layouts/application/application_view_model
-import ../../layouts/application/application_view
+import ../../layouts/app/app_view_model
+import ../../layouts/app/app_view
 import ./editor_view_model
 
 
@@ -61,8 +61,8 @@ proc impl(viewModel:EditorViewModel):Component =
     </div>
   """
 
-proc editorView*(appViewModel:ApplicationViewModel, viewModel:EditorViewModel):Component =
-  applicationView(appViewModel, impl(viewModel))
+proc editorView*(appViewModel:AppViewModel, viewModel:EditorViewModel):Component =
+  appView(appViewModel, impl(viewModel))
 
 proc htmxEditorView*(viewModel:EditorViewModel):Component =
   impl(viewModel)

@@ -2,10 +2,10 @@ import basolato/view
 import ../head_view
 import ../navbar/navbar_view
 import ../footer_view
-import ./application_view_model
+import ./app_view_model
 
 
-proc applicationView*(viewModel:ApplicationViewModel, body:Component):Component =
+proc appView*(viewModel:AppViewModel, body:Component):Component =
   tmpli html"""
     <!DOCTYPE html>
     <html>

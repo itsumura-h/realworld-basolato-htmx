@@ -1,6 +1,6 @@
 import basolato/view
-import ../../layouts/application/application_view_model
-import ../../layouts/application/application_view
+import ../../layouts/app/app_view_model
+import ../../layouts/app/app_view
 import ./home_view_model
 
 
@@ -54,8 +54,8 @@ proc impl(viewModel:HomeViewModel):Component =
   """
 
 
-proc homeView*(appViewModel:ApplicationViewModel, viewModel:HomeViewModel):Component =
-  return applicationView(appViewModel, impl(viewModel))
+proc homeView*(appViewModel:AppViewModel, viewModel:HomeViewModel):Component =
+  return appView(appViewModel, impl(viewModel))
 
 proc htmxHomeView*(viewModel:HomeViewModel):Component =
   return impl(viewModel)
