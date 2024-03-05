@@ -34,8 +34,8 @@ proc impl(viewModel:SettingViewModel):Component =
     </div>
   """
 
-proc settingView*(appViewModel:ApplicationViewModel, viewModel:SettingViewModel):string =
-  return $applicationView(appViewModel, impl(viewModel)) 
+proc settingView*(appViewModel:ApplicationViewModel, viewModel:SettingViewModel):Component =
+  return applicationView(appViewModel, impl(viewModel)) 
 
-proc htmxSettingView*(viewModel:SettingViewModel):string =
-  return $impl(viewModel)
+proc htmxSettingView*(viewModel:SettingViewModel):Component =
+  return impl(viewModel)

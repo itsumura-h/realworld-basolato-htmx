@@ -61,8 +61,8 @@ proc impl(viewModel:EditorViewModel):Component =
     </div>
   """
 
-proc editorView*(appViewModel:ApplicationViewModel, viewModel:EditorViewModel):string =
-  $applicationView(appViewModel, impl(viewModel))
+proc editorView*(appViewModel:ApplicationViewModel, viewModel:EditorViewModel):Component =
+  applicationView(appViewModel, impl(viewModel))
 
-proc htmxEditorView*(viewModel:EditorViewModel):string =
-  $impl(viewModel)
+proc htmxEditorView*(viewModel:EditorViewModel):Component =
+  impl(viewModel)

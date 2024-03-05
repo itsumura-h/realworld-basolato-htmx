@@ -16,5 +16,5 @@ proc impl(popularTags:HtmxTagItemListViewModel):Component =
     </div>
   """
 
-proc htmxTagListView*(popularTags:HtmxTagItemListViewModel):string =
-  return $impl(popularTags)
+proc htmxTagListView*(popularTags:HtmxTagItemListViewModel):Component =
+  return impl(popularTags)

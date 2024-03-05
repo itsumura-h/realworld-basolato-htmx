@@ -94,5 +94,5 @@ proc impl(viewModel:HtmxPostPreviewViewModel):Component =
     }
   """
 
-proc htmxPostPreviewView*(viewModel:HtmxPostPreviewViewModel):string =
-  return $impl(viewModel)
+proc htmxPostPreviewView*(viewModel:HtmxPostPreviewViewModel):Component =
+  return impl(viewModel)

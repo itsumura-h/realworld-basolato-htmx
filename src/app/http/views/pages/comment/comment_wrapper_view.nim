@@ -32,5 +32,5 @@ proc impl(viewModel:CommentViewModel):Component =
     }
   """
 
-proc commentWrapperView*(viewModel:CommentViewModel):string =
-  $impl(viewModel)
+proc commentWrapperView*(viewModel:CommentViewModel):Component =
+  return impl(viewModel)

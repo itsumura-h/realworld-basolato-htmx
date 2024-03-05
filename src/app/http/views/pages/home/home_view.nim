@@ -54,8 +54,8 @@ proc impl(viewModel:HomeViewModel):Component =
   """
 
 
-proc homeView*(appViewModel:ApplicationViewModel, viewModel:HomeViewModel):string =
-  return $applicationView(appViewModel, impl(viewModel))
+proc homeView*(appViewModel:ApplicationViewModel, viewModel:HomeViewModel):Component =
+  return applicationView(appViewModel, impl(viewModel))
 
-proc htmxHomeView*(viewModel:HomeViewModel):string =
-  return $impl(viewModel)
+proc htmxHomeView*(viewModel:HomeViewModel):Component =
+  return impl(viewModel)

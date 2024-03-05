@@ -65,5 +65,5 @@ proc impl(viewModel:HtmxUserFeedViewModel):Component =
   </div>
   """
 
-proc htmxUserFeedView*(viewModel:HtmxUserFeedViewModel):string =
-  return $impl(viewModel)
+proc htmxUserFeedView*(viewModel:HtmxUserFeedViewModel):Component =
+  return impl(viewModel)

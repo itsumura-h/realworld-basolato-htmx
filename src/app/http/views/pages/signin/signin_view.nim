@@ -45,8 +45,8 @@ proc impl(viewModel:SignInViewModel):Component =
   """
 
 
-proc signInView*(appViewModel:ApplicationViewModel, viewModle:SignInViewModel):string =
-  return $applicationView(appViewModel, impl(viewModle))
+proc signInView*(appViewModel:ApplicationViewModel, viewModle:SignInViewModel):Component =
+  return applicationView(appViewModel, impl(viewModle))
 
-proc htmxSignInView*(viewModl:SignInViewModel):string =
-  return $impl(viewModl)
+proc htmxSignInView*(viewModl:SignInViewModel):Component =
+  return impl(viewModl)

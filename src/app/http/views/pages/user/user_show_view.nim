@@ -58,9 +58,9 @@ proc impl(viewModel:UserShowViewModel):Component =
     </div>
   """
 
-proc userShowView*(appViewModel:ApplicationViewModel, viewModel:UserShowViewModel):string =
-  $applicationView(appViewModel, impl(viewModel))
+proc userShowView*(appViewModel:ApplicationViewModel, viewModel:UserShowViewModel):Component =
+  applicationView(appViewModel, impl(viewModel))
 
 
-proc htmxUserShowView*(viewModel:UserShowViewModel):string =
-  $impl(viewModel)
+proc htmxUserShowView*(viewModel:UserShowViewModel):Component =
+  impl(viewModel)

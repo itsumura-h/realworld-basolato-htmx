@@ -12,7 +12,7 @@ import ../../components/article/delete_button/delete_button_view
 proc impl(viewModel:ArticleShowViewModel):Component =
   let style = styleTmpl(Css, """
     <style>
-      .inline_flex {
+      .inline-flex {
         display: inline-flex;
       }
     </style>
@@ -48,7 +48,7 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
               $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
             }$else{
-              <div class="$(style.element("inline_flex"))">
+              <div class="$(style.element("inline-flex"))">
                 <!-- follow button -->
                 $( followButtonView(viewModel.followButtonViewModel.get) )
                 <!-- favorite button -->
@@ -98,7 +98,7 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
               $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
             }$else{
-              <div class="$(style.element("inline_flex"))">
+              <div class="$(style.element("inline-flex"))">
                 <!-- follow button -->
                 $(followButtonView(viewModel.followButtonViewModel.get))
                 <!-- favorite button -->
@@ -117,8 +117,8 @@ proc impl(viewModel:ArticleShowViewModel):Component =
     </div>
   """
 
-proc htmxArticleShowView*(viewModel:ArticleShowViewModel):string =
-  return $impl(viewModel)
+proc htmxArticleShowView*(viewModel:ArticleShowViewModel):Component =
+  return impl(viewModel)
 
-proc articleShowPageView*(appViewModel:ApplicationViewModel, viewModel:ArticleShowViewModel):string =
-  return $applicationView(appViewModel, impl(viewModel))
+proc articleShowPageView*(appViewModel:ApplicationViewModel, viewModel:ArticleShowViewModel):Component =
+  return applicationView(appViewModel, impl(viewModel))
