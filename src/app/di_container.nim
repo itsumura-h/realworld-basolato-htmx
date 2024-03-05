@@ -20,9 +20,9 @@ import ./usecases/get_follow_button_in_user/get_follow_button_in_user_query_inte
 import ./data_stores/queries/get_follow_button_in_user/mock_get_follow_button_in_user_query
 import ./data_stores/queries/get_follow_button_in_user/get_follow_button_in_user_query
 # get favorite button in user
-import ./usecases/get_favorite_button_in_user/get_favorite_button_in_user_query_interface
-import ./data_stores/queries/get_favorite_button_in_user/mock_get_favorite_button_in_user_query
-import ./data_stores/queries/get_favorite_button_in_user/get_favorite_button_in_user_query
+import ./usecases/get_favorite_button/get_favorite_button_query_interface
+import ./data_stores/queries/get_favorite_button/mock_get_favorite_button_query
+import ./data_stores/queries/get_favorite_button/get_favorite_button_query
 # get article
 import ./usecases/get_article_in_feed/get_article_in_feed_query_interface
 import ./data_stores/queries/get_article_in_feed/mock_get_article_in_feed_query
@@ -70,7 +70,7 @@ type DiContainer* = object
   getCommentsInArticleQuery*:IGetCommentsInArticleQuery
   getUserShowQuery*: IGetUserShowQuery
   getFollowButtonInUserQuery*: IGetFollowButtonInUserQuery
-  getFavoriteButtonInUserQuery*: IGetFavoriteButtonInUserQuery
+  getFavoriteButtonQuery*: IGetFavoriteButtonQuery
   getArticlesInUserQuery*: IGetArticlesInUserQuery
   getFavoritesInUserQuery*: IGetFavoritesInUserQuery
   getYourFeedQuery*: IGetYourFeedQuery
@@ -90,7 +90,7 @@ proc newDiContainer():DiContainer =
       getCommentsInArticleQuery:MockGetCommentsInArticleQuery.new(),
       getUserShowQuery: MockGetUserShowQuery.new(),
       getFollowButtonInUserQuery: MockGetFollowButtonInUserQuery.new(),
-      getFavoriteButtonInUserQuery: MockGetFavoriteButtonInUserQuery.new(),
+      getFavoriteButtonQuery: MockGetFavoriteButtonQuery.new(),
       getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
       getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
       getYourFeedQuery: MockGetYourFeedQuery.new(),
@@ -116,8 +116,8 @@ proc newDiContainer():DiContainer =
       # getFollowButtonInUserQuery: MockGetFollowButtonInUserQuery.new(),
       getFollowButtonInUserQuery: GetFollowButtonInUserQuery.new(),
       # getArticlesInUserQuery: MockGetArticlesInUserQuery.new(),
-      getFavoriteButtonInUserQuery: GetFavoriteButtonInUserQuery.new(),
-      # getFavoriteButtonInUserQuery: MockGetFavoriteButtonInUserQuery.new(),
+      getFavoriteButtonQuery: GetFavoriteButtonQuery.new(),
+      # getFavoriteButtonQuery: MockGetFavoriteButtonQuery.new(),
       getArticlesInUserQuery: GetArticlesInUserQuery.new(),
       # getFavoritesInUserQuery: MockGetFavoritesInUserQuery.new(),
       getFavoritesInUserQuery: GetFavoritesInUserQuery.new(),

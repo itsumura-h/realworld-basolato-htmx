@@ -1,8 +1,10 @@
 import std/asyncdispatch
 import std/times
+import ../../../models/vo/article_id
 import ../../../models/vo/user_id
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_query_interface
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
+import ../get_favorite_button/mock_get_favorite_button_query
 
 
 type MockGetFavoritesInUserQuery*  = object of IGetFavoritesInUserQuery
@@ -25,10 +27,7 @@ method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavori
     TagDto.new("tag2"),
   ]
 
-  let favoritedUsers = @[
-    FavoritedUserDto.new("user1"),
-    FavoritedUserDto.new("user2"),
-  ]
+  let getFavoriteButtonQuery = MockGetFavoriteButtonQuery.new()
 
   let articles = @[
     ArticleDto.new(
@@ -38,7 +37,7 @@ method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavori
       "2024-01-01 12:00:00",
       author,
       tags,
-      favoritedUsers
+      getFavoriteButtonQuery.invoke(ArticleId.new("article-1"), userId).await
     ),
     ArticleDto.new(
       "article-2",
@@ -47,7 +46,7 @@ method invoke*(self:MockGetFavoritesInUserQuery, userId:UserId):Future[GetFavori
       "2024-01-01 12:00:00",
       author,
       tags,
-      favoritedUsers
+      getFavoriteButtonQuery.invoke(ArticleId.new("article-2"), userId).await
     ),
   ]
 

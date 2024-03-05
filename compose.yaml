@@ -12,7 +12,7 @@ services:
     image: adminer:4.8.1-standalone
     tty: true
     ports:
-      - 8001:8080
+      - 9001:8080
     depends_on:
       - postgres
 
@@ -24,6 +24,6 @@ services:
         VERSION: 2.0.2
     tty: true
     ports:
-      - 8000:8000
+      - 9000:8000
     volumes:
       - .:/root/project

@@ -14,7 +14,8 @@ proc new*(_:type GetFavoritesInUserUsecase):GetFavoritesInUserUsecase =
   )
 
 
-proc invoke*(self:GetFavoritesInUserUsecase, userId: string): Future[GetFavoritesInUserDto] {.async.} =
+proc invoke*(self:GetFavoritesInUserUsecase, userId: string, loginUserId:string): Future[GetFavoritesInUserDto] {.async.} =
   let userId = UserId.new(userId)
-  let dto = self.query.invoke(userId).await
+  let loginUserId = UserId.new(loginUserId)
+  let dto = self.query.invoke(userId, loginUserId).await
   return dto

@@ -19,7 +19,7 @@ import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../http/views/components/user/follow_button/follow_button_view
 # favorite
 import ../../usecases/favorite_usecase
-import ../../usecases/get_favorite_button_in_user/get_favorite_button_in_user_usecase
+import ../../usecases/get_favorite_button/get_favorite_button_usecase
 import ../views/components/user/favorite_button/favorite_button_view_model
 import ../views/components/user/favorite_button/favorite_button_view
 
@@ -50,8 +50,8 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
   let loginUserId = context.get("id").await
   try:
     let usecase = GetArticlesInUserUsecase.new()
-    let dto = usecase.invoke(userId).await
-    let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
+    let dto = usecase.invoke(userId, loginUserId).await
+    let viewModel = HtmxUserFeedViewModel.new(dto)
     let view = htmxUserFeedView(viewModel)
     return render(view)
   except IdNotFoundError:
@@ -63,8 +63,8 @@ proc favoriteArticles*(context:Context, params:Params):Future[Response] {.async.
   let loginUserId = context.get("id").await
   try:
     let usecase = GetFavoritesInUserUsecase.new()
-    let dto = usecase.invoke(userId).await
-    let viewModel = HtmxUserFeedViewModel.new(dto, loginUserId)
+    let dto = usecase.invoke(userId, loginUserId).await
+    let viewModel = HtmxUserFeedViewModel.new(dto)
     let view = htmxUserFeedView(viewModel)
     return render(view)
   except IdNotFoundError:
@@ -94,8 +94,8 @@ proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
     let followUsecase = FavoriteUsecase.new()
     followUsecase.invoke(articleId, loginUserId).await
 
-    let getFavoriteButtonInUserUsecase = GetFavoriteButtonInUserUsecase.new()
-    let dto = getFavoriteButtonInUserUsecase.invoke(articleId, loginUserId).await
+    let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
+    let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
     let viewModel = FavoriteButtonViewModel.new(dto)
     let view = favoriteButtonView(viewModel)
     return render(view)

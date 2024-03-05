@@ -14,7 +14,8 @@ proc new*(_:type GetArticlesInUserUsecase):GetArticlesInUserUsecase =
   )
 
 
-proc invoke*(self:GetArticlesInUserUsecase, userId:string):Future[GetArticlesInUserDto] {.async.} =
+proc invoke*(self:GetArticlesInUserUsecase, userId:string, loginUserId:string):Future[GetArticlesInUserDto] {.async.} =
   let userId = UserId.new(userId)
-  let dto = self.query.invoke(userId).await
+  let loginUserId = UserId.new(loginUserId)
+  let dto = self.query.invoke(userId, loginUserId).await
   return dto

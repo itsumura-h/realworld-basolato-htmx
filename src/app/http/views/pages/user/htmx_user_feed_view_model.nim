@@ -45,7 +45,6 @@ type Article*  = object
   createdAt*:string
   author*:Author
   tags*:seq[Tag]
-  favoritedUsers*:seq[FavoritedUser]
   favoriteButtonViewModel*:FavoriteButtonViewModel
 
 proc new*(_:type Article,
@@ -55,22 +54,8 @@ proc new*(_:type Article,
   createdAt:DateTime,
   author:Author,
   tags:seq[Tag],
-  favoritedUsers:seq[FavoritedUser],
-  loginUserId:string
+  favoriteButtonViewModel:FavoriteButtonViewModel,
 ): Article =  
-  var isFavorited = false
-  for favoritedUser in favoritedUsers:
-    if favoritedUser.id == loginUserId:
-      isFavorited = true
-      break
-  
-  let favoriteButtonViewModel = FavoriteButtonViewModel.new(
-    isFavorited,
-    id,
-    loginUserId == author.id,
-    favoritedUsers.len
-  )
-
   let createdAt = createdAt.format("yyyy MMMM d")
   return Article(
     id:id,
@@ -79,7 +64,6 @@ proc new*(_:type Article,
     createdAt:createdAt,
     author:author,
     tags:tags,
-    favoritedUsers:favoritedUsers,
     favoriteButtonViewModel:favoriteButtonViewModel
   )
 
@@ -89,7 +73,7 @@ type HtmxUserFeedViewModel*  = object
   articles*:seq[Article]
   feedNavigationViewModel*:FeedNavigationViewModel
 
-proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto):HtmxUserFeedViewModel =
   let author = Author.new(
     dto.author.id,
     dto.author.name,
@@ -103,10 +87,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
           return Tag.new(tag.name)
       )
 
-      let favoritedUsers = article.favoritedUsers.map(
-        proc(favoritedUser:FavoritedUserDto):FavoritedUser =
-          FavoritedUser.new(favoritedUser.id)
-      )
+      let favoriteButtonViewModel = FavoriteButtonViewModel.new(article.favoriteButtonDto)
 
       let article = Article.new(
         article.id,
@@ -115,8 +96,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
         article.createdAt,
         author,
         tags,
-        favoritedUsers,
-        loginUserId,
+        favoriteButtonViewModel,
       )
 
       return article
@@ -147,7 +127,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetArticlesInUserDto, loginUserId:st
 
 
 
-proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:string):HtmxUserFeedViewModel =
+proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto):HtmxUserFeedViewModel =
   let articles = dto.articles.map(
     proc(article:get_favorites_in_user_dto.ArticleDto):Article =
       let author = Author.new(
@@ -161,10 +141,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:s
           return Tag.new(tag.name)
       )
 
-      let favoritedUsers = article.favoritedUsers.map(
-        proc(favoritedUser:get_favorites_in_user_dto.FavoritedUserDto):FavoritedUser =
-          FavoritedUser.new(favoritedUser.id)
-      )
+      let favoriteButtonViewModel = FavoriteButtonViewModel.new(article.favoriteButtonDto)
 
       let article = Article.new(
         article.id,
@@ -173,8 +150,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto, loginUserId:s
         article.createdAt,
         author,
         tags,
-        favoritedUsers,
-        loginUserId,
+        favoriteButtonViewModel,
       )
 
       return article

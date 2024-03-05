@@ -10,7 +10,16 @@ import ../../components/article/delete_button/delete_button_view
 
 
 proc impl(viewModel:ArticleShowViewModel):Component =
+  let style = styleTmpl(Css, """
+    <style>
+      .inline_flex {
+        display: inline-flex;
+      }
+    </style>
+  """)
+
   tmpli html"""
+    $(style)
     <div class="post-page">
 
       <div class="banner">
@@ -39,10 +48,12 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
               $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
             }$else{
-              <!-- follow button -->
-              $( followButtonView(viewModel.followButtonViewModel.get) )
-              <!-- favorite button -->
-              $( favoriteButtonView(viewModel.favoriteButtonViewModel.get) )
+              <div class="$(style.element("inline_flex"))">
+                <!-- follow button -->
+                $( followButtonView(viewModel.followButtonViewModel.get) )
+                <!-- favorite button -->
+                $( favoriteButtonView(viewModel.favoriteButtonViewModel.get) )
+              </div>
             }
           </div>
 
@@ -87,10 +98,12 @@ proc impl(viewModel:ArticleShowViewModel):Component =
               <!-- delete-button -->
               $( deleteButtonView(viewModel.deleteButtonViewModel.get) )
             }$else{
-              <!-- follow button -->
-              $(followButtonView(viewModel.followButtonViewModel.get))
-              <!-- favorite button -->
-              $(favoriteButtonView(viewModel.favoriteButtonViewModel.get))
+              <div class="$(style.element("inline_flex"))">
+                <!-- follow button -->
+                $(followButtonView(viewModel.followButtonViewModel.get))
+                <!-- favorite button -->
+                $(favoriteButtonView(viewModel.favoriteButtonViewModel.get))
+              </div>
             }
           </div>
         </div>

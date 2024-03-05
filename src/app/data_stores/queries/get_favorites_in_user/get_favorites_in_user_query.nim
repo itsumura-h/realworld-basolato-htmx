@@ -3,9 +3,11 @@ import std/json
 import std/options
 from ../../../../config/database import rdb
 import allographer/query_builder
+import ../../../models/vo/article_id
 import ../../../models/vo/user_id
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_query_interface
 import ../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
+import ../get_favorite_button/get_favorite_button_query
 
 
 type GetFavoritesInUserQuery*  = object of IGetFavoritesInUserQuery
@@ -14,7 +16,7 @@ proc new*(_:type GetFavoritesInUserQuery):GetFavoritesInUserQuery =
   return GetFavoritesInUserQuery()
 
 
-method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesInUserDto] {.async.} =
+method invoke*(self:GetFavoritesInUserQuery, userId:UserId, loginUserId:UserId):Future[GetFavoritesInUserDto] {.async.} =
   let userData = rdb.table("user").find(userId.value).await.get()
   let user = UserDto.new(userData["id"].getStr())
 
@@ -49,25 +51,16 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
           row["tag_id"].getStr()
         )
       )
-    
-    var favoritedUsers:seq[FavoritedUserDto] 
-    let favoritedUsersData = rdb.table("user_article_map")
-                                .join("user", "user.id", "=", "user_article_map.user_id")
-                                .where("user_article_map.article_id", "=", articleData["id"].getStr())
-                                .get()
-                                .await
-    for row in favoritedUsersData:
-      favoritedUsers.add(
-        FavoritedUserDto.new(
-          row["id"].getStr(),
-        )
-      )
 
     let author = AuthorDto.new(
       articleData["author_id"].getStr(),
       articleData["name"].getStr(),
       articleData["image"].getStr(),
     )
+
+    let articleId = ArticleId.new(articleData["id"].getStr())
+    let getFavoriteButtonQuery = GetFavoriteButtonQuery.new()
+    let favoritesButtonDto = getFavoriteButtonQuery.invoke(articleId, loginUserId).await
 
     articles.add(
       ArticleDto.new(
@@ -77,7 +70,7 @@ method invoke*(self:GetFavoritesInUserQuery, userId:UserId):Future[GetFavoritesI
         articleData["created_at"].getStr(),
         author,
         tags,
-        favoritedUsers
+        favoritesButtonDto
       )
     )
 

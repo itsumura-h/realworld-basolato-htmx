@@ -1,4 +1,5 @@
 import std/times
+import ../get_favorite_button/favorite_button_dto
 
 
 type UserDto*  = object
@@ -32,15 +33,6 @@ proc new*(_:type TagDto, name:string):TagDto =
   )
 
 
-type FavoritedUserDto*  = object
-  id*:string
-
-proc new*(_:type FavoritedUserDto, id:string):FavoritedUserDto =
-  return FavoritedUserDto(
-    id:id
-  )
-
-
 type ArticleDto*  = object
   id*:string
   title*:string
@@ -48,7 +40,7 @@ type ArticleDto*  = object
   createdAt*:DateTime
   author*:AuthorDto
   tags*:seq[TagDto]
-  favoritedUsers*:seq[FavoritedUserDto]
+  favoriteButtonDto*:FavoriteButtonDto
 
 proc new*(_:type ArticleDto,
   id:string,
@@ -57,7 +49,7 @@ proc new*(_:type ArticleDto,
   createdAt:string,
   author:AuthorDto,
   tags:seq[TagDto],
-  favoritedUsers:seq[FavoritedUserDto]
+  favoriteButtonDto:FavoriteButtonDto
 ): ArticleDto =  
   let createdAt = createdAt.parse("yyyy-MM-dd hh:mm:ss")
   return ArticleDto(
@@ -67,7 +59,7 @@ proc new*(_:type ArticleDto,
     createdAt:createdAt,
     author:author,
     tags:tags,
-    favoritedUsers:favoritedUsers,
+    favoriteButtonDto:favoriteButtonDto,
   )
 
 

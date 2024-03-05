@@ -5,6 +5,7 @@ import ../../../usecases/get_article_in_feed/get_article_in_feed_query_interface
 import ../../../usecases/get_article_in_feed/get_article_in_feed_dto
 import ../../../models/vo/article_id
 import ../../../models/vo/user_id
+import ../get_favorite_button/mock_get_favorite_button_query
 
 
 type MockGetArticleInFeedQuery*  = object of IGetArticleInFeedQuery
@@ -27,6 +28,13 @@ method invoke*(self:MockGetArticleInFeedQuery, articleId:ArticleId, loginUserId:
     ),
   ]
 
+  let getFavoriteButtonQuery = MockGetFavoriteButtonQuery.new()
+  let favoriteButtonDto =
+    if loginUserId.isSome():
+      getFavoriteButtonQuery.invoke(articleId, loginUserId.get()).await
+    else:
+      getFavoriteButtonQuery.invoke(articleId).await
+
   let article = ArticleDto.new(
     id = articleId.value,
     title = "titie",
@@ -34,8 +42,7 @@ method invoke*(self:MockGetArticleInFeedQuery, articleId:ArticleId, loginUserId:
     body = "body",
     createdAt = "2024-01-01 12:00:00",
     tags = tags,
-    isFavorited = false,
-    favoriteCount = 5,
+    favoriteButtonDto = favoriteButtonDto,
   )
   let user = UserDto.new(
     "user-name",

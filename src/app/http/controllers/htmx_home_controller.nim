@@ -16,7 +16,11 @@ import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view_model
 import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view
 # your feed
 import ../../usecases/get_your_feed/get_your_feed_usecase
-
+# favorite
+import ../../usecases/favorite_usecase
+import ../../usecases/get_favorite_button/get_favorite_button_usecase
+import ../views/components/home/favorite_button/favorite_button_view_model
+import ../views/components/home/favorite_button/favorite_button_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
@@ -80,3 +84,19 @@ proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   let viewModel = HtmxTagItemListViewModel.new(tagsDto)
   let view = htmxTagListView(viewModel)
   return render(view)
+
+
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
+
+    let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
+    let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
+    let viewModel = FavoriteButtonViewModel.new(dto)
+    let view = favoriteButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())

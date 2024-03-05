@@ -32,13 +32,16 @@ proc impl(viewModel:HtmxPostPreviewViewModel):Component =
               <span class="date">$(article.createdAt)</span>
             </div>
 
-            <!-- if is_favorited, add class "active" -->
-            <button class="btn btn-outline-primary btn-sm pull-xs-right"
+            <form
               hx-post="/htmx/home/articles/$(article.id)/favorite"
               hx-swap="outerHTML"
             >
-              <i class="ion-heart"></i> $(article.popularCount)
-            </button>
+              $(csrfToken())
+              <!-- if is_favorited, add class "active" -->
+              <button class="btn btn-outline-primary btn-sm pull-xs-right">
+                <i class="ion-heart"></i> $(article.popularCount)
+              </button>
+            </form>
 
           </div>
           <a href="/articles/$(article.id)"

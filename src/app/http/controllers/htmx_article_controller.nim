@@ -4,15 +4,15 @@ import std/strformat
 import basolato/controller
 import basolato/view
 import ../../di_container
-
+# article show
 import ../../usecases/get_article_in_feed/get_article_in_feed_usecase
 import ../views/pages/article/article_show_view_model
 import ../views/pages/article/article_show_view
-
+# comment
 import ../../usecases/get_comments_in_article/get_comments_in_article_usecase
 import ../views/pages/comment/comment_view_model
 import ../views/pages/comment/comment_wrapper_view
-
+# delete
 import ../../usecases/delete_article_usecase
 
 

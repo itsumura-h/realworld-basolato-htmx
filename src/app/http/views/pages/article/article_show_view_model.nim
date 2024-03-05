@@ -105,13 +105,7 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:stri
     if isAuthor:
       none(FavoriteButtonViewModel)
     else:
-      FavoriteButtonViewModel.new(
-        dto.article.isFavorited,
-        dto.article.id,
-        false,
-        dto.article.favoriteCount,
-      )
-      .some()
+      FavoriteButtonViewModel.new(dto.article.favoriteButtonDto).some()
 
   let editButtonViewModel =
     if isAuthor:

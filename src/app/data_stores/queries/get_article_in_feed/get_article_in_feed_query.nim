@@ -8,6 +8,7 @@ import ../../../usecases/get_article_in_feed/get_article_in_feed_query_interface
 import ../../../usecases/get_article_in_feed/get_article_in_feed_dto
 import ../../../models/vo/article_id
 import ../../../models/vo/user_id
+import ../get_favorite_button/get_favorite_button_query
 
 
 type GetArticleInFeedQuery*  = object of IGetArticleInFeedQuery
@@ -58,22 +59,12 @@ method invoke*(self:GetArticleInFeedQuery, articleId:ArticleId, loginUserId:Opti
     else:
       newSeq[TagDto]()
 
-  # get data from article whether login user is favorited or not
-  let isLoginUserfavoritedCount =
+  let getFavoriteButtonQuery = GetFavoriteButtonQuery.new()
+  let favoriteButtonDto =
     if loginUserId.isSome():
-      rdb.table("user_article_map")
-          .where("user_id", "=", loginUserId.get().value)
-          .where("article_id", "=", articleId.value)
-          .count()
-          .await
-    else:
-      0
-
-  # get favorites count of article
-  let favoriteCount = rdb.table("user_article_map")
-                          .where("article_id", "=", articleId.value)
-                          .count()
-                          .await
+        getFavoriteButtonQuery.invoke(articleId, loginUserId.get()).await
+      else:
+        getFavoriteButtonQuery.invoke(articleId).await
 
   let article = ArticleDto.new(
     id = articleId.value,
@@ -82,8 +73,7 @@ method invoke*(self:GetArticleInFeedQuery, articleId:ArticleId, loginUserId:Opti
     body = articleData["body"].getStr(),
     createdAt = articleData["createdAt"].getStr(),
     tags = tags,
-    isFavorited = isLoginUserfavoritedCount > 0,
-    favoriteCount = favoriteCount,
+    favoriteButtonDto = favoriteButtonDto
   )
 
   let followerCount = rdb.table("user_user_map")
