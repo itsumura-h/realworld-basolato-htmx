@@ -14,6 +14,11 @@ import ../views/pages/comment/comment_view_model
 import ../views/pages/comment/comment_wrapper_view
 # delete
 import ../../usecases/delete_article_usecase
+# favorite
+import ../../usecases/favorite_usecase
+import ../../usecases/get_favorite_button/get_favorite_button_usecase
+import ../views/components/article/favorite_button/favorite_button_view_model
+import ../views/components/article/favorite_button/favorite_button_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -48,3 +53,19 @@ proc delete*(context:Context, params:Params):Future[Response] {.async.} =
     "HX-Redirect": &"/users/{userId}",
   }.newHttpHeaders()
   return render("", header)
+
+
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
+
+    let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
+    let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
+    let viewModel = FavoriteButtonViewModel.new(dto)
+    let view = favoriteButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())
