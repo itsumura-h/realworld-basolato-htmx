@@ -19,15 +19,14 @@ proc impl(viewModel:ArticleShowViewModel):Component =
   """)
 
   tmpli html"""
-    $(style)
-    <div class="article-page">
+    <div class="post-page">
 
       <div class="banner">
         <div class="container">
 
           <h1>$(viewModel.article.title)</h1>
 
-          <div class="article-meta">
+          <div class="post-meta">
             <a href="profile.html"><img src="$(viewModel.user.image)" /></a>
             <div class="info">
               <a href="/users/$(viewModel.user.id)"
@@ -115,6 +114,7 @@ proc impl(viewModel:ArticleShowViewModel):Component =
       </div>
 
     </div>
+    $(style)
   """
 
 proc htmxArticleShowView*(viewModel:ArticleShowViewModel):Component =

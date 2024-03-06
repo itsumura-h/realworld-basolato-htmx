@@ -27,6 +27,7 @@ proc impl(viewModel:SettingViewModel):Component =
               <button type="submit" class="btn btn-outline-danger">
                 Or click here to logout.
               </button>
+            </form>
           </div>
 
         </div>
