@@ -10,56 +10,46 @@ proc appView*(viewModel:AppViewModel, body:Component):Component =
     <!DOCTYPE html>
     <html>
       $(headView(viewModel.title))
-    <body hx-ext="head-support">
-      <nav class="navbar navbar-light">
-        <div class="container">
-          <a class="navbar-brand" 
-            href="/"
-            hx-push-url="/"
-            hx-get="/htmx/home" 
-            hx-target="#app-body">conduit</a>
-            
-          $(navbarView(viewModel.navbarViewModel))
+      <body hx-ext="head-support">
+        $(navbarView(viewModel.navbarViewModel))
+
+        <div id="app-body">
+          $(body)
         </div>
-      </nav>
 
-      <div id="app-body">
-        $(body)
-      </div>
+        $(footerView())
 
-      $(footerView())
+        <script src="/js/tagify.js"></script>
+        <script>
+          var isTagify = null;
 
-      <script src="/js/tagify.js"></script>
-      <script>
-        var isTagify = null;
+          document.body.addEventListener('htmx:configRequest', function(evt) {
+            evt.detail.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
+          })
 
-        document.body.addEventListener('htmx:configRequest', function(evt) {
-          evt.detail.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
-        })
+          window.addEventListener('DOMContentLoaded', function() {
+            renderTagify();
+          });
 
-        window.addEventListener('DOMContentLoaded', function() {
-          renderTagify();
-        });
+          document.body.addEventListener("htmx:afterSwap", function(evt) {
+            renderTagify();
+          });
 
-        document.body.addEventListener("htmx:afterSwap", function(evt) {
-          renderTagify();
-        });
+          function renderTagify() {
+            const input = document.querySelector('input[name=tags]');
+            const tagify = document.querySelector('tags[class="tagify  form-control tagify--outside"]');
 
-        function renderTagify() {
-          const input = document.querySelector('input[name=tags]');
-          const tagify = document.querySelector('tags[class="tagify  form-control tagify--outside"]');
-
-          if (input && !tagify) {
-            new Tagify(input, {
-              whitelist: [],
-              dropdown: {
-                position: "input",
-                enabled : 0 // always opens dropdown when input gets focus
-              }
-            })
+            if (input && !tagify) {
+              new Tagify(input, {
+                whitelist: [],
+                dropdown: {
+                  position: "input",
+                  enabled : 0 // always opens dropdown when input gets focus
+                }
+              })
+            }
           }
-        }
-      </script>
-    </body>
+        </script>
+      </body>
     </html>
   """

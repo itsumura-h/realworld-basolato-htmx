@@ -7,11 +7,11 @@ proc favoriteButtonView*(viewModel: FavoriteButtonViewModel): Component =
     <form
       hx-post="/htmx/users/articles/$(viewModel.articleId)/favorite"
 
-      $if viewModel.isCurrentUser{
+      $if viewModel.willDelete{
         hx-swap="delete"
-        hx-target="closest .post-preview"
+        hx-target="closest .article-preview"
       }$else{
-        hx-swap="outerHTML"
+      hx-swap="outerHTML"
       }
     >
       $(csrfToken())

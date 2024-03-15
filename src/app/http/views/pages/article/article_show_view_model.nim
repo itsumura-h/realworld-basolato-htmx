@@ -94,8 +94,8 @@ proc new*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:stri
       none(FollowButtonViewModel)
     else:
       FollowButtonViewModel.new(
+        dto.user.id,
         dto.user.name,
-        false,
         dto.user.id == loginUserId,
         dto.user.followerCount,
       )

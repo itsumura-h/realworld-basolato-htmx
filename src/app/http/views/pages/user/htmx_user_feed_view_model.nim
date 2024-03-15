@@ -141,7 +141,7 @@ proc new*(_:type HtmxUserFeedViewModel, dto:GetFavoritesInUserDto):HtmxUserFeedV
           return Tag.new(tag.name)
       )
 
-      let favoriteButtonViewModel = FavoriteButtonViewModel.new(article.favoriteButtonDto)
+      let favoriteButtonViewModel = FavoriteButtonViewModel.new(article.favoriteButtonDto, true)
 
       let article = Article.new(
         article.id,

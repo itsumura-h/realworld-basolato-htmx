@@ -46,6 +46,7 @@ method invoke*(self:GetArticlesInUserQuery, userId:UserId, loginUserId:UserId):F
 
   var articles:seq[ArticleDto]
   for articleData in articlesData:
+    echo articleData.pretty()
     var tags:seq[TagDto] 
     let tagsData = rdb.table("tag")
                     .join("tag_article_map", "tag_article_map.tag_id", "=", "tag.id")

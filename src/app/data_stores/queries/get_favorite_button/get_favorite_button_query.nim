@@ -8,6 +8,7 @@ import ../../../usecases/get_favorite_button/favorite_button_dto
 import ../../../models/vo/article_id
 import ../../../models/vo/user_id
 
+
 type GetFavoriteButtonQuery* = object of IGetFavoriteButtonQuery
 
 proc new*(_:type GetFavoriteButtonQuery): GetFavoriteButtonQuery =
@@ -27,13 +28,15 @@ method invoke*(self:GetFavoriteButtonQuery, articleId:ArticleId, userId:UserId):
                         .await
   let isFavorited = isFavoriteOpt.isSome()
 
-  let articleDataOpt = rdb.table("article")
+  let articleDataOpt = rdb.select("author_id")
+                          .table("article")
                           .find(articleId.value)
                           .await
+
   let articleData = articleDataOpt.get()
   let isCurrentUser = articleData["author_id"].getStr == userId.value
 
-  let dto = FavoriteButtonDto.new(articleId.value, favoriteCount, isFavorited, isCurrentUser)
+  let dto = FavoriteButtonDto.new(articleId.value, favoriteCount, isFavorited)
   return dto
 
 
@@ -43,5 +46,5 @@ method invoke*(self:GetFavoriteButtonQuery, articleId:ArticleId):Future[Favorite
                           .count()
                           .await
 
-  let dto = FavoriteButtonDto.new(articleId.value, favoriteCount, false,  false)
+  let dto = FavoriteButtonDto.new(articleId.value, favoriteCount, false)
   return dto

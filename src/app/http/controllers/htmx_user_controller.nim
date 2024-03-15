@@ -96,7 +96,7 @@ proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
 
     let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
     let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
-    let viewModel = FavoriteButtonViewModel.new(dto)
+    let viewModel = FavoriteButtonViewModel.new(dto, true)
     let view = favoriteButtonView(viewModel)
     return render(view)
   except:

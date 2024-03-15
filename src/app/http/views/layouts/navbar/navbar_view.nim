@@ -4,78 +4,82 @@ import ./navbar_view_model
 
 proc navbarView*(viewModel:NavbarViewModel):Component =
   tmpli html"""
-    <ul id="navbar" class="nav navbar-nav pull-xs-right" hx-swap-oob="true">
-      <li class="nav-item">
-        <a id="nav-link-home"
-          href="/"
-          hx-get="/htmx/home"
-          hx-target="#app-body"
-          hx-push-url="/"
-          class="nav-link" 
-        >
-          Home
-        </a>
-      </li>
-
-      $if not viewModel.isLogin{
-        <li class="nav-item">
-          <a id="nav-link-sign-in"
-            href="/sign-in"
-            hx-get="/htmx/sign-in"
-            hx-target="#app-body"
-            hx-push-url="/sign-in"
-            class="nav-link" 
-          >
-            Sign in
-          </a>
-        </li>
-        <li class="nav-item">
-          <a id="nav-link-sign-up"
-            href="/sign-up"
-            hx-get="/htmx/sign-up"
-            hx-target="#app-body"
-            hx-push-url="/sign-up"
-            class="nav-link"
-          >
-            Sign up
-          </a>
-        </li>
-      }$else{
-        <li class="nav-item">
-          <a id="nav-link-editor"
-            href="/editor"
-            hx-get="/htmx/editor"
-            hx-target="#app-body"
-            hx-push-url="/editor"
-            class="nav-link"
-          >
-            <i class="ion-compose"></i>
-            New Article
-          </a>
-        </li>
-        <li class="nav-item">
-          <a id="nav-link-settings"
-            href="/settings"
-            hx-get="/htmx/settings"
-            hx-target="#app-body"
-            hx-push-url="/settings"
-            class="nav-link"
-          >
-            Settings
-          </a>
-        </li>
-        <li class="nav-item">
-          <a id="nav-link-profile"
-            href="/users/$(viewModel.userId)"
-            hx-get="/htmx/users/$(viewModel.userId)"
-            hx-target="#app-body"
-            hx-push-url="/users/$(viewModel.userId)"
-            class="nav-link"
-          >
-            <img class="user-pic" src="$(viewModel.image)">
-            $(viewModel.userName)
-          </a>
-        </li>
-      }
-    </ul>
+    <nav class="navbar navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">conduit</a>
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item">
+            <!-- Add "active" class when you're on that page" -->
+            <a
+              class="nav-link active"
+              href="/"
+              hx-push-url="/"
+              hx-get="/htmx/home"
+              hx-target="#app-body"
+            >
+              Home
+            </a>
+          </li>
+          $if not viewModel.isLogin{
+            <li class="nav-item">
+              <a id="nav-link-sign-in"
+                class="nav-link" 
+                href="/sign-in"
+                hx-push-url="/sign-in"
+                hx-get="/htmx/sign-in"
+                hx-target="#app-body"
+              >
+                Sign in
+              </a>
+            </li>
+            <li class="nav-item">
+              <a id="nav-link-sign-up"
+                class="nav-link"
+                href="/sign-up"
+                hx-push-url="/sign-up"
+                hx-get="/htmx/sign-up"
+                hx-target="#app-body"
+              >
+                Sign up
+              </a>
+            </li>
+          }$else{
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/editor"
+                hx-push-url="/editor"
+                hx-get="/htmx/editor"
+                hx-target="#app-body"
+              >
+                <i class="ion-compose"></i>&nbsp;New Article
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/settings"
+                hx-push-url="/settings"
+                hx-get="/htmx/settings"
+                hx-target="#app-body"
+              >
+                <i class="ion-gear-a"></i>&nbsp;Settings
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/users/$(viewModel.userId)"
+                hx-push-url="/users/$(viewModel.userId)"
+                hx-get="/htmx/users/$(viewModel.userId)"
+                hx-target="#app-body"
+              >
+                <img src="$(viewModel.image)" class="user-pic" />
+                $(viewModel.userName)
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </nav>
   """

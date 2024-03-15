@@ -10,8 +10,8 @@ proc impl(viewModel:HtmxUserFeedViewModel):Component =
 
     <div id="user-post-preview" hx-swap-oob="true">
     $for article in viewModel.articles{
-      <div class="post-preview">
-        <div class="post-meta">
+      <div class="article-preview">
+        <div class="article-meta">
           <a href="/users/$(article.author.id)"
             hx-push-url="/users/$(article.author.id)"
             hx-get="/htmx/users/$(article.author.id)"
@@ -56,7 +56,7 @@ proc impl(viewModel:HtmxUserFeedViewModel):Component =
       </div>
     }
     $if viewModel.articles.len == 0{
-      <div class="post-preview">
+      <div class="article-preview">
         <div class="alert alert-warning" role="alert">
           No articles are here... yet.
         </div>

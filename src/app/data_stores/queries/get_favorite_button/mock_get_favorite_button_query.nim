@@ -14,7 +14,6 @@ method invoke*(self:MockGetFavoriteButtonQuery, articleId:ArticleId, userId:User
   return FavoriteButtonDto.new(
     articleId.value,
     5,
-    true,
     true
   )
 
@@ -23,6 +22,5 @@ method invoke*(self:MockGetFavoriteButtonQuery, articleId:ArticleId):Future[Favo
   return FavoriteButtonDto.new(
     articleId.value,
     5,
-    false,
     false
   )

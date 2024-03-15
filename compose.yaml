@@ -1,6 +1,6 @@
 version: '3'
 services:
-  postgres:
+  database:
     image: postgres:alpine
     tty: true
     environment:
@@ -14,7 +14,7 @@ services:
     ports:
       - 9001:8080
     depends_on:
-      - postgres
+      - database
 
   app:
     build:
@@ -23,7 +23,10 @@ services:
       args:
         VERSION: 2.0.2
     tty: true
+    user: ${UID}:${GID}
     ports:
       - 9000:8000
     volumes:
       - .:/root/project
+    depends_on:
+      - database
