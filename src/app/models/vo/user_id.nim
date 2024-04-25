@@ -14,3 +14,6 @@ proc new*(_:type UserId, value:string):UserId =
 proc new*(_:type UserId, userName:UserName):UserId =
   let value = userName.value.replace(".", "").replace(" ", "-")
   return UserId(value:value)
+
+proc `==`*(a:UserId, b:UserId):bool =
+  return a.value == b.value

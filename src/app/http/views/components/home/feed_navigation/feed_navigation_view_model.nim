@@ -1,16 +1,16 @@
-type FeedNavbar*  = object
+type FeedNavbarViewModel*  = object
   title*:string
   isActive*:bool
   hxGetUrl*:string
   hxPushUrl*:string
 
-proc new*(_:type FeedNavbar,
+proc new*(_:type FeedNavbarViewModel,
   title:string,
   isActive:bool,
   hxGetUrl:string,
   hxPushUrl:string
-):FeedNavbar =
-  return FeedNavbar(
+):FeedNavbarViewModel =
+  return FeedNavbarViewModel(
     title:title,
     isActive:isActive,
     hxGetUrl:hxGetUrl,

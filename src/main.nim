@@ -10,17 +10,17 @@ import ./app/http/middlewares/should_login_middleware
 # controller
 # import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/home_controller
-import ./app/http/controllers/article_controller
-import ./app/http/controllers/user_controller
-import ./app/http/controllers/sign_controller
-import ./app/http/controllers/setting_controller
-import ./app/http/controllers/editor_controller
-import ./app/http/controllers/htmx_sign_controller
+# import ./app/http/controllers/article_controller
+# import ./app/http/controllers/user_controller
+# import ./app/http/controllers/sign_controller
+# import ./app/http/controllers/setting_controller
+# import ./app/http/controllers/editor_controller
+# import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
-import ./app/http/controllers/htmx_article_controller
-import ./app/http/controllers/htmx_user_controller
-import ./app/http/controllers/htmx_setting_controller
-import ./app/http/controllers/htmx_editor_controller
+# import ./app/http/controllers/htmx_article_controller
+# import ./app/http/controllers/htmx_user_controller
+# import ./app/http/controllers/htmx_setting_controller
+# import ./app/http/controllers/htmx_editor_controller
 import ./app/http/controllers/api_user_controller
 
 
@@ -31,52 +31,52 @@ let routes = @[
       Route.get("/global-feed", home_controller.index),
       Route.get("/tag-feed/{tag:str}", home_controller.tagFeed),
 
-      Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),
-      Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
-      Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
+      # Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),
+      # Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
+      # Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
 
-      Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
+      # Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
 
-      Route.get("/articles/{articleId:str}", article_controller.show),
+      # Route.get("/articles/{articleId:str}", article_controller.show),
 
-      Route.get("/users/{userId:str}", user_controller.show),
-      Route.get("/users/{userId:str}/favorites", user_controller.favorites),
+      # Route.get("/users/{userId:str}", user_controller.show),
+      # Route.get("/users/{userId:str}/favorites", user_controller.favorites),
 
-      Route.get("/editor", editor_controller.create).middleware(should_login_middleware.shouldLogin),
-      Route.get("/editor/{articleId:str}", editor_controller.update).middleware(should_login_middleware.shouldLogin),
+      # Route.get("/editor", editor_controller.create).middleware(should_login_middleware.shouldLogin),
+      # Route.get("/editor/{articleId:str}", editor_controller.update).middleware(should_login_middleware.shouldLogin),
 
       Route.group("/htmx", @[
-        Route.get("/sign-up", htmx_sign_controller.signUpPage),
-        Route.post("/sign-up", htmx_sign_controller.signUp),
-        Route.get("/sign-in", htmx_sign_controller.signInPage),
-        Route.post("/sign-in", htmx_sign_controller.signIn),
-        Route.post("/logout", htmx_sign_controller.logout),
+      #   Route.get("/sign-up", htmx_sign_controller.signUpPage),
+      #   Route.post("/sign-up", htmx_sign_controller.signUp),
+      #   Route.get("/sign-in", htmx_sign_controller.signInPage),
+      #   Route.post("/sign-in", htmx_sign_controller.signIn),
+      #   Route.post("/logout", htmx_sign_controller.logout),
 
-        Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),
-        Route.get("/home/your-feed", htmx_home_controller.yourFeed).middleware(should_login_middleware.htmxShouldLogin),
-        Route.get("/home/tag-list", htmx_home_controller.tagList),
-        Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
-        Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/home/your-feed", htmx_home_controller.yourFeed).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/home/tag-list", htmx_home_controller.tagList),
+      #   Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
+      #   Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
-        Route.get("/articles/{articleId:str}", htmx_article_controller.show),
-        Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
-        Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/articles/{articleId:str}", htmx_article_controller.show),
+      #   Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
+      #   Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
-        Route.get("/users/{userId:str}", htmx_user_controller.show),
-        Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
-        Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
-        Route.post("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/users/articles/{articleId:str}/favorite", htmx_user_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/users/{userId:str}", htmx_user_controller.show),
+      #   Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
+      #   Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
+      #   Route.post("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.post("/users/articles/{articleId:str}/favorite", htmx_user_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
-        Route.get("/editor", htmx_editor_controller.create).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/editor", htmx_editor_controller.store).middleware(should_login_middleware.htmxShouldLogin),
-        Route.get("/editor/{articleId:str}", htmx_editor_controller.update).middleware(should_login_middleware.htmxShouldLogin),
-        Route.post("/editor/{articleId:str}", htmx_editor_controller.edit).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/editor", htmx_editor_controller.create).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.post("/editor", htmx_editor_controller.store).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.get("/editor/{articleId:str}", htmx_editor_controller.update).middleware(should_login_middleware.htmxShouldLogin),
+      #   Route.post("/editor/{articleId:str}", htmx_editor_controller.edit).middleware(should_login_middleware.htmxShouldLogin),
       ])
     ])
     .middleware(checkCsrfToken)

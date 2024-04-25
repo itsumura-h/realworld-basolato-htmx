@@ -16,8 +16,8 @@ import ../views/pages/comment/comment_wrapper_view
 import ../../usecases/delete_article_usecase
 # favorite
 import ../../usecases/favorite_usecase
-import ../../usecases/get_favorite_button/get_favorite_button_usecase
-import ../views/components/article/favorite_button/favorite_button_view_model
+# import ../../usecases/get_favorite_button/get_favorite_button_usecase
+import ../../presenters/article_favorite_button/article_favorite_button_presenter
 import ../views/components/article/favorite_button/favorite_button_view
 
 
@@ -57,14 +57,17 @@ proc delete*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
+  let isLogin = context.isLogin().await
   let loginUserId = context.get("id").await
   try:
     let followUsecase = FavoriteUsecase.new()
     followUsecase.invoke(articleId, loginUserId).await
 
-    let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
-    let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
-    let viewModel = FavoriteButtonViewModel.new(dto)
+    # let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
+    # let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
+    # let viewModel = FavoriteButtonViewModel.new(dto)
+    let presenter = ArticleFavoriteButtonPresenter.new()
+    let viewModel = presenter.invoke(articleId, isLogin, loginUserId).await
     let view = favoriteButtonView(viewModel)
     return render(view)
   except:

@@ -11,7 +11,7 @@ proc impl(popularTags:HtmxTagItemListViewModel):Component =
           href="/tag-feed/$(tag.id)"
           hx-push-url="/tag-feed/$(tag.name)"
           hx-get="/htmx/home/tag-feed/$(tag.name)"
-          hx-target="#feed-post-preview"
+          hx-target="#feed-article-preview"
         >
           $(tag.name)
         </a>

@@ -1,15 +1,17 @@
 import basolato/controller
-import ../../usecases/get_login_user/get_login_user_usecase
+import ../../presenters/app_presenter
+import ../../presenters/setting_presenter
 import ../views/pages/setting/setting_view_model
 import ../views/pages/setting/setting_view
-import ./libs/create_app_view_model
+import ../../presenter/app_presenter
 
 
 proc index*(context:Context, parmas:Params):Future[Response] {.async.} =
+  let isLogin = context.isLogin().await
   let userId = context.get("id").await
-  let usecase = GetLoginUserUsecase.new()
-  let dto = usecase.invoke(userId).await
-  let viewModel = SettingViewModel.new(dto)
-  let appViewModel = createAppViewModel(context, "Setting ― Conduit").await
-  let view = settingView(appViewModel, viewModel)
+  let appPresenter = AppPresenter.new()
+  let appViewModel = appPresenter.invoke(isLogin, userId, "Setting ― Conduit").await
+  let settingPresenter = SettingPresenter.new()
+  let settingViewModel = settingPresenter.invoke(userId).await
+  let view = settingView(appViewModel, settingViewModel)
   return render(view)

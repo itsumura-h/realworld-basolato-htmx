@@ -22,7 +22,7 @@ proc impl(viewModel:HomeViewModel):Component =
               <ul id="feed-navigation" class="nav nav-pills outline-active"></ul>
             </div>
 
-            <div id="feed-post-preview"
+            <div id="feed-article-preview"
               hx-trigger="load"
 
               $if viewModel.feedType == tag{

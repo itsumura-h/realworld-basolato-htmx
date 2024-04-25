@@ -1,4 +1,4 @@
-import ../../../../usecases/get_login_user/get_login_user_dto
+import ../../../../models/dto/user/user_dto
 import ../../components/setting/form_message/form_message_view_model
 import ../../components/setting/form/form_view_model
 
@@ -8,7 +8,7 @@ type SettingViewModel*  = object
   formViewModel*:FormViewModel
 
 proc new*(_:type SettingViewModel,
-  getLoginUserDto:LoginUserDto,
+  loginUserDto:UserDto,
 ):SettingViewModel =
   let fromMessageViewModel = FormMessageViewModel.new(
     false,
@@ -16,10 +16,10 @@ proc new*(_:type SettingViewModel,
   )
   let formViewModel = FormViewModel.new(
     false,
-    getLoginUserDto.name,
-    getLoginUserDto.email,
-    getLoginUserDto.bio,
-    getLoginUserDto.image,
+    loginUserDto.name,
+    loginUserDto.email,
+    loginUserDto.bio,
+    loginUserDto.image,
   )
 
   let viewModel = SettingViewModel(

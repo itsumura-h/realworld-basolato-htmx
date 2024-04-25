@@ -19,7 +19,8 @@ import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../http/views/components/user/follow_button/follow_button_view
 # favorite
 import ../../usecases/favorite_usecase
-import ../../usecases/get_favorite_button/get_favorite_button_usecase
+# import ../../usecases/get_favorite_button/get_favorite_button_usecase
+import ../../presenters/user_favorite_button/user_favorite_button_presenter
 import ../views/components/user/favorite_button/favorite_button_view_model
 import ../views/components/user/favorite_button/favorite_button_view
 
@@ -89,14 +90,14 @@ proc follow*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
   let articleId = params.getStr("articleId")
+  let isLogin = context.isLogin().await
   let loginUserId = context.get("id").await
   try:
     let followUsecase = FavoriteUsecase.new()
     followUsecase.invoke(articleId, loginUserId).await
 
-    let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
-    let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
-    let viewModel = FavoriteButtonViewModel.new(dto, true)
+    let presenter = UserFavoriteButtonPresenter.new()
+    let viewModel = presenter.invoke(articleId, isLogin, loginUserId).await
     let view = favoriteButtonView(viewModel)
     return render(view)
   except:

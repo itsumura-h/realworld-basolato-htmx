@@ -1,7 +1,7 @@
-import ../../../../usecases/get_user_show/get_user_show_dto
-import ../../../../usecases/get_favorites_in_user/get_favorites_in_user_dto
+import ../../../../models/dto/user/user_dto
+import ../../../../models/dto/follow_button_in_user/follow_button_in_user_dto
+import ../../../../models/dto/favorites_in_user/favorites_in_user_dto
 import ../../components/user/follow_button/follow_button_view_model
-import ../../../../usecases/get_follow_button_in_user/follow_button_in_user_dto
 
 
 type User*  = object
@@ -26,7 +26,7 @@ type UserShowViewModel*  = object
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool
 
-proc new*(_:type UserShowViewModel, dto:GetUserShowDto, followButtonDto:FollowButtonInUserDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
+proc new*(_:type UserShowViewModel, dto:UserDto, followButtonDto:FollowButtonInUserDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
   let user = User.new(
     dto.id,
     dto.name,

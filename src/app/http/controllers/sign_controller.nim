@@ -1,26 +1,34 @@
 # framework
 import basolato/controller
 import basolato/view
-import ../views/pages/signup/signup_view_model
+import ../../presenters/app_presenter
+import ../../presenters/sign_up_presenter
+import ../../presenters/sign_in_presenter
 import ../views/pages/signup/signup_view
-import ../views/pages/signin/signin_view_model
 import ../views/pages/signin/signin_view
-import ./libs/create_app_view_model
 
 
 proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let appViewModel = createAppViewModel(context, "Sign Up ― Conduit").await
+  let isLogin = context.isLogin().await
+  let id = context.get("id").await
+  let appPresenter = AppPresenter.new()
+  let appViewModel = appPresenter.invoke(isLogin, id, "Sign Up ― Conduit").await
   let oldName = params.old("username")
   let oldEmail = params.old("email")
-  let viewModel = SignUpViewModel.new(oldName, oldEmail)
+  let signUpPresenter = SignUpPresenter.new()
+  let viewModel = signUpPresenter.invoke(oldName, oldEmail)
   let view = signUpView(appViewModel, viewModel)
   return render(view)
 
 
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let appViewModel = createAppViewModel(context, "Sign In ― Conduit").await
+  let isLogin = context.isLogin().await
+  let id = context.get("id").await
+  let appPresenter = AppPresenter.new()
+  let appViewModel = appPresenter.invoke(isLogin, id, "Sign In ― Conduit").await
   let oldEmail = params.old("email")
-  let viewModel = SignInViewModel.new(oldEmail)
+  let signInPresenter = SignInPresenter.new()
+  let viewModel = signInPresenter.invoke(oldEmail)
   let view = signInView(appViewModel, viewModel)
   return render(view)
 

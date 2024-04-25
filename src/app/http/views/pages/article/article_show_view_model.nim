@@ -1,7 +1,7 @@
 import std/times
 import std/options
 import std/sequtils
-import ../../../../usecases/get_article_in_feed/get_article_in_feed_dto
+import ../../../../models/dto/article_in_feed/article_in_feed_dto
 import ../../components/article/follow_button/follow_button_view_model
 import ../../components/article/favorite_button/favorite_button_view_model
 import ../../components/article/edit_button/edit_button_view_model
@@ -64,7 +64,7 @@ type ArticleShowViewModel*  = object
   editButtonViewModel*:Option[EditButtonViewModel]
   deleteButtonViewModel*:Option[DeleteButtonViewModel]
 
-proc new*(_:type ArticleShowViewModel, dto:GetArticleInFeedDto, loginUserId:string):ArticleShowViewModel =
+proc new*(_:type ArticleShowViewModel, dto:ArticleInFeedDto, loginUserId:string):ArticleShowViewModel =
   let tags = dto.article.tags.map(
     proc(tag:TagDto):Tag =
       return Tag.new(
