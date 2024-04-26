@@ -1,9 +1,7 @@
 import basolato/controller
-import ../../presenters/app_presenter
-import ../../presenters/setting_presenter
-import ../views/pages/setting/setting_view_model
+import ../../presenters/app/app_presenter
+import ../../presenters/setting/setting_presenter
 import ../views/pages/setting/setting_view
-import ../../presenter/app_presenter
 
 
 proc index*(context:Context, parmas:Params):Future[Response] {.async.} =

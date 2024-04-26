@@ -11,17 +11,14 @@ proc impl(viewModel:SettingViewModel):Component =
     <div class="settings-page">
       <div class="container page">
         <div class="row">
-
-          <div class="col-md-6 col-md-offset-3 col-xs-12">
+          <div class="col-md-6 offset-md-3 col-xs-12">
             <h1 class="text-xs-center">Your Settings</h1>
 
             $(formMessageView(viewModel.fromMessageViewModel))
 
             $(formView(viewModel.formViewModel))
-          </div>
 
-          <div class="col-md-6 col-md-offset-3">
-            <hr>
+            <hr />
             <form hx-post="/htmx/logout" method="post">
               $(csrfToken())
               <button type="submit" class="btn btn-outline-danger">
@@ -29,7 +26,6 @@ proc impl(viewModel:SettingViewModel):Component =
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </div>

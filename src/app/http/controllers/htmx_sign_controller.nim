@@ -6,9 +6,7 @@ import ../../presenters/sign_up/sign_up_presenter
 import ../../presenters/sign_in/sign_in_presenter
 import ../../usecases/create_user_usecase
 import ../../usecases/login_usecase
-import ../views/pages/signup/signup_view_model
 import ../views/pages/signup/signup_view
-import ../views/pages/signin/signin_view_model
 import ../views/pages/signin/signin_view
 
 

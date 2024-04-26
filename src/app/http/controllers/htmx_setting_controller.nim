@@ -2,38 +2,34 @@ import std/json
 import basolato/controller
 import basolato/request_validation
 import ../../errors
-import ../../usecases/get_login_user/get_login_user_usecase
-import ../views/pages/setting/setting_view_model
+import ../../presenters/setting/setting_presenter
+import ../../presenters/setting/setting_with_success_message_presenter
 import ../views/pages/setting/setting_view
 
 import ../../usecases/update_user_usecase
+import ../../presenters/form_error_message/form_error_message_presenter
 import ../views/components/form_error_message/form_error_message_view_model
 import ../views/components/form_error_message/form_error_message_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = context.get("id").await
-  let usecase = GetLoginUserUsecase.new()
-  let dto = usecase.invoke(userId).await
-  let viewModel = SettingViewModel.new(dto)
-  let view = htmxSettingView(viewModel)
+  let settingPresenter = SettingPresenter.new()
+  let settingViewModel = settingPresenter.invoke(userId).await
+  let view = htmxSettingView(settingViewModel)
   return render(view)
 
 
 proc update*(context:Context, params:Params):Future[Response] {.async.} =
   let v = RequestValidation.new(params)
-  v.required("image_url")
+  v.required("image_url", "URL of profile picture")
   v.required("name")
   v.required("email")
   # v.required("password")
   v.email("email")
   if v.hasErrors:
-    var errorMessages:seq[string]
-    let errors = %v.errors
-    for (key, rows) in errors.pairs:
-      for row in rows.items:
-        errorMessages.add(row.getStr())
-    let viewModel = FormErrorMessageViewModel.new(errorMessages)
+    let formErrorMessagePresenter = FormErrorMessagePresenter.new()
+    let viewModel = formErrorMessagePresenter.invoke(%v.errors)
     let view = formErrorMessageView(viewModel)
     let header = {
       "HX-Reswap": "innerHTML show:top",
@@ -51,7 +47,8 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let usecase = UpdateUserUsecase.new()
     usecase.invoke(userId, name, email, password, bio, image).await
-    let viewModel = SettingViewModel.new(name, email, bio, image, "Successfully updated")
+    let presenter = SettingWithSuccessMessagePresenter.new()
+    let viewModel = presenter.invoke(userId).await
     let view = htmxSettingView(viewModel)
     return render(view)
   except IdNotFoundError:

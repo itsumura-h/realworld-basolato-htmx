@@ -23,6 +23,8 @@ method invoke*(self:UserQuery, userId:string):Future[UserDto] {.async.} =
   let dto = UserDto.new(
     userId,
     userData["name"].str,
+    userData["email"].str,
+    userData["bio"].str,
     userData["image"].str,
   )
   return dto

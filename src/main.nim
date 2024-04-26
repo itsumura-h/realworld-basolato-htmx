@@ -13,13 +13,13 @@ import ./app/http/controllers/home_controller
 # import ./app/http/controllers/article_controller
 # import ./app/http/controllers/user_controller
 import ./app/http/controllers/sign_controller
-# import ./app/http/controllers/setting_controller
+import ./app/http/controllers/setting_controller
 # import ./app/http/controllers/editor_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
 # import ./app/http/controllers/htmx_article_controller
 # import ./app/http/controllers/htmx_user_controller
-# import ./app/http/controllers/htmx_setting_controller
+import ./app/http/controllers/htmx_setting_controller
 # import ./app/http/controllers/htmx_editor_controller
 import ./app/http/controllers/api_user_controller
 
@@ -35,7 +35,7 @@ let routes = @[
       Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
       Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
 
-      # Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
+      Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
 
       # Route.get("/articles/{articleId:str}", article_controller.show),
 
@@ -52,8 +52,8 @@ let routes = @[
         Route.post("/sign-in", htmx_sign_controller.signIn),
         Route.post("/logout", htmx_sign_controller.logout),
 
-      #   Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
-      #   Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),
+        Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/home", htmx_home_controller.index),
         Route.get("/home/global-feed", htmx_home_controller.globalFeed),

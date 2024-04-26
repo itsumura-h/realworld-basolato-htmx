@@ -30,10 +30,7 @@ proc new*(_:type SettingViewModel,
 
 
 proc new*(_:type SettingViewModel,
-  name:string,
-  email:string,
-  bio:string,
-  image:string,
+  loginUserDto:UserDto,
   successMessage:string,
 ):SettingViewModel =
   let fromMessageViewModel = FormMessageViewModel.new(
@@ -42,10 +39,10 @@ proc new*(_:type SettingViewModel,
   )
   let formViewModel = FormViewModel.new(
     true,
-    name,
-    email,
-    bio,
-    image,
+    loginUserDto.name,
+    loginUserDto.email,
+    loginUserDto.bio,
+    loginUserDto.image,
   )
 
   let viewModel = SettingViewModel(
