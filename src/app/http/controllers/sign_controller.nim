@@ -1,9 +1,9 @@
 # framework
 import basolato/controller
 import basolato/view
-import ../../presenters/app_presenter
-import ../../presenters/sign_up_presenter
-import ../../presenters/sign_in_presenter
+import ../../presenters/app/app_presenter
+import ../../presenters/sign_up/sign_up_presenter
+import ../../presenters/sign_in/sign_in_presenter
 import ../views/pages/signup/signup_view
 import ../views/pages/signin/signin_view
 

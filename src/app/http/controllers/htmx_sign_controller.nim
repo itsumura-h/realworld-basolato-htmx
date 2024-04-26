@@ -2,18 +2,22 @@
 import basolato/controller
 import basolato/request_validation
 import basolato/view
+import ../../presenters/sign_up/sign_up_presenter
+import ../../presenters/sign_in/sign_in_presenter
 import ../../usecases/create_user_usecase
+import ../../usecases/login_usecase
 import ../views/pages/signup/signup_view_model
 import ../views/pages/signup/signup_view
 import ../views/pages/signin/signin_view_model
 import ../views/pages/signin/signin_view
-import ../../usecases/login_usecase
 
 
 proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
   let oldName = params.old("username")
   let oldEmail = params.old("email")
-  let viewModel = SignUpViewModel.new(oldName, oldEmail)
+  # let viewModel = SignUpViewModel.new(oldName, oldEmail)
+  let signUpPresenter = SignUpPresenter.new()
+  let viewModel = signUpPresenter.invoke(oldName, oldEmail)
   let view = htmxSignUpView(viewModel)
   return render(view)
 
@@ -45,7 +49,9 @@ proc signUp*(context:Context, params:Params):Future[Response] {.async.} =
 
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
   let oldEmail = params.old("email")
-  let viewModel = SignInViewModel.new(oldEmail)
+  # let viewModel = SignInViewModel.new(oldEmail)
+  let signInPresenter = SignInPresenter.new()
+  let viewModel = signInPresenter.invoke(oldEmail)
   let view = htmxSignInView(viewModel)
   return render(view)
 

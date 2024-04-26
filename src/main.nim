@@ -12,10 +12,10 @@ import ./app/http/middlewares/should_login_middleware
 import ./app/http/controllers/home_controller
 # import ./app/http/controllers/article_controller
 # import ./app/http/controllers/user_controller
-# import ./app/http/controllers/sign_controller
+import ./app/http/controllers/sign_controller
 # import ./app/http/controllers/setting_controller
 # import ./app/http/controllers/editor_controller
-# import ./app/http/controllers/htmx_sign_controller
+import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
 # import ./app/http/controllers/htmx_article_controller
 # import ./app/http/controllers/htmx_user_controller
@@ -31,9 +31,9 @@ let routes = @[
       Route.get("/global-feed", home_controller.index),
       Route.get("/tag-feed/{tag:str}", home_controller.tagFeed),
 
-      # Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),
-      # Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
-      # Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
+      Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),
+      Route.get("/sign-in", sign_controller.signInPage).middleware(auth_middleware.loginSkip),
+      Route.get("/logout", sign_controller.logout).middleware(auth_middleware.loginSkip),
 
       # Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
 
@@ -46,11 +46,11 @@ let routes = @[
       # Route.get("/editor/{articleId:str}", editor_controller.update).middleware(should_login_middleware.shouldLogin),
 
       Route.group("/htmx", @[
-      #   Route.get("/sign-up", htmx_sign_controller.signUpPage),
-      #   Route.post("/sign-up", htmx_sign_controller.signUp),
-      #   Route.get("/sign-in", htmx_sign_controller.signInPage),
-      #   Route.post("/sign-in", htmx_sign_controller.signIn),
-      #   Route.post("/logout", htmx_sign_controller.logout),
+        Route.get("/sign-up", htmx_sign_controller.signUpPage),
+        Route.post("/sign-up", htmx_sign_controller.signUp),
+        Route.get("/sign-in", htmx_sign_controller.signInPage),
+        Route.post("/sign-in", htmx_sign_controller.signIn),
+        Route.post("/logout", htmx_sign_controller.logout),
 
       #   Route.get("/settings", htmx_setting_controller.index).middleware(should_login_middleware.htmxShouldLogin),
       #   Route.post("/settings", htmx_setting_controller.update).middleware(should_login_middleware.htmxShouldLogin),

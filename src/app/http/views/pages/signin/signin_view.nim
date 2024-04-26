@@ -28,7 +28,7 @@ proc impl(viewModel:SignInViewModel):Component =
             <form method="POST" hx-post="/htmx/sign-in" hx-target="#app-body">
               $(csrfToken())
               <fieldset class="form-group">
-                <input type="text" id="sign-in-email" class="form-control form-control-lg" name="email" placeholder="Email" value="$(viewModel.oldEmail)">
+                <input type="text" id="sign-in-email" class="form-control form-control-lg" name="email" placeholder="Email" value="$(viewModel.oldEmail)" >
               </fieldset>
               <fieldset class="form-group">
                 <input type="password" id="sign-in-password" class="form-control form-control-lg" name="password" placeholder="Password">
