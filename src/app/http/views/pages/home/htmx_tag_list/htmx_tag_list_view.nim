@@ -1,8 +1,8 @@
 import basolato/view
-import ./htmx_tag_item_list_view_model
+import ./htmx_tag_list_view_model
 
 
-proc impl(popularTags:HtmxTagItemListViewModel):Component =
+proc impl(popularTags:HtmxTagListViewModel):Component =
   tmpli html"""
     <div id="popular-tag-list" class="tag-list">
       $for tag in popularTags.tags{
@@ -19,5 +19,5 @@ proc impl(popularTags:HtmxTagItemListViewModel):Component =
     </div>
   """
 
-proc htmxTagListView*(popularTags:HtmxTagItemListViewModel):Component =
+proc htmxTagListView*(popularTags:HtmxTagListViewModel):Component =
   return impl(popularTags)

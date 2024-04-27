@@ -1,4 +1,4 @@
-import ../../../../../usecases/get_popular_tags/get_popular_tags_dto
+import ../../../../../models/dto/tag/tag_dto
 
 
 type Tag*  = object
@@ -14,10 +14,10 @@ proc new*(_:type Tag, id:string, name:string, popularCount:int):Tag =
   )
 
 
-type HtmxTagItemListViewModel*  = object
+type HtmxTagListViewModel*  = object
   tags*:seq[Tag]
 
-proc new*(_:type HtmxTagItemListViewModel, tagDtoList:seq[PopularTagDto]):HtmxTagItemListViewModel =
+proc new*(_:type HtmxTagListViewModel, tagDtoList:seq[TagDto]):HtmxTagListViewModel =
   var tags:seq[Tag]
   for row in tagDtoList:
     let tag = Tag.new(
@@ -27,6 +27,6 @@ proc new*(_:type HtmxTagItemListViewModel, tagDtoList:seq[PopularTagDto]):HtmxTa
     )
     tags.add(tag)
 
-  return HtmxTagItemListViewModel(
+  return HtmxTagListViewModel(
     tags:tags
   )

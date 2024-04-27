@@ -14,10 +14,9 @@ import ../../presenters/htmx_article_preview/global_feed_article_list_presenter
 # import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
 # # tag feed
 # import ../../presenters/htmx_article_preview/tag_feed_article_list_presenter
-# # tag list
-# import ../../usecases/get_popular_tags/get_popular_tags_usecase
-# import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view_model
-# import ../views/pages/home/htmx_tag_item_list/htmx_tag_item_list_view
+# tag list
+import ../../presenters/popular_tag_list/popular_tag_list_presenter
+import ../views/pages/home/htmx_tag_list/htmx_tag_list_view
 # # favorite
 # import ../../usecases/favorite_usecase
 # import ../views/components/home/favorite_button/favorite_button_view_model
@@ -82,12 +81,11 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
 #   return render(view)
 
 
-# proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
-#   let usecase = GetPopularTagsUsecase.new()
-#   let tagsDto = usecase.invoke().await
-#   let viewModel = HtmxTagItemListViewModel.new(tagsDto)
-#   let view = htmxTagListView(viewModel)
-#   return render(view)
+proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
+  let presenter = PopularTagListPresenter.new()
+  let viewModel = presenter.invoke().await
+  let view = htmxTagListView(viewModel)
+  return render(view)
 
 
 # proc favorite*(context:Context, params:Params):Future[Response] {.async.} =

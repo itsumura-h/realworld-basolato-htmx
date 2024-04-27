@@ -8,13 +8,21 @@ import ../../../models/dto/user/user_query_interface
 import ../../../models/dto/user/user_dto
 
 
+type UserDbResponse = object
+  id: string
+  name: string
+  email: string
+  bio: string
+  image: string
+
+
 type UserQuery* = object of IUserQuery
 
 proc new*(_:type UserQuery):UserQuery =
   return  UserQuery()
 
 method invoke*(self:UserQuery, userId:string):Future[UserDto] {.async.} =
-  let userDataOpt = rdb.table("user").find(userId).await
+  let userDataOpt = rdb.table("user").find(userId).orm(UserDbResponse).await
   if not userDataOpt.isSome():
     raise newException(DomainError, "user is not found") 
 
@@ -22,9 +30,9 @@ method invoke*(self:UserQuery, userId:string):Future[UserDto] {.async.} =
 
   let dto = UserDto.new(
     userId,
-    userData["name"].str,
-    userData["email"].str,
-    userData["bio"].str,
-    userData["image"].str,
+    userData.name,
+    userData.email,
+    userData.bio,
+    userData.image,
   )
   return dto

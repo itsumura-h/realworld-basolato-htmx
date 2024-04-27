@@ -32,6 +32,10 @@ import ./data_stores/queries/global_feed_paginator/mock_global_feed_paginator_qu
 import ./models/dto/favorite_button/favorite_button_query_interface
 import ./data_stores/queries/favorite_button/favorite_button_query
 import ./data_stores/queries/favorite_button/mock_favorite_button_query
+#
+import ./models/dto/tag/tag_list_query_interface
+import ./data_stores/queries/popular_tag_list/popular_tag_list_query
+import ./data_stores/queries/popular_tag_list/mock_popular_tag_list_query
 
 
 type DiContainer* = object
@@ -45,6 +49,7 @@ type DiContainer* = object
   globalFeedArticleListQuery*: IArticleWithAuthorQuery
   globalFeedPaginatorQuery*: IPaginatorQuery
   favoriteButtonQuery*: IFavoriteButtonQuery
+  tagListQuery*: ITagListQuery
 
 
 proc new(_:type DiContainer):DiContainer =
@@ -60,6 +65,7 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedArticleListQuery: MockGlobalFeedArticleListQuery.new(),
       globalFeedPaginatorQuery: MockGlobalFeedPaginatorQuery.new(),
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
+      tagListQuery: MockPopularTagListQuery.new(),
     )
   else:
     return DiContainer(
@@ -77,6 +83,7 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedArticleListQuery: GlobalFeedArticleListQuery.new(),
       globalFeedPaginatorQuery: GlobalFeedPaginatorQuery.new(),
       favoriteButtonQuery: FavoriteButtonQuery.new(),
+      tagListQuery: PopularTagListQuery.new(),
     )
 
 let di* = DiContainer.new()

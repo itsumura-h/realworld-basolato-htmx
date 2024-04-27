@@ -61,7 +61,8 @@ method invoke*(
             .table("tag_article_map")
             .join("tag", "tag.id", "=", "tag_article_map.tag_id")
             .where("tag_article_map.article_id", "=", articleId)
-            .get(TagDto)
+            .get()
+            .orm(TagDto)
             .await
       else:
         newSeq[TagDto]()
