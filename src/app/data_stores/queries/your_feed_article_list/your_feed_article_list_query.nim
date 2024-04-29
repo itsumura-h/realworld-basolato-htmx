@@ -2,36 +2,35 @@ import std/asyncdispatch
 import std/json
 import allographer/query_builder
 from ../../../../config/database import rdb
-import ../../../models/dto/article_with_author/global_feed_article_list_query_interface
+import ../../../models/dto/article_with_author/your_feed_article_list_query_interface
 import ../../../models/dto/article_with_author/article_with_author_dto
+import ../../../models/vo/user_id
 
 
-type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
+type YourFeedArticleListQuery* = object of IYourFeedArticleListQuery
 
-proc new*(_:type GlobalFeedArticleListQuery):GlobalFeedArticleListQuery =
-  return GlobalFeedArticleListQuery()
+proc new*(_:type YourFeedArticleListQuery):YourFeedArticleListQuery =
+  return YourFeedArticleListQuery()
 
 
-method invoke*(
-  self:GlobalFeedArticleListQuery,
-  offset:int,
-  display:int
-):Future[seq[ArticleWithAuthorDto]] {.async.} =
+method invoke*(self:YourFeedArticleListQuery, userId:UserId, offset:int, display:int):Future[seq[ArticleWithAuthorDto]] {.async.} =
   let articleListJson = rdb.select(
-                      "article.id",
-                      "article.title",
-                      "article.description",
-                      "article.created_at as createdAt",
-                      "article.author_id",
-                      "user.name",
-                      "user.image as image",
-                    )
-                    .table("article")
-                    .join("user", "user.id", "=", "article.author_id")
-                    .offset(offset)
-                    .limit(display)
-                    .get()
-                    .await
+                          "article.id",
+                          "article.title",
+                          "article.description",
+                          "article.created_at as createdAt",
+                          "user.id as userId",
+                          "user.name",
+                          "user.image as image",
+                        )
+                        .table("article")
+                        .join("user", "user.id", "=", "article.author_id")
+                        .join("user_user_map", "user_user_map.user_id", "=", "article.author_id")
+                        .where("user_user_map.follower_id", "=", userId.value)
+                        .offset(offset)
+                        .limit(display)
+                        .get()
+                        .await
 
   var articleList:seq[ArticleWithAuthorDto]
   for i, row in articleListJson:
@@ -42,7 +41,7 @@ method invoke*(
                           .await
 
     let author = AuthorDto.new(
-      id = row["author_id"].getStr(),
+      id = row["userId"].getStr(),
       name = row["name"].getStr(),
       image = row["image"].getStr(),
     )

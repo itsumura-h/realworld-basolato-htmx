@@ -21,13 +21,21 @@ import ./models/dto/user/user_query_interface
 import ./data_stores/queries/user/user_query
 import ./data_stores/queries/user/mock_user_query
 #
-import ./models/dto/article_with_author/article_with_author_query_interface
+import ./models/dto/article_with_author/global_feed_article_list_query_interface
 import ./data_stores/queries/global_feed_article_list/global_feed_article_list_query
 import ./data_stores/queries/global_feed_article_list/mock_global_feed_article_list_query
 #
-import ./models/dto/paginator/paginator_query_interface
+import ./models/dto/paginator/global_feed_article_list_paginator_query_interface
 import ./data_stores/queries/global_feed_paginator/global_feed_paginator_query
 import ./data_stores/queries/global_feed_paginator/mock_global_feed_paginator_query
+#
+import ./models/dto/article_with_author/your_feed_article_list_query_interface
+import ./data_stores/queries/your_feed_article_list/your_feed_article_list_query
+import ./data_stores/queries/your_feed_article_list/mock_your_feed_article_list_query
+#
+import ./models/dto/paginator/your_feed_article_list_paginator_query_interface
+import ./data_stores/queries/your_feed_paginator/your_feed_paginator_query
+import ./data_stores/queries/your_feed_paginator/mock_your_feed_paginator_query
 #
 import ./models/dto/favorite_button/favorite_button_query_interface
 import ./data_stores/queries/favorite_button/favorite_button_query
@@ -46,8 +54,10 @@ type DiContainer* = object
   favoriteRepository*: IFavoriteRepository
 # ==================== read ====================
   userQuery*: IUserQuery
-  globalFeedArticleListQuery*: IArticleWithAuthorQuery
-  globalFeedPaginatorQuery*: IPaginatorQuery
+  globalFeedArticleListQuery*: IGlobalFeedArticleListQuery
+  globalFeedPaginatorQuery*: IGlobalFeedArticleListPaginatorQuery
+  yourFeedArticleListQuery*: IYourFeedArticleListQuery
+  yourFeedPaginatorQuery*: IYourFeedArticleListPaginatorQuery
   favoriteButtonQuery*: IFavoriteButtonQuery
   tagListQuery*: ITagListQuery
 
@@ -64,6 +74,8 @@ proc new(_:type DiContainer):DiContainer =
       userQuery: MockUserQuery.new(),
       globalFeedArticleListQuery: MockGlobalFeedArticleListQuery.new(),
       globalFeedPaginatorQuery: MockGlobalFeedPaginatorQuery.new(),
+      yourFeedArticleListQuery: MockYourFeedArticleListQuery.new(),
+      yourFeedPaginatorQuery: MockYourFeedPaginatorQuery.new(),
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
       tagListQuery: MockPopularTagListQuery.new(),
     )
@@ -82,6 +94,8 @@ proc new(_:type DiContainer):DiContainer =
       userQuery: UserQuery.new(),
       globalFeedArticleListQuery: GlobalFeedArticleListQuery.new(),
       globalFeedPaginatorQuery: GlobalFeedPaginatorQuery.new(),
+      yourFeedArticleListQuery: YourFeedArticleListQuery.new(),
+      yourFeedPaginatorQuery: YourFeedPaginatorQuery.new(),
       favoriteButtonQuery: FavoriteButtonQuery.new(),
       tagListQuery: PopularTagListQuery.new(),
     )

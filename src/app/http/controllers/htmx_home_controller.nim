@@ -11,6 +11,7 @@ import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
 import ../../presenters/home/global_feed_presenter
 
 import ../../presenters/htmx_article_preview/global_feed_article_list_presenter
+import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
 # import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
 # # tag feed
 # import ../../presenters/htmx_article_preview/tag_feed_article_list_presenter
@@ -47,23 +48,23 @@ proc globalFeed*(context:Context, params:Params):Future[Response] {.async.} =
   return render(view)
 
 
-# proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
-#   let page =
-#     if params.hasKey("page"):
-#       params.getInt("page")
-#     else:
-#       1
+proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
 
-#   let userId =
-#     if context.isSome("id").await:
-#       context.get("id").await
-#     else:
-#       return render(Http403, "Forbidden")
+  let userId =
+    if context.isSome("id").await:
+      context.get("id").await
+    else:
+      return render(Http403, "Forbidden")
 
-#   let presenter = YourFeedPresenter.new()
-#   let viewModel = presenter.invoke(userId, page).await
-#   let view = htmxArticlePreviewView(viewModel)
-#   return render(view)
+  let presenter = YourFeedArticleListPresenter.new()
+  let viewModel = presenter.invoke(userId, page).await
+  let view = htmxArticlePreviewView(viewModel)
+  return render(view)
 
 
 # proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =

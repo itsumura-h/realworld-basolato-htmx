@@ -1,6 +1,6 @@
 import std/asyncdispatch
-import ../../models/dto/article_with_author/article_with_author_query_interface
-import ../../models/dto/paginator/paginator_query_interface
+import ../../models/dto/article_with_author/global_feed_article_list_query_interface
+import ../../models/dto/paginator/global_feed_article_list_paginator_query_interface
 import ../../models/dto/favorite_button/favorite_button_query_interface
 import ../../models/vo/article_id
 import ../../models/vo/user_id
@@ -12,8 +12,8 @@ import ../../di_container
 
 
 type GlobalFeedArticleListPresenter* = object
-  globalFeedArticleListQuery:IArticleWithAuthorQuery
-  paginatorQuery: IPaginatorQuery
+  globalFeedArticleListQuery:IGlobalFeedArticleListQuery
+  paginatorQuery: IGlobalFeedArticleListPaginatorQuery
   favoriteButtonQuery: IFavoriteButtonQuery
 
 proc new*(_:type GlobalFeedArticleListPresenter):GlobalFeedArticleListPresenter =
@@ -32,10 +32,10 @@ proc invoke*(
 ):Future[HtmxArticlePreviewViewModel] {.async.} =
   const display = 5
   let offset = (page - 1) * display
-  let articleWithAuthorListDto = self.globalFeedArticleListQuery.invoke(offset, display).await
+  let articleWithAuthorDtoList = self.globalFeedArticleListQuery.invoke(offset, display).await
 
   var articleList:seq[Article]
-  for articleWithAuthorDto in articleWithAuthorListDto:
+  for articleWithAuthorDto in articleWithAuthorDtoList:
     let articleId = ArticleId.new(articleWithAuthorDto.id)
 
     let favoriteButtonDto =
