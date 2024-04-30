@@ -19,7 +19,7 @@ proc new*(_:type UserShowPresenter):UserShowPresenter =
   )
 
 
-proc invoke*(self:UserShowPresenter, userId:string, loginUserId:Option[string]):Future[UserShowViewModel] {.async.} =
+proc invoke*(self:UserShowPresenter, userId:string, loginUserId:Option[string], page:int):Future[UserShowViewModel] {.async.} =
   let userId = UserId.new(userId)
   let loginUserId =
     if loginUserId.isSome():
@@ -38,5 +38,7 @@ proc invoke*(self:UserShowPresenter, userId:string, loginUserId:Option[string]):
     else:
       false
 
-  let viewModel = UserShowViewModel.new(userDto, followButtonDto, isSelf, loadFavorites)
+  let hasPage = page > 1
+
+  let viewModel = UserShowViewModel.new(userDto, followButtonDto, isSelf, loadFavorites, hasPage, page)
   return viewModel

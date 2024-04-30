@@ -24,8 +24,18 @@ type UserShowViewModel*  = object
   user*:User
   followButtonViewModel*:FollowButtonViewModel
   loadFavorites*:bool
+  hasPage*:bool
+  page*:int
 
-proc new*(_:type UserShowViewModel, dto:UserDto, followButtonDto:FollowButtonInUserDto, isSelf:bool, loadFavorites:bool):UserShowViewModel =
+proc new*(
+  _:type UserShowViewModel,
+  dto:UserDto,
+  followButtonDto:FollowButtonInUserDto,
+  isSelf:bool,
+  loadFavorites:bool,
+  hasPage=false,
+  page=0
+):UserShowViewModel =
   let user = User.new(
     dto.id,
     dto.name,
@@ -40,5 +50,7 @@ proc new*(_:type UserShowViewModel, dto:UserDto, followButtonDto:FollowButtonInU
     user:user,
     followButtonViewModel:followButtonViewModel,
     loadFavorites:loadFavorites,
+    hasPage:hasPage,
+    page:page
   )
   return viewModel

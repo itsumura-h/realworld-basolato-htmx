@@ -37,21 +37,25 @@ proc impl(viewModel:UserShowViewModel):Component =
         </div>
       </div>
 
-      <div class="container">
+       <div class="container page">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1">
-            <div class="posts-toggle">
-              <ul id="user-feed-navigation" class="nav nav-pills outline-active"></ul>
+
+          <div class="col-md-9">
+            <div class="feed-toggle">
+              <ul id="feed-navigation" class="nav nav-pills outline-active"></ul>
             </div>
-            
-            <div id="user-post-preview"
-              $if viewModel.loadFavorites{
-                hx-get="/htmx/users/$(viewModel.user.id)/favorites"
-              }$else{
-                hx-get="/htmx/users/$(viewModel.user.id)/articles"
-              }
+
+            <div id="feed-article-preview"
               hx-trigger="load"
+
+              $if viewModel.loadFavorites{
+                hx-get="/htmx/users/$(viewModel.user.id)/favorites$if viewModel.hasPage{?page=$(viewModel.page)}"
+              }$else{
+                hx-get="/htmx/users/$(viewModel.user.id)/articles$if viewModel.hasPage{?page=$(viewModel.page)}"
+              }
             ></div>
+
+            <nav id="feed-pagination"></nav>
           </div>
         </div>
       </div>

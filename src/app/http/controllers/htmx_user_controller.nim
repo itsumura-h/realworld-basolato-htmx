@@ -2,13 +2,12 @@ import std/options
 # framework
 import basolato/controller
 import ../../errors
-# user shoq
-import ../../presenters/useer_show/user_show_presenter
+# user show
+import ../../presenters/user_show/user_show_presenter
 import ../views/pages/user/user_show_view
-# # user feed
-# import ../../usecases/get_articles_in_user/get_articles_in_user_usecase
-# import ../views/pages/user/htmx_user_feed_view
-# import ../views/pages/user/htmx_user_feed_view_model
+# user feed
+import ../../presenters/htmx_article_preview/user_article_list_presenter
+import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
 # # favoriteArticles
 # import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
 # # follow
@@ -28,27 +27,38 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let isLogin = context.isLogin().await
   let userId = params.getStr("userId")
   let loginUserId = context.get("id").await
-  let loginUserIdOpt = if loginUserId.len > 0: loginUserId.some() else: none(string)
+  let loginUserIdOpt = if isLogin: loginUserId.some() else: none(string)
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
   try:
     let userShowPresenter = UserShowPresenter.new()
-    let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt).await
+    let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt, page).await
     let view = htmxUserShowView(userShowViewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")
 
 
-# proc articles*(context:Context, params:Params):Future[Response] {.async.} =
-#   let userId = params.getStr("userId")
-#   let loginUserId = context.get("id").await
-#   try:
-#     let usecase = GetArticlesInUserUsecase.new()
-#     let dto = usecase.invoke(userId, loginUserId).await
-#     let viewModel = HtmxUserFeedViewModel.new(dto)
-#     let view = htmxUserFeedView(viewModel)
-#     return render(view)
-#   except IdNotFoundError:
-#     return render(Http404, "")
+proc articles*(context:Context, params:Params):Future[Response] {.async.} =
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
+  let userId = params.getStr("userId")
+  let isLogin = context.isLogin().await
+  let loginUserId = context.get("id").await
+  
+  try:
+    let presenter = UserArticleListPresenter.new()
+    let viewModel = presenter.invoke(page, userId, isLogin, loginUserId).await
+    let view = htmxArticlePreviewView(viewModel)
+    return render(view)
+  except IdNotFoundError:
+    return render(Http404, "")
 
 
 # proc favoriteArticles*(context:Context, params:Params):Future[Response] {.async.} =

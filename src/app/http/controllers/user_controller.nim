@@ -6,8 +6,7 @@ import ../../errors
 import ../views/pages/user/user_show_view_model
 import ../views/pages/user/user_show_view
 import ../../presenters/app/app_presenter
-import ../../presenters/useer_show/user_show_presenter
-# import ../../presenters/htmx_article_preview/user_article_list_presenter
+import ../../presenters/user_show/user_show_presenter
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -15,9 +14,14 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let loginUserId = context.get("id").await
   let userId = params.getStr("userId")
   let loginUserIdOpt = if loginUserId.len > 0: loginUserId.some() else: none(string)
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
   try:
     let userShowPresenter = UserShowPresenter.new()
-    let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt).await    
+    let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt, page).await    
 
     let appPresenter = AppPresenter.new()
     let title = &"{userShowViewModel.user.name} ― Cnduit"

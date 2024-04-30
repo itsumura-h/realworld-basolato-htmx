@@ -23,7 +23,7 @@ proc new*(_:type UserArticleListPresenter):UserArticleListPresenter =
   return UserArticleListPresenter(
     userQuery: di.userQuery,
     userArticleListQuery: di.userArticleListQuery,
-    paginatorQuery: di.userPaginatorQuery,
+    paginatorQuery: di.userArticleListPaginatorQuery,
     favoriteButtonQuery: di.favoriteButtonQuery
   )
 
@@ -35,13 +35,13 @@ proc invoke*(
   isLogin:bool,
   loginUserId:string
 ):Future[HtmxArticlePreviewViewModel] {.async.} =
-  let userId = UserId.new(userId)
-  let userDto = self.userQuery.invoke(userId).await
-
   const display = 5
   let offset = (page - 1) * display
+  let userId = UserId.new(userId)
   let loginUserId = UserId.new(loginUserId)
-  let articleWithAuthorDtoList = self.userArticleListQuery.invoke(loginUserId, offset, display).await
+
+  let articleWithAuthorDtoList = self.userArticleListQuery.invoke(userId, offset, display).await
+  echo "articleWithAuthorDtoList.len: ",articleWithAuthorDtoList.len 
 
   var articleList:seq[Article]
   for articleWithAuthorDto in articleWithAuthorDtoList:
@@ -59,4 +59,22 @@ proc invoke*(
     )
 
   let paginatorDto = self.paginatorQuery.invoke(loginUserId, page, display).await
-  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/htmx/home/{}")
+  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/htmx/users/{userId.value}/articles")
+
+  var feedNavbarViewModelList = @[
+    FeedNavbarViewModel.new(
+      title = "My Articles",
+      isActive = true,
+      hxGetUrl = &"/htmx/user/{userId.value}",
+      hxPushUrl = &"/user/{userId.value}"
+    ),
+    FeedNavbarViewModel.new(
+      title = "Favorited Articles",
+      isActive = false,
+      hxGetUrl = &"/htmx/users/{userId.value}/favorites",
+      hxPushUrl = &"/users/{userId.value}/favorites"
+    )
+  ]
+
+  let viewModel = HtmxArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)
+  return viewModel
