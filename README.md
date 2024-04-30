@@ -50,6 +50,8 @@ DTO
   - → Query Interface
   - → DTO
 
+presenterの返り値のViewModelの単位でまとめる
+
 - article_preview/
   - 最新の記事一覧                GlobalFeedPresenter
   - フォローしている人の記事一覧  YourFeedPresenter
@@ -59,9 +61,14 @@ DTO
   - ヘッダーのログイン状態  AppPresenter
 
 ### ドメイン層
-- /article_preview  記事一覧
-  - DTO               ArticlePreviewDto
-  - Query Interface   IArticlePreviewQuery
+DTOの単位でまとめる
+
+- /article_with_author  記事一覧
+  - DTO               ArticleWithAuthorDto
+  - Query Interface   IGlobalFeedArticleListQuery
+  - Query Interface   IYourFeedArticleListQuery
+  - Query Interface   IFavoriteArticleListInUserQuery
+  - Query Interface   ITagFeedArticleListQuery
 - /favorite_button  いいねボタン
   - DTO               FavoriteButtonDto
   - Query Interface   IFavoriteButtonQuery
@@ -75,8 +82,14 @@ DTO
   - → Query Service Interface
   - → DTO
 
-- 最新の記事一覧取得                GlobalFeedQuery
-- フォローしている人の記事一覧取得  YourFeedQuery
-- いいねした記事一覧取得            FavoritesInUserQuery
-- いいねボタン取得                  TagFeedQuery
-- ログインIDからユーザー情報取得    UserQuery
+クエリの返り値のDTOの単位でまとめる
+
+- article_with_author/
+  - 最新の記事一覧取得                GlobalFeedArticleListQuery
+  - フォローしている人の記事一覧取得  YourFeedArticleListQuery
+  - いいねした記事一覧取得            FavoriteArticleListInUserQuery
+  - タグに紐づく記事一覧取得          TagFeedArticleListQuery
+- favoriteButton/
+  - いいねボタン取得                  favoriteButtonQuery
+- user/
+  - ログインIDからユーザー情報取得    UserQuery

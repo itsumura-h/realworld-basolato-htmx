@@ -11,14 +11,14 @@ import ./app/http/middlewares/should_login_middleware
 # import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/home_controller
 # import ./app/http/controllers/article_controller
-# import ./app/http/controllers/user_controller
+import ./app/http/controllers/user_controller
 import ./app/http/controllers/sign_controller
 import ./app/http/controllers/setting_controller
 # import ./app/http/controllers/editor_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
 # import ./app/http/controllers/htmx_article_controller
-# import ./app/http/controllers/htmx_user_controller
+import ./app/http/controllers/htmx_user_controller
 import ./app/http/controllers/htmx_setting_controller
 # import ./app/http/controllers/htmx_editor_controller
 import ./app/http/controllers/api_user_controller
@@ -39,7 +39,7 @@ let routes = @[
 
       # Route.get("/articles/{articleId:str}", article_controller.show),
 
-      # Route.get("/users/{userId:str}", user_controller.show),
+      Route.get("/users/{userId:str}", user_controller.show),
       # Route.get("/users/{userId:str}/favorites", user_controller.favorites),
 
       # Route.get("/editor", editor_controller.create).middleware(should_login_middleware.shouldLogin),
@@ -67,7 +67,7 @@ let routes = @[
       #   Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
       #   Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
-      #   Route.get("/users/{userId:str}", htmx_user_controller.show),
+        Route.get("/users/{userId:str}", htmx_user_controller.show),
       #   Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
       #   Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
       #   Route.post("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),

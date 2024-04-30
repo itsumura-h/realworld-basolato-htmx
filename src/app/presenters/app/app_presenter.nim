@@ -2,6 +2,7 @@ import std/asyncdispatch
 import ../../http/views/layouts/app/app_view_model
 import ../../http/views/layouts/navbar/navbar_view_model
 import ../../models/dto/user/user_query_interface
+import ../../models/vo/user_id
 import ../../di_container
 
 
@@ -16,6 +17,7 @@ proc new*(_:type AppPresenter):AppPresenter =
 
 proc invoke*(self:AppPresenter, isLogin:bool, userId:string, title:string):Future[AppViewModel] {.async.} =
   if isLogin:
+    let userId = UserId.new(userId)
     let userDto = self.userQuery.invoke(userId).await
     let navbarViewModel = NavbarViewModel.new(isLogin, userDto.id, userDto.name, userDto.image)
     let appViewModel = AppViewModel.new(title, navbarViewModel)

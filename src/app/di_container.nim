@@ -44,6 +44,18 @@ import ./data_stores/queries/favorite_button/mock_favorite_button_query
 import ./models/dto/tag/tag_list_query_interface
 import ./data_stores/queries/popular_tag_list/popular_tag_list_query
 import ./data_stores/queries/popular_tag_list/mock_popular_tag_list_query
+#
+import ./models/dto/article_with_author/user_article_list_query_interface
+import ./data_stores/queries/user_article_list/user_article_list_query
+import ./data_stores/queries/user_article_list/mock_user_article_list_query
+#
+import ./models/dto/paginator/user_article_list_paginator_query_interface
+import ./data_stores/queries/user_paginator/user_paginator_query
+import ./data_stores/queries/user_paginator/mock_user_paginator_query
+#
+import ./models/dto/follow_button_in_user/follow_button_in_user_query_interface
+import ./data_stores/queries/follow_button_in_user/follow_button_in_user_query
+import ./data_stores/queries/follow_button_in_user/mock_follow_button_in_user_query
 
 
 type DiContainer* = object
@@ -60,6 +72,9 @@ type DiContainer* = object
   yourFeedPaginatorQuery*: IYourFeedArticleListPaginatorQuery
   favoriteButtonQuery*: IFavoriteButtonQuery
   tagListQuery*: ITagListQuery
+  userArticleListQuery*: IUserArticleListQuery
+  userArticleListPaginatorQuery*: IUserArticleListPaginatorQuery
+  followButtonInUserQuery*:IFollowButtonInUserQuery
 
 
 proc new(_:type DiContainer):DiContainer =
@@ -78,6 +93,9 @@ proc new(_:type DiContainer):DiContainer =
       yourFeedPaginatorQuery: MockYourFeedPaginatorQuery.new(),
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
       tagListQuery: MockPopularTagListQuery.new(),
+      userArticleListQuery: MockUserArticleListQuery.new(),
+      userArticleListPaginatorQuery: MockUserPaginatorQuery.new(),
+      followButtonInUserQuery: MockFollowButtonInUserQuery.new(),
     )
   else:
     return DiContainer(
@@ -98,6 +116,9 @@ proc new(_:type DiContainer):DiContainer =
       yourFeedPaginatorQuery: YourFeedPaginatorQuery.new(),
       favoriteButtonQuery: FavoriteButtonQuery.new(),
       tagListQuery: PopularTagListQuery.new(),
+      userArticleListQuery: UserArticleListQuery.new(),
+      userArticleListPaginatorQuery: UserPaginatorQuery.new(),
+      followButtonInUserQuery: FollowButtonInUserQuery.new(),
     )
 
 let di* = DiContainer.new()
