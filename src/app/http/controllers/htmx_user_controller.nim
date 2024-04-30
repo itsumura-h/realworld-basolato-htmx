@@ -11,10 +11,10 @@ import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
 # # favoriteArticles
 # import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
 # # follow
-# import ../../usecases/follow_usecase
-# import ../../usecases/get_follow_button_in_user/get_follow_button_in_user_usecase
-# import ../../http/views/components/user/follow_button/follow_button_view_model
-# import ../../http/views/components/user/follow_button/follow_button_view
+import ../../usecases/follow_usecase
+import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
+import ../../http/views/components/user/follow_button/follow_button_view_model
+import ../../http/views/components/user/follow_button/follow_button_view
 # # favorite
 # import ../../usecases/favorite_usecase
 # # import ../../usecases/get_favorite_button/get_favorite_button_usecase
@@ -74,20 +74,19 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
 #     return render(Http404, "")
 
 
-# proc follow*(context:Context, params:Params):Future[Response] {.async.} =
-#   let userId = params.getStr("userId")
-#   let loginUserId = context.get("id").await
-#   try:
-#     let followUsecase = FollowUsecase.new()
-#     followUsecase.invoke(userId, loginUserId).await
+proc follow*(context:Context, params:Params):Future[Response] {.async.} =
+  let userId = params.getStr("userId")
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FollowUsecase.new()
+    followUsecase.invoke(userId, loginUserId).await
 
-#     let getFollowButtonUsecase = GetFollowButtonInUserUsecase.new()
-#     let dto = getFollowButtonUsecase.invoke(userId, loginUserId).await
-#     let viewModel = FollowButtonViewModel.new(dto)
-#     let view = followButtonView(viewModel)
-#     return render(view)
-#   except:
-#     return render(Http400, getCurrentExceptionMsg())
+    let followButtonPresenter = FollowButtonInUserPresenter.new()
+    let viewModel = followButtonPresenter.invoke(userId, loginUserId).await
+    let view = followButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())
 
 
 # proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
