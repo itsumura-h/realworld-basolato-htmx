@@ -22,36 +22,36 @@ import ./data_stores/queries/user/user_query
 import ./data_stores/queries/user/mock_user_query
 #
 import ./models/dto/article_with_author/global_feed_article_list_query_interface
-import ./data_stores/queries/global_feed_article_list/global_feed_article_list_query
-import ./data_stores/queries/global_feed_article_list/mock_global_feed_article_list_query
+import ./data_stores/queries/article_with_author/global_feed_article_list_query
+import ./data_stores/queries/article_with_author/mock_global_feed_article_list_query
 #
 import ./models/dto/paginator/global_feed_article_list_paginator_query_interface
-import ./data_stores/queries/global_feed_paginator/global_feed_paginator_query
-import ./data_stores/queries/global_feed_paginator/mock_global_feed_paginator_query
+import ./data_stores/queries/paginator/global_feed_paginator_query
+import ./data_stores/queries/paginator/mock_global_feed_paginator_query
 #
 import ./models/dto/article_with_author/your_feed_article_list_query_interface
-import ./data_stores/queries/your_feed_article_list/your_feed_article_list_query
-import ./data_stores/queries/your_feed_article_list/mock_your_feed_article_list_query
+import ./data_stores/queries/article_with_author/your_feed_article_list_query
+import ./data_stores/queries/article_with_author/mock_your_feed_article_list_query
 #
 import ./models/dto/paginator/your_feed_article_list_paginator_query_interface
-import ./data_stores/queries/your_feed_paginator/your_feed_paginator_query
-import ./data_stores/queries/your_feed_paginator/mock_your_feed_paginator_query
+import ./data_stores/queries/paginator/your_feed_paginator_query
+import ./data_stores/queries/paginator/mock_your_feed_paginator_query
 #
 import ./models/dto/favorite_button/favorite_button_query_interface
 import ./data_stores/queries/favorite_button/favorite_button_query
 import ./data_stores/queries/favorite_button/mock_favorite_button_query
 #
 import ./models/dto/tag/tag_list_query_interface
-import ./data_stores/queries/popular_tag_list/popular_tag_list_query
-import ./data_stores/queries/popular_tag_list/mock_popular_tag_list_query
+import ./data_stores/queries/tag/popular_tag_list_query
+import ./data_stores/queries/tag/mock_popular_tag_list_query
 #
 import ./models/dto/article_with_author/user_article_list_query_interface
-import ./data_stores/queries/user_article_list/user_article_list_query
-import ./data_stores/queries/user_article_list/mock_user_article_list_query
+import ./data_stores/queries/article_with_author/user_article_list_query
+import ./data_stores/queries/article_with_author/mock_user_article_list_query
 #
 import ./models/dto/paginator/user_article_list_paginator_query_interface
-import ./data_stores/queries/user_paginator/user_paginator_query
-import ./data_stores/queries/user_paginator/mock_user_paginator_query
+import ./data_stores/queries/paginator/user_paginator_query
+import ./data_stores/queries/paginator/mock_user_paginator_query
 #
 import ./models/dto/follow_button_in_user/follow_button_in_user_query_interface
 import ./data_stores/queries/follow_button_in_user/follow_button_in_user_query
