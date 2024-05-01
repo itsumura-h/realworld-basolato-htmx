@@ -1,7 +1,7 @@
 import std/asyncdispatch
-import ../../../models/dto/article_with_author/your_feed_article_list_query_interface
-import ../../../models/dto/article_with_author/article_with_author_dto
-import ../../../models/vo/user_id
+import ../../../../models/dto/article_with_author/your_feed_article_list_query_interface
+import ../../../../models/dto/article_with_author/article_with_author_dto
+import ../../../../models/vo/user_id
 
 
 type MockYourFeedArticleListQuery* = object of IYourFeedArticleListQuery

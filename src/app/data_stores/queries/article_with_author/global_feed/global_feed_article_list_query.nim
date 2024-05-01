@@ -1,20 +1,22 @@
 import std/asyncdispatch
 import std/json
-import std/options
 import allographer/query_builder
-from ../../../../config/database import rdb
-import ../../../models/dto/article_with_author/user_article_list_query_interface
-import ../../../models/dto/article_with_author/article_with_author_dto
-import ../../../models/vo/user_id
+from ../../../../../config/database import rdb
+import ../../../../models/dto/article_with_author/global_feed_article_list_query_interface
+import ../../../../models/dto/article_with_author/article_with_author_dto
 
 
-type UserArticleListQuery* = object of IUserArticleListQuery
+type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
 
-proc new*(_:type UserArticleListQuery):UserArticleListQuery =
-  return UserArticleListQuery()
+proc new*(_:type GlobalFeedArticleListQuery):GlobalFeedArticleListQuery =
+  return GlobalFeedArticleListQuery()
 
 
-method invoke*(self:UserArticleListQuery, userId:UserId, offset:int, display:int):Future[seq[ArticleWithAuthorDto]] {.async.} =
+method invoke*(
+  self:GlobalFeedArticleListQuery,
+  offset:int,
+  display:int
+):Future[seq[ArticleWithAuthorDto]] {.async.} =
   let articleListJson = rdb.select(
                       "article.id",
                       "article.title",
@@ -26,7 +28,6 @@ method invoke*(self:UserArticleListQuery, userId:UserId, offset:int, display:int
                     )
                     .table("article")
                     .join("user", "user.id", "=", "article.author_id")
-                    .where("article.author_id", "=", userId.value)
                     .offset(offset)
                     .limit(display)
                     .get()

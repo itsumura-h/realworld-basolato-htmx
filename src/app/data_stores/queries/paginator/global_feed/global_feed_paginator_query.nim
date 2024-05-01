@@ -1,8 +1,9 @@
 import std/asyncdispatch
 import allographer/query_builder
-from ../../../../config/database import rdb
-import ../../../models/dto/paginator/paginator_dto
-import ../../../models/dto/paginator/global_feed_article_list_paginator_query_interface
+from ../../../../../config/database import rdb
+import ../../../../models/dto/paginator/paginator_dto
+import ../../../../models/dto/paginator/global_feed_article_list_paginator_query_interface
+
 
 type GlobalFeedPaginatorQuery* = object of IGlobalFeedArticleListPaginatorQuery
 

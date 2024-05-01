@@ -51,27 +51,28 @@ proc invoke*(self:TagFeedArticleListPresenter, tagName:string, page:int, isLogin
 
   var feedNavbarViewModelList = @[
     FeedNavbarViewModel.new(
-      title = "Tag Feed",
-      isActive = true,
-      hxGetUrl = &"/htmx/home/tag-feed/{tagName}",
-      hxPushUrl = "/"
-    ),
-    FeedNavbarViewModel.new(
       title = "Global Feed",
       isActive = false,
       hxGetUrl = "/htmx/home/global-feed",
       hxPushUrl = "/"
-    )
+    ),
+    FeedNavbarViewModel.new(
+      title = tagName,
+      isActive = true,
+      hxGetUrl = &"/htmx/home/tag-feed/{tagName}",
+      hxPushUrl = "/"
+    ),
   ]
 
   if isLogin:
-    feedNavbarViewModelList.add(
+    feedNavbarViewModelList.insert(
       FeedNavbarViewModel.new(
         title = "Your Feed",
         isActive = false,
         hxGetUrl = "/htmx/home/your-feed",
         hxPushUrl = "/your-feed"
-      )
+      ),
+      0
     )
 
   let viewModel = HtmxArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)

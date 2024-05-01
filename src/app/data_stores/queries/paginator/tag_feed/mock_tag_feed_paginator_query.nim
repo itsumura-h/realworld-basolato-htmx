@@ -1,6 +1,6 @@
 import std/asyncdispatch
-import ../../../models/dto/paginator/paginator_dto
-import ../../../models/dto/paginator/tag_feed_article_list_paginator_query_interface
+import ../../../../models/dto/paginator/paginator_dto
+import ../../../../models/dto/paginator/tag_feed_article_list_paginator_query_interface
 
 type MockTagFeedPaginatorQuery* = object of ITagFeedArticleListPaginatorQuery
 

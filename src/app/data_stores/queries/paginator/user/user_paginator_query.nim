@@ -1,9 +1,9 @@
 import std/asyncdispatch
 import allographer/query_builder
-from ../../../../config/database import rdb
-import ../../../models/dto/paginator/user_article_list_paginator_query_interface
-import ../../../models/dto/paginator/paginator_dto
-import ../../../models/vo/user_id
+from ../../../../../config/database import rdb
+import ../../../../models/dto/paginator/user_article_list_paginator_query_interface
+import ../../../../models/dto/paginator/paginator_dto
+import ../../../../models/vo/user_id
 
 
 type UserPaginatorQuery* = object of IUserArticleListPaginatorQuery
