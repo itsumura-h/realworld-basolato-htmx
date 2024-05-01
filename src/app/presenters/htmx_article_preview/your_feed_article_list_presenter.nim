@@ -1,4 +1,5 @@
 import std/asyncdispatch
+import std/strformat
 import ../../models/dto/article_with_author/your_feed_article_list_query_interface
 import ../../models/dto/paginator/your_feed_article_list_paginator_query_interface
 import ../../models/dto/favorite_button/favorite_button_query_interface
@@ -33,7 +34,6 @@ proc invoke*(
   let offset = (page - 1) * display
   let loginUserId = UserId.new(loginUserId)
   let articleWithAuthorDtoList = self.yourFeedArticleListQuery.invoke(loginUserId, offset, display).await
-  echo "articleWithAuthorDtoList: ", articleWithAuthorDtoList.len
 
   var articleList:seq[Article]
   for articleWithAuthorDto in articleWithAuthorDtoList:
@@ -45,7 +45,7 @@ proc invoke*(
     )
 
   let paginatorDto = self.paginatorQuery.invoke(loginUserId, page, display).await
-  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, "/htmx/home/global-feed")
+  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/htmx/home/your-feed")
 
   var feedNavbarViewModelList = @[
     FeedNavbarViewModel.new(
