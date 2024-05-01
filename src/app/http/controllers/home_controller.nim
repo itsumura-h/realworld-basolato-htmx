@@ -3,7 +3,9 @@ import basolato/controller
 import basolato/view
 import ../../presenters/app/app_presenter
 import ../../presenters/home/global_feed_presenter
+import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
 import ../../presenters/home/tag_feed_presenter
+import ../../presenters/home/your_feed_presenter
 import ../views/pages/home/home_view
 
 
@@ -17,6 +19,29 @@ proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let globalFeedPresenter = GlobalFeedPresenter.new()
   let homeViewModel = globalFeedPresenter.invoke()
   let view = homeView(appViewModel, homeViewModel)
+  return render(view)
+
+
+proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
+  let userId =
+    if context.isSome("id").await:
+      context.get("id").await
+    else:
+      return render(Http403, "Forbidden")
+  let hasPage = page > 1
+  let isLogin = context.isLogin().await
+
+  let appPresenter = AppPresenter.new()
+  let appViewModel = appPresenter.invoke(isLogin, userId, "conduit").await
+
+  let presenter = YourFeedPresenter.new()
+  let viewModel = presenter.invoke(hasPage, page)
+  let view = homeView(appViewModel, viewModel)
   return render(view)
 
 

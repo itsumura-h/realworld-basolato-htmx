@@ -29,6 +29,7 @@ let routes = @[
     Route.group("", @[
       Route.get("/", home_controller.index),
       Route.get("/global-feed", home_controller.index),
+      Route.get("/your-feed", home_controller.yourFeed),
       Route.get("/tag-feed/{tag:str}", home_controller.tagFeed),
 
       Route.get("/sign-up", sign_controller.signUpPage).middleware(auth_middleware.loginSkip),

@@ -28,7 +28,7 @@ proc impl(viewModel:HomeViewModel):Component =
               $if viewModel.feedType == tag{
                 hx-get="/htmx/home/tag-feed/$(viewModel.tagName)$if viewModel.hasPage{?page=$(viewModel.page)}"
               }$elif viewModel.feedType == personal{
-                hx-get="/htmx/home/your-feed/$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/htmx/home/your-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
               }$else{
                 hx-get="/htmx/home/global-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
               }

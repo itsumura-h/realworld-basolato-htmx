@@ -5,7 +5,6 @@ import basolato/view
 # global feed
 # import ../../usecases/get_global_feed/get_global_feed_usecase
 import ../views/pages/home/home_view
-import ../views/pages/home/htmx_article_preview/htmx_article_preview_view_model
 import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
 #
 import ../../presenters/home/global_feed_presenter
