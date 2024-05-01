@@ -1,6 +1,4 @@
 import std/asyncdispatch
-import ../../../errors
-from ../../../../config/database import rdb
 import ../../../models/aggregates/follow_relationship/follow_relationship_repository_interface
 import ../../../models/aggregates/follow_relationship/follow_relationship_entity
 

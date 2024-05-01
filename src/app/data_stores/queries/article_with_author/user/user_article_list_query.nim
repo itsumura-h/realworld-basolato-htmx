@@ -1,6 +1,5 @@
 import std/asyncdispatch
 import std/json
-import std/options
 import allographer/query_builder
 from ../../../../../config/database import rdb
 import ../../../../models/dto/article_with_author/user_article_list_query_interface

@@ -13,7 +13,6 @@ import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
 # # follow
 import ../../usecases/follow_usecase
 import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
-import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../http/views/components/user/follow_button/follow_button_view
 # # favorite
 # import ../../usecases/favorite_usecase

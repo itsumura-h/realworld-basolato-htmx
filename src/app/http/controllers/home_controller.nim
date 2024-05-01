@@ -3,7 +3,6 @@ import basolato/controller
 import basolato/view
 import ../../presenters/app/app_presenter
 import ../../presenters/home/global_feed_presenter
-import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
 import ../../presenters/home/tag_feed_presenter
 import ../../presenters/home/your_feed_presenter
 import ../views/pages/home/home_view
