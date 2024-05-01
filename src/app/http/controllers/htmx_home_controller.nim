@@ -11,9 +11,7 @@ import ../../presenters/home/global_feed_presenter
 
 import ../../presenters/htmx_article_preview/global_feed_article_list_presenter
 import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
-# import ../../presenters/htmx_article_preview/your_feed_article_list_presenter
-# # tag feed
-# import ../../presenters/htmx_article_preview/tag_feed_article_list_presenter
+import ../../presenters/htmx_article_preview/tag_feed_article_list_presenter
 # tag list
 import ../../presenters/popular_tag_list/popular_tag_list_presenter
 import ../views/pages/home/htmx_tag_list/htmx_tag_list_view
@@ -66,19 +64,19 @@ proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
   return render(view)
 
 
-# proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
-#   let tagName = params.getStr("tagName")
-#   let page =
-#     if params.hasKey("page"):
-#       params.getInt("page")
-#     else:
-#       1
-#   let isLogin = context.isLogin().await
-#   let usecase = GetTagFeedUsecase.new()
-#   let dto = usecase.invoke(tagName, page).await
-#   let viewModel = HtmxArticlePreviewViewModel.new(dto, tagName, isLogin)
-#   let view = htmxArticlePreviewView(viewModel)
-#   return render(view)
+proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
+  let tagName = params.getStr("tagName")
+  let page =
+    if params.hasKey("page"):
+      params.getInt("page")
+    else:
+      1
+  let isLogin = context.isLogin().await
+  let loginUserId = context.get("id").await
+  let presenter = TagFeedArticleListPresenter.new()
+  let viewModel = presenter.invoke(tagName, page, isLogin, loginUserId).await
+  let view = htmxArticlePreviewView(viewModel)
+  return render(view)
 
 
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =

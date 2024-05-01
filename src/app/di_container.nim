@@ -56,6 +56,14 @@ import ./data_stores/queries/paginator/mock_user_paginator_query
 import ./models/dto/follow_button_in_user/follow_button_in_user_query_interface
 import ./data_stores/queries/follow_button_in_user/follow_button_in_user_query
 import ./data_stores/queries/follow_button_in_user/mock_follow_button_in_user_query
+#
+import ./models/dto/article_with_author/tag_feed_article_list_query_interface
+import ./data_stores/queries/article_with_author/tag_feed_article_list_query
+import ./data_stores/queries/article_with_author/mock_tag_feed_article_list_query
+#
+import ./models/dto/paginator/tag_feed_article_list_paginator_query_interface
+import ./data_stores/queries/paginator/tag_feed_paginator_query
+import ./data_stores/queries/paginator/mock_tag_feed_paginator_query
 
 
 type DiContainer* = object
@@ -70,11 +78,14 @@ type DiContainer* = object
   globalFeedPaginatorQuery*: IGlobalFeedArticleListPaginatorQuery
   yourFeedArticleListQuery*: IYourFeedArticleListQuery
   yourFeedPaginatorQuery*: IYourFeedArticleListPaginatorQuery
+  tagFeedArticleListQuery*: ITagFeedArticleListQuery
+  tagFeedPaginatorQuery*: ITagFeedArticleListPaginatorQuery
   favoriteButtonQuery*: IFavoriteButtonQuery
   tagListQuery*: ITagListQuery
   userArticleListQuery*: IUserArticleListQuery
   userArticleListPaginatorQuery*: IUserArticleListPaginatorQuery
   followButtonInUserQuery*:IFollowButtonInUserQuery
+  
 
 
 proc new(_:type DiContainer):DiContainer =
@@ -91,6 +102,8 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedPaginatorQuery: MockGlobalFeedPaginatorQuery.new(),
       yourFeedArticleListQuery: MockYourFeedArticleListQuery.new(),
       yourFeedPaginatorQuery: MockYourFeedPaginatorQuery.new(),
+      tagFeedArticleListQuery: MockTagFeedArticleListQuery.new(),
+      tagFeedPaginatorQuery: MockTagFeedPaginatorQuery.new(),
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
       tagListQuery: MockPopularTagListQuery.new(),
       userArticleListQuery: MockUserArticleListQuery.new(),
@@ -114,6 +127,8 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedPaginatorQuery: GlobalFeedPaginatorQuery.new(),
       yourFeedArticleListQuery: YourFeedArticleListQuery.new(),
       yourFeedPaginatorQuery: YourFeedPaginatorQuery.new(),
+      tagFeedArticleListQuery: TagFeedArticleListQuery.new(),
+      tagFeedPaginatorQuery: TagFeedPaginatorQuery.new(),
       favoriteButtonQuery: FavoriteButtonQuery.new(),
       tagListQuery: PopularTagListQuery.new(),
       userArticleListQuery: UserArticleListQuery.new(),
