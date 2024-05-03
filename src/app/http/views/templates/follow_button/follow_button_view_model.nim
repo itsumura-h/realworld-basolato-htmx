@@ -1,4 +1,4 @@
-import ../../../../../models/dto/follow_button_in_user/follow_button_in_user_dto
+import ../../../../models/dto/follow_button_in_user/follow_button_in_user_dto
 
 
 type FollowButtonViewModel*  = object

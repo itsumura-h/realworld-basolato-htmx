@@ -1,4 +1,4 @@
-import ../../../../../data_stores/queries/get_favorite_button/favorite_button_dto
+import ../../../../models/dto/favorite_button/favorite_button_dto
 
 
 type FavoriteButtonViewModel* = object

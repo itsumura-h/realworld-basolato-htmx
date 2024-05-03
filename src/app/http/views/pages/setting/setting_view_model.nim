@@ -1,6 +1,6 @@
 import ../../../../models/dto/user/user_dto
-import ../../components/setting/form_message/form_message_view_model
-import ../../components/setting/form/form_view_model
+import ./components/form_message/form_message_view_model
+import ./components/form/form_view_model
 
 
 type SettingViewModel*  = object

@@ -1,6 +1,6 @@
 import basolato/view
-import ../../components/comment/card_view
-import ../../components/comment/form_view
+import ./form_view
+import ./card_view
 import ./comment_view_model
 
 

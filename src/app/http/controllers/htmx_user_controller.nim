@@ -6,14 +6,14 @@ import ../../errors
 import ../../presenters/user_show/user_show_presenter
 import ../views/pages/user/user_show_view
 # user feed
-import ../../presenters/htmx_article_preview/user_article_list_presenter
-import ../views/pages/home/htmx_article_preview/htmx_article_preview_view
+import ../../presenters/article_preview/user_article_list_presenter
+import ../views/templates/article_preview/article_preview_view
 # # favoriteArticles
 # import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
 # # follow
 import ../../usecases/follow_usecase
 import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
-import ../../http/views/components/user/follow_button/follow_button_view
+import ../../http/views/templates/follow_button/follow_button_view
 # # favorite
 # import ../../usecases/favorite_usecase
 # # import ../../usecases/get_favorite_button/get_favorite_button_usecase
@@ -54,7 +54,7 @@ proc articles*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let presenter = UserArticleListPresenter.new()
     let viewModel = presenter.invoke(page, userId, isLogin, loginUserId).await
-    let view = htmxArticlePreviewView(viewModel)
+    let view = articlePreviewView(viewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")

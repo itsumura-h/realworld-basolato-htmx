@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/options
 import ../../models/dto/follow_button_in_user/follow_button_in_user_query_interface
 import ../../models/vo/user_id
-import ../../http/views/components/user/follow_button/follow_button_view_model
+import ../../http/views/templates/follow_button/follow_button_view_model
 import ../../di_container
 
 

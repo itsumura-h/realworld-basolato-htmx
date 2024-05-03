@@ -1,12 +1,12 @@
 # import std/json
 import basolato/view
-import ./htmx_article_preview_view_model
-import ../../../components/home/feed_navigation/feed_navigation_view
-import ../../../components/home/favorite_button/favorite_button_view
-import ../../../components/paginator/paginator_view
+import ./article_preview_view_model
+import ../favorite_button/favorite_button_view
+import ./components/feed_navigation/feed_navigation_view
+import ./components/paginator/paginator_view
 
 
-proc impl(viewModel:HtmxArticlePreviewViewModel):Component =
+proc impl(viewModel:ArticlePreviewViewModel):Component =
   tmpli html"""
     $(feedNavigationView(viewModel.feedNavbarItems))
 
@@ -71,5 +71,5 @@ proc impl(viewModel:HtmxArticlePreviewViewModel):Component =
     $(paginatorView(viewModel.paginator))
   """
 
-proc htmxArticlePreviewView*(viewModel:HtmxArticlePreviewViewModel):Component =
+proc articlePreviewView*(viewModel:ArticlePreviewViewModel):Component =
   return impl(viewModel)

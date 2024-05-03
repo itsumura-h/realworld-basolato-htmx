@@ -1,7 +1,7 @@
 import basolato/view
 import ../../layouts/app/app_view_model
 import ../../layouts/app/app_view
-import ../../components/user/follow_button/follow_button_view
+import ../../templates/follow_button/follow_button_view
 import ./user_show_view_model
 
 

@@ -6,10 +6,10 @@ import ../../models/dto/paginator/user_article_list_paginator_query_interface
 import ../../models/dto/favorite_button/favorite_button_query_interface
 import ../../models/vo/article_id
 import ../../models/vo/user_id
-import ../../http/views/pages/home/htmx_article_preview/htmx_article_preview_view_model
-import ../../http/views/components/paginator/paginator_view_model
-import ../../http/views/components/home/favorite_button/favorite_button_view_model
-import ../../http/views/components/home/feed_navigation/feed_navigation_view_model
+import ../../http/views/templates/article_preview/article_preview_view_model
+import ../../http/views/templates/article_preview/components/paginator/paginator_view_model
+import ../../http/views/templates/article_preview/components/feed_navigation/feed_navigation_view_model
+import ../../http/views/templates/favorite_button/favorite_button_view_model
 import ../../di_container
 
 
@@ -34,7 +34,7 @@ proc invoke*(
   userId:string,
   isLogin:bool,
   loginUserId:string
-):Future[HtmxArticlePreviewViewModel] {.async.} =
+):Future[ArticlePreviewViewModel] {.async.} =
   const display = 5
   let offset = (page - 1) * display
   let userId = UserId.new(userId)
@@ -76,5 +76,5 @@ proc invoke*(
     )
   ]
 
-  let viewModel = HtmxArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)
+  let viewModel = ArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)
   return viewModel

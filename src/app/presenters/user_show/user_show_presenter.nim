@@ -1,8 +1,8 @@
 import std/asyncdispatch
 import std/options
 import ../../http/views/pages/user/user_show_view_model
+import ../../http/views/templates/follow_button/follow_button_view_model
 import ../../models/dto/user/user_query_interface
-import ../../http/views/components/user/follow_button/follow_button_view_model
 import ../../models/dto/follow_button_in_user/follow_button_in_user_query_interface
 import ../../models/vo/user_id
 import ../../di_container

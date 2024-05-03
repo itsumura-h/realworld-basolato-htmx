@@ -1,9 +1,8 @@
 import std/times
-import ../../../../../models/dto/article_with_author/article_with_author_dto
-import ../../../components/home/feed_navigation/feed_navigation_view_model
-import ../../../components/home/favorite_button/favorite_button_view_model
-# import ../../../../../usecases/get_tag_feed/get_tag_feed_dto
-import ../../../components/paginator/paginator_view_model
+import ../../../../models/dto/article_with_author/article_with_author_dto
+import ../../templates/favorite_button/favorite_button_view_model
+import ./components/feed_navigation/feed_navigation_view_model
+import ./components/paginator/paginator_view_model
 
 
 type Tag*  = object
@@ -61,20 +60,20 @@ proc new*(_:type Article, dto:ArticleWithAuthorDto, favoriteButtonViewModel:Favo
   )
 
 
-type HtmxArticlePreviewViewModel*  = object
+type ArticlePreviewViewModel*  = object
   articles*:seq[Article]
   paginator*:PaginatorViewModel
   feedNavbarItems*:seq[FeedNavbarViewModel]
 
-proc new*(_:type HtmxArticlePreviewViewModel, articles:seq[Article], paginator:PaginatorViewModel, feedNavbarItems:seq[FeedNavbarViewModel]):HtmxArticlePreviewViewModel =
-  return HtmxArticlePreviewViewModel(
+proc new*(_:type ArticlePreviewViewModel, articles:seq[Article], paginator:PaginatorViewModel, feedNavbarItems:seq[FeedNavbarViewModel]):ArticlePreviewViewModel =
+  return ArticlePreviewViewModel(
     articles:articles,
     paginator:paginator,
     feedNavbarItems:feedNavbarItems
   )
 
 
-# proc new*(_:type HtmxArticlePreviewViewModel, tagFeedDto:TagFeedDto, tagName:string, paginator:PaginatorViewModel, isLogin:bool):HtmxArticlePreviewViewModel =
+# proc new*(_:type ArticlePreviewViewModel, tagFeedDto:TagFeedDto, tagName:string, paginator:PaginatorViewModel, isLogin:bool):ArticlePreviewViewModel =
 #   var articles:seq[Article]
 #   for row in tagFeedDto.articlesWithAuthor:
 #     let user = User.new(
@@ -124,7 +123,7 @@ proc new*(_:type HtmxArticlePreviewViewModel, articles:seq[Article], paginator:P
 #       0
 #     )
 
-#   return HtmxArticlePreviewViewModel(
+#   return ArticlePreviewViewModel(
 #     articles:articles,
 #     paginator:paginator,
 #     feedNavbarItems:feedNavbarItems

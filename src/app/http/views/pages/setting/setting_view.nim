@@ -1,8 +1,8 @@
 import basolato/view
 import ../../layouts/app/app_view_model
 import ../../layouts/app/app_view
-import ../../components/setting/form_message/form_message_view
-import ../../components/setting/form/form_view
+import ./components/form_message/form_message_view
+import ./components/form/form_view
 import ./setting_view_model
 
 

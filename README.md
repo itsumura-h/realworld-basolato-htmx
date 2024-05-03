@@ -1,39 +1,13 @@
 # realworld-basolato-htmx
 
-- DTO
-  - クエリサービスで作られる
-  - Presenterで呼ばれる
-  - ViewModelに対応する
-
-## 参照系
-### Presenter
-- DBから値を取り出し、Viewを構築し返す
-- コントローラーの中で呼ばれる
-- 文脈を作る
-
-### ViewModel
-- 表示に関するロジックを持つ
-- 
-
-### View
-- ViewModelに依存する
-
-Controller
-↓
-Presenter
-↓
-Query Service
-↓
-DTO
-
----
-
 
 ### プレゼンテーション層
 - View(ViewModel):string
 - ViewModel(DTO)
   - → DTO
- 
+
+  ---
+
 - 記事一覧
   - ArticlePreviewView
   - ArticlePreviewViewModel
@@ -45,12 +19,14 @@ DTO
   - AppViewModel
 
 ### アプリケーション層
+presenterの返り値のViewModelの単位でまとめる
+
 - Presenter():DTO
   - ※必ずしもQueryServiceを呼ぶわけではない
   - → Query Interface
   - → DTO
 
-presenterの返り値のViewModelの単位でまとめる
+  ---
 
 - article_preview/
   - 最新の記事一覧                GlobalFeedPresenter
@@ -78,11 +54,13 @@ DTOの単位でまとめる
 
 
 ### インフラ層
+クエリの返り値のDTOの単位でまとめる
+
 - Query():DTO
   - → Query Service Interface
   - → DTO
 
-クエリの返り値のDTOの単位でまとめる
+  ---
 
 - article_with_author/
   - 最新の記事一覧取得                GlobalFeedArticleListQuery
@@ -93,3 +71,39 @@ DTOの単位でまとめる
   - いいねボタン取得                  favoriteButtonQuery
 - user/
   - ログインIDからユーザー情報取得    UserQuery
+
+---
+
+Atomicデザインは以下のようにモジュールを分割する
+
+- Atoms:
+  - 汎用的な機能を提供する。
+  - ドメインが入ってはいけない。
+  - Contextへのアクセスはしない。
+  - 自分自身で状態はなるべく持たない。
+  - 他のコンポーネントに依存していなければAtoms。
+- Molecules:
+  - 汎用的な機能を提供する。
+  - ドメインが入ってはいけない。
+  - Contextへのアクセスはしない。
+  - 自分自身で状態はなるべく持たない。
+  - 他のAtomsやMoleculesのコンポーネントに依存している。
+- Organisms:
+  - ドメインが入ったらOrganisms。
+  - 他に依存するコンポーネントがなかったとしても、ドメインが入った時点でOrganismsにする。
+  - useContextによるContext接続可。
+  - その機能のためのAPIを叩くのはここ。
+- Templates:
+  - 部分導入した範囲内のレイアウトを決める。
+  - ロジックは持たない。
+- Pages:
+  - 現在はただのラッパーに近い。
+
+  ---
+
+- 文脈を持たないもの
+  - AtomsとMoleculesをまとめてPartsに
+- 文脈を持つもの
+  - Organismsを各ページ配下のComponentsに
+- プレゼン層から呼ばれるもの
+  - TemplatesとPagesをまとめてPagesに

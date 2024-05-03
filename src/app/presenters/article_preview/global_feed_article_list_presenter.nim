@@ -1,8 +1,8 @@
 import std/asyncdispatch
-import ../../http/views/pages/home/htmx_article_preview/htmx_article_preview_view_model
-import ../../http/views/components/home/favorite_button/favorite_button_view_model
-import ../../http/views/components/home/feed_navigation/feed_navigation_view_model
-import ../../http/views/components/paginator/paginator_view_model
+import ../../http/views/templates/article_preview/article_preview_view_model
+import ../../http/views/templates/favorite_button/favorite_button_view_model
+import ../../http/views/templates/article_preview/components/feed_navigation/feed_navigation_view_model
+import ../../http/views/templates/article_preview/components/paginator/paginator_view_model
 import ../../models/dto/article_with_author/global_feed_article_list_query_interface
 import ../../models/dto/paginator/global_feed_article_list_paginator_query_interface
 import ../../models/dto/favorite_button/favorite_button_query_interface
@@ -29,7 +29,7 @@ proc invoke*(
   page:int,
   isLogin:bool,
   loginUserId:string
-):Future[HtmxArticlePreviewViewModel] {.async.} =
+):Future[ArticlePreviewViewModel] {.async.} =
   const display = 5
   let offset = (page - 1) * display
   let articleWithAuthorDtoList = self.globalFeedArticleListQuery.invoke(offset, display).await
@@ -73,5 +73,5 @@ proc invoke*(
       0
     )
 
-  let viewModel = HtmxArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)
+  let viewModel = ArticlePreviewViewModel.new(articleList, paginatorViewModel, feedNavbarViewModelList)
   return viewModel

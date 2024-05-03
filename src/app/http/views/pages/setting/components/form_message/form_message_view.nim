@@ -1,5 +1,5 @@
 import basolato/view
-import ../../form_success_message/form_success_message_view
+import ../../../../templates/form_success_message/form_success_message_view
 import ./form_message_view_model
 
 

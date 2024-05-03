@@ -8,8 +8,8 @@ import ../views/pages/setting/setting_view
 
 import ../../usecases/update_user_usecase
 import ../../presenters/form_error_message/form_error_message_presenter
-import ../views/components/form_error_message/form_error_message_view_model
-import ../views/components/form_error_message/form_error_message_view
+import ../views/templates/form_error_message/form_error_message_view_model
+import ../views/templates/form_error_message/form_error_message_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =

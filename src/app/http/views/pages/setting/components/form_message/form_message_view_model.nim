@@ -1,4 +1,5 @@
-import ../../form_success_message/form_success_message_view_model
+import ../../../../templates/form_success_message/form_success_message_view_model
+
 
 type FormMessageViewModel*  = object
   oobSwap*:bool

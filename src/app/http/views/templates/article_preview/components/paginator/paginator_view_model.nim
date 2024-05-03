@@ -1,4 +1,4 @@
-import ../../../../models/dto/paginator/paginator_dto
+import ../../../../../../models/dto/paginator/paginator_dto
 
 
 type PaginatorViewModel* = object
