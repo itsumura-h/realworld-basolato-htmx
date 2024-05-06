@@ -14,11 +14,10 @@ import ../views/pages/article/article_view
 # import ../views/pages/comment/comment_view
 # # delete
 # import ../../usecases/delete_article_usecase
-# # favorite
-# import ../../usecases/favorite_usecase
-# # import ../../usecases/get_favorite_button/get_favorite_button_usecase
-# import ../../presenters/article_favorite_button/article_favorite_button_presenter
-# import ../views/components/article/favorite_button/favorite_button_view
+# favorite
+import ../../usecases/favorite_usecase
+import ../../presenters/favorite_button_in_articles/favorite_button_in_articles_presenter
+import ../views/pages/article/favorite_button/favorite_button_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -56,20 +55,17 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
 #   return render("", header)
 
 
-# proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
-#   let articleId = params.getStr("articleId")
-#   let isLogin = context.isLogin().await
-#   let loginUserId = context.get("id").await
-#   try:
-#     let followUsecase = FavoriteUsecase.new()
-#     followUsecase.invoke(articleId, loginUserId).await
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  # let isLogin = context.isLogin().await
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
 
-#     # let getFavoriteButtonUsecase = GetFavoriteButtonUsecase.new()
-#     # let dto = getFavoriteButtonUsecase.invoke(articleId, loginUserId).await
-#     # let viewModel = FavoriteButtonViewModel.new(dto)
-#     let presenter = ArticleFavoriteButtonPresenter.new()
-#     let viewModel = presenter.invoke(articleId, isLogin, loginUserId).await
-#     let view = favoriteButtonView(viewModel)
-#     return render(view)
-#   except:
-#     return render(Http400, getCurrentExceptionMsg())
+    let presenter = FavoriteButtonInArticlesPresenter.new()
+    let viewModel = presenter.invoke(articleId, loginUserId).await
+    let view = favoriteButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())

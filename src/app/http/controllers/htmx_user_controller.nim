@@ -14,12 +14,10 @@ import ../views/templates/article_preview/article_preview_view
 import ../../usecases/follow_usecase
 import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
 import ../../http/views/templates/follow_button/follow_button_view
-# # favorite
-# import ../../usecases/favorite_usecase
-# # import ../../usecases/get_favorite_button/get_favorite_button_usecase
-# import ../../presenters/user_favorite_button/user_favorite_button_presenter
-# import ../views/components/user/favorite_button/favorite_button_view_model
-# import ../views/components/user/favorite_button/favorite_button_view
+# favorite
+import ../../usecases/favorite_usecase
+import ../../presenters/favorite_button/favorite_button_presenter
+import ../../http/views/templates/favorite_button/favorite_button_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -88,17 +86,17 @@ proc follow*(context:Context, params:Params):Future[Response] {.async.} =
     return render(Http400, getCurrentExceptionMsg())
 
 
-# proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
-#   let articleId = params.getStr("articleId")
-#   let isLogin = context.isLogin().await
-#   let loginUserId = context.get("id").await
-#   try:
-#     let followUsecase = FavoriteUsecase.new()
-#     followUsecase.invoke(articleId, loginUserId).await
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  # let isLogin = context.isLogin().await
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
 
-#     let presenter = UserFavoriteButtonPresenter.new()
-#     let viewModel = presenter.invoke(articleId, isLogin, loginUserId).await
-#     let view = favoriteButtonView(viewModel)
-#     return render(view)
-#   except:
-#     return render(Http400, getCurrentExceptionMsg())
+    let presenter = FavoriteButtonPresenter.new()
+    let viewModel = presenter.invoke(articleId, loginUserId).await
+    let view = favoriteButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())

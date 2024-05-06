@@ -61,18 +61,18 @@ let routes = @[
         Route.get("/home/your-feed", htmx_home_controller.yourFeed).middleware(should_login_middleware.htmxShouldLogin),
         Route.get("/home/tag-list", htmx_home_controller.tagList),
         Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
-        # Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
         # Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
       #   Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
-      #   Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/users/{userId:str}", htmx_user_controller.show),
         Route.get("/users/{userId:str}/articles", htmx_user_controller.articles),
-      #   Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
+        # Route.get("/users/{userId:str}/favorites", htmx_user_controller.favoriteArticles),
         Route.post("/users/{userId:str}/follow", htmx_user_controller.follow).middleware(should_login_middleware.htmxShouldLogin),
-      #   Route.post("/users/articles/{articleId:str}/favorite", htmx_user_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
+        Route.post("/users/articles/{articleId:str}/favorite", htmx_user_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
       #   Route.get("/editor", htmx_editor_controller.create).middleware(should_login_middleware.htmxShouldLogin),
       #   Route.post("/editor", htmx_editor_controller.store).middleware(should_login_middleware.htmxShouldLogin),

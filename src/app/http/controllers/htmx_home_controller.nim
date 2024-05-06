@@ -15,8 +15,10 @@ import ../../presenters/article_preview/tag_feed_article_list_presenter
 # tag list
 import ../../presenters/popular_tag_list/popular_tag_list_presenter
 import ../views/pages/home/htmx_tag_list/htmx_tag_list_view
-# # favorite
-# import ../../usecases/favorite_usecase
+# favorite
+import ../../usecases/favorite_usecase
+import ../../presenters/favorite_button/favorite_button_presenter
+import ../views/templates/favorite_button/favorite_button_view
 # import ../views/components/home/favorite_button/favorite_button_view_model
 # import ../views/components/home/favorite_button/favorite_button_view
 
@@ -86,17 +88,17 @@ proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   return render(view)
 
 
-# proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
-#   let articleId = params.getStr("articleId")
-#   let isLogin = context.isLogin().await
-#   let loginUserId = context.get("id").await
-#   try:
-#     let followUsecase = FavoriteUsecase.new()
-#     followUsecase.invoke(articleId, loginUserId).await
+proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  # let isLogin = context.isLogin().await
+  let loginUserId = context.get("id").await
+  try:
+    let followUsecase = FavoriteUsecase.new()
+    followUsecase.invoke(articleId, loginUserId).await
 
-#     let presenter = HomeFavoriteButtonPresenter.new()
-#     let viewModel = presenter.invoke(articleId, isLogin, loginUserId).await
-#     let view = favoriteButtonView(viewModel)
-#     return render(view)
-#   except:
-#     return render(Http400, getCurrentExceptionMsg())
+    let presenter = FavoriteButtonPresenter.new()
+    let viewModel = presenter.invoke(articleId, loginUserId).await
+    let view = favoriteButtonView(viewModel)
+    return render(view)
+  except:
+    return render(Http400, getCurrentExceptionMsg())
