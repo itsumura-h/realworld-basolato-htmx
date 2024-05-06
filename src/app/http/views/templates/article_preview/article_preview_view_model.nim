@@ -1,8 +1,8 @@
 import std/times
 import ../../../../models/dto/article_with_author/article_with_author_dto
 import ../../templates/favorite_button/favorite_button_view_model
-import ./components/feed_navigation/feed_navigation_view_model
-import ./components/paginator/paginator_view_model
+import ./feed_navigation/feed_navigation_view_model
+import ./paginator/paginator_view_model
 
 
 type Tag*  = object

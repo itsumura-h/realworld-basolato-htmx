@@ -17,7 +17,7 @@ import ./app/http/controllers/setting_controller
 # import ./app/http/controllers/editor_controller
 import ./app/http/controllers/htmx_sign_controller
 import ./app/http/controllers/htmx_home_controller
-# import ./app/http/controllers/htmx_article_controller
+import ./app/http/controllers/htmx_article_controller
 import ./app/http/controllers/htmx_user_controller
 import ./app/http/controllers/htmx_setting_controller
 # import ./app/http/controllers/htmx_editor_controller
@@ -63,8 +63,8 @@ let routes = @[
         Route.get("/home/tag-feed/{tagName:str}", htmx_home_controller.tagFeed),
         # Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
-      #   Route.get("/articles/{articleId:str}", htmx_article_controller.show),
-      #   Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
+        Route.get("/articles/{articleId:str}", htmx_article_controller.show),
+        # Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
       #   Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
       #   Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 

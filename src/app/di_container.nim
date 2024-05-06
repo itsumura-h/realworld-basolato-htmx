@@ -49,21 +49,29 @@ import ./models/dto/article_with_author/tag_feed_article_list_query_interface
 import ./data_stores/queries/article_with_author/tag_feed/tag_feed_article_list_query
 import ./data_stores/queries/article_with_author/tag_feed/mock_tag_feed_article_list_query
 #
+import ./models/dto/article_detail/article_detail_query_interface
+import ./data_stores/queries/article_detail/article_detail_query
+import ./data_stores/queries/article_detail/mock_article_detail_query
+#
 import ./models/dto/paginator/tag_feed_article_list_paginator_query_interface
 import ./data_stores/queries/paginator/tag_feed/tag_feed_paginator_query
 import ./data_stores/queries/paginator/tag_feed/mock_tag_feed_paginator_query
-#
-import ./models/dto/favorite_button/favorite_button_query_interface
-import ./data_stores/queries/favorite_button/favorite_button_query
-import ./data_stores/queries/favorite_button/mock_favorite_button_query
 #
 import ./models/dto/tag/tag_list_query_interface
 import ./data_stores/queries/tag/popular_tag_list_query
 import ./data_stores/queries/tag/mock_popular_tag_list_query
 #
-import ./models/dto/follow_button_in_user/follow_button_in_user_query_interface
-import ./data_stores/queries/follow_button_in_user/follow_button_in_user_query
-import ./data_stores/queries/follow_button_in_user/mock_follow_button_in_user_query
+import ./models/dto/favorite_button/favorite_button_query_interface
+import ./data_stores/queries/favorite_button/favorite_button_query
+import ./data_stores/queries/favorite_button/mock_favorite_button_query
+#
+import ./models/dto/follow_button/follow_button_query_interface
+import ./data_stores/queries/follow_button/follow_button_query
+import ./data_stores/queries/follow_button/mock_follow_button_query
+#
+import ./models/dto/comment_list_in_article/comment_list_in_article_query_interface
+import ./data_stores/queries/comment_list_in_article/comment_list_in_article_quer
+import ./data_stores/queries/comment_list_in_article/mock_comment_list_in_article_quer
 
 
 type DiContainer* = object
@@ -80,12 +88,13 @@ type DiContainer* = object
   yourFeedPaginatorQuery*: IYourFeedArticleListPaginatorQuery
   tagFeedArticleListQuery*: ITagFeedArticleListQuery
   tagFeedPaginatorQuery*: ITagFeedArticleListPaginatorQuery
+  articleDetailQuery*: IArticleDetailQuery
   userArticleListQuery*: IUserArticleListQuery
   userArticleListPaginatorQuery*: IUserArticleListPaginatorQuery
   favoriteButtonQuery*: IFavoriteButtonQuery
   tagListQuery*: ITagListQuery
-  followButtonInUserQuery*:IFollowButtonInUserQuery
-  
+  followButtonQuery*:IFollowButtonQuery
+  commentListInArticleQuery*:ICommentListInArticleQuery
 
 
 proc new(_:type DiContainer):DiContainer =
@@ -104,11 +113,13 @@ proc new(_:type DiContainer):DiContainer =
       yourFeedPaginatorQuery: MockYourFeedPaginatorQuery.new(),
       tagFeedArticleListQuery: MockTagFeedArticleListQuery.new(),
       tagFeedPaginatorQuery: MockTagFeedPaginatorQuery.new(),
+      articleDetailQuery: MockArticleDetailQuery.new(),
       userArticleListQuery: MockUserArticleListQuery.new(),
       userArticleListPaginatorQuery: MockUserPaginatorQuery.new(),
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
       tagListQuery: MockPopularTagListQuery.new(),
-      followButtonInUserQuery: MockFollowButtonInUserQuery.new(),
+      followButtonQuery: MockFollowButtonQuery.new(),
+      commentListInArticleQuery: MockCommentListInArticleQuery.new(),
     )
   else:
     return DiContainer(
@@ -129,11 +140,13 @@ proc new(_:type DiContainer):DiContainer =
       yourFeedPaginatorQuery: YourFeedPaginatorQuery.new(),
       tagFeedArticleListQuery: TagFeedArticleListQuery.new(),
       tagFeedPaginatorQuery: TagFeedPaginatorQuery.new(),
+      articleDetailQuery: ArticleDetailQuery.new(),
       userArticleListQuery: UserArticleListQuery.new(),
       userArticleListPaginatorQuery: UserPaginatorQuery.new(),
       favoriteButtonQuery: FavoriteButtonQuery.new(),
       tagListQuery: PopularTagListQuery.new(),
-      followButtonInUserQuery: FollowButtonInUserQuery.new(),
+      followButtonQuery: FollowButtonQuery.new(),
+      commentListInArticleQuery: CommentListInArticleQuery.new(),
     )
 
 let di* = DiContainer.new()

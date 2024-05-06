@@ -10,38 +10,43 @@ type AuthorDto*  = object
   id*:string
   name*:string
   image*:string
+  followerCount*:int
 
-proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
+proc new*(_:type AuthorDto, id, name, image:string, followerCount:int):AuthorDto =
   return AuthorDto(
     id:id,
     name:name,
     image:image,
+    followerCount:followerCount,
   )
 
 
-type ArticleWithAuthorDto*  = object
+type ArticleDetailDto*  = object
   id*:string
   title*:string
   description*:string
+  body*:string
   createdAt*:DateTime
   popularCount*:int
   author*:AuthorDto
   tags*:seq[TagDto]
 
-proc new*(_:type ArticleWithAuthorDto,
+proc new*(_:type ArticleDetailDto,
   id:string,
   title:string,
   description:string,
+  body:string,
   createdAt:string,
   popularCount:int,
   author:AuthorDto,
   tags:seq[TagDto]
-):ArticleWithAuthorDto =
+):ArticleDetailDto =
   let createdAt = parse(createdAt, "yyyy-MM-dd hh:mm:ss")
-  return ArticleWithAuthorDto(
+  return ArticleDetailDto(
     id:id,
     title:title,
     description:description,
+    body:body,
     createdAt:createdAt,
     popularCount:popularCount,
     author:author,

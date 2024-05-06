@@ -1,76 +1,32 @@
 import std/times
-import ../../../../usecases/get_comments_in_article/get_comments_in_article_dto
-
-
-type User*  = object
-  id*:string
-  name*:string
-  image*:string
-
-proc new*(_:type User, id, name, image:string):User =
-  return User(
-    id:id,
-    name:name,
-    image:image
-  ) 
-
-
-type Article*  = object
-  id*:string
-  user*:User
-
-proc new*(_:type Article, id:string, user:User):Article =
-  return Article(
-    id:id,
-    user:user
-  )
-
-
-type Comment*  = object
-  user*:User
-  body*:string
-  createdAt*:string
-
-proc new*(_:type Comment, user:User, body:string, createdAt:DateTime):Comment =
-  let createdAt = createdAt.format("yyyy MMMM d")
-  return Comment(
-    user:user,
-    body:body,
-    createdAt:createdAt
-  )
+import std/sequtils
+import ../../../../models/dto/comment_list_in_article/comment_list_in_article_dto
+import ./card/card_view_model
+import ./form/form_view_model
 
 
 type CommentViewModel*  = object
-  comments*:seq[Comment]
-  article*:Article
+  cardList*:seq[CardViewModel]
+  form*:FormViewModel
   isLogin*:bool
 
-proc new*(_:type CommentViewModel, dto:GetCommentsInArticleDto, isLogin:bool):CommentViewModel =
-  var comments:seq[Comment]
-  for row in dto.comments:
-    let user = User.new(
-      row.user.id,
-      row.user.name,
-      row.user.image
-    )
-    comments.add(
-      Comment.new(
-        user,
+proc new*(_:type CommentViewModel, dto:CommentListInArticleDto, isLogin:bool):CommentViewModel =
+  let cardList = dto.commentList.map(
+    proc(row:CommentDto):CardViewModel =
+      return CardViewModel.new(
         row.body,
-        row.createdAt
+        row.createdAt,
+        row.user.id,
+        row.user.name,
+        row.user.image,
       )
-    )
-  let author = User.new(
-    dto.article.user.id,
-    dto.article.user.name,
+  )
+  let form = FormViewModel.new(
+    dto.article.id,
     dto.article.user.image,
   )
-  let article = Article.new(
-    dto.article.id,
-    author
-  )
   return CommentViewModel(
-    comments:comments,
-    article:article,
+    cardList:cardList,
+    form:form,
     isLogin:isLogin
   )

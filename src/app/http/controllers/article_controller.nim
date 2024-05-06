@@ -5,9 +5,9 @@ import basolato/view
 import ../../di_container
 import ../../errors
 import ../../presenters/app_presenter
-import ../../presenters/article_show_presenter
-import ../views/pages/article/article_show_view_model
-import ../views/pages/article/article_show_view
+import ../../presenters/article_presenter
+import ../views/pages/article/article_view_model
+import ../views/pages/article/article_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =

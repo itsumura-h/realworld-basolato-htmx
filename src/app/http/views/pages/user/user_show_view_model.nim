@@ -1,5 +1,5 @@
 import ../../../../models/dto/user/user_dto
-import ../../../../models/dto/follow_button_in_user/follow_button_in_user_dto
+import ../../../../models/dto/follow_button/follow_button_dto
 import ../../templates/follow_button/follow_button_view_model
 
 
@@ -30,7 +30,7 @@ type UserShowViewModel*  = object
 proc new*(
   _:type UserShowViewModel,
   dto:UserDto,
-  followButtonDto:FollowButtonInUserDto,
+  followButtonDto:FollowButtonDto,
   isSelf:bool,
   loadFavorites:bool,
   hasPage=false,

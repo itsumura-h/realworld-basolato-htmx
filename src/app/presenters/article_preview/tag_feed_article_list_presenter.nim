@@ -1,8 +1,8 @@
 import std/asyncdispatch
 import std/strformat
 import ../../http/views/templates/article_preview/article_preview_view_model
-import ../../http/views/templates/article_preview/components/feed_navigation/feed_navigation_view_model
-import ../../http/views/templates/article_preview/components/paginator/paginator_view_model
+import ../../http/views/templates/article_preview/feed_navigation/feed_navigation_view_model
+import ../../http/views/templates/article_preview/paginator/paginator_view_model
 import ../../http/views/templates/favorite_button/favorite_button_view_model
 import ../../models/dto/article_with_author/tag_feed_article_list_query_interface
 import ../../models/dto/paginator/tag_feed_article_list_paginator_query_interface

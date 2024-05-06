@@ -10,7 +10,7 @@ import ../../presenters/article_preview/user_article_list_presenter
 import ../views/templates/article_preview/article_preview_view
 # # favoriteArticles
 # import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
-# # follow
+# follow
 import ../../usecases/follow_usecase
 import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
 import ../../http/views/templates/follow_button/follow_button_view

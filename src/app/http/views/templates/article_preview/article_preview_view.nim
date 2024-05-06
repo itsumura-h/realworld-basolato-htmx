@@ -2,8 +2,8 @@
 import basolato/view
 import ./article_preview_view_model
 import ../favorite_button/favorite_button_view
-import ./components/feed_navigation/feed_navigation_view
-import ./components/paginator/paginator_view
+import ./feed_navigation/feed_navigation_view
+import ./paginator/paginator_view
 
 
 proc impl(viewModel:ArticlePreviewViewModel):Component =

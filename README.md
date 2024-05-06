@@ -99,11 +99,29 @@ Atomicデザインは以下のようにモジュールを分割する
 - Pages:
   - 現在はただのラッパーに近い。
 
-  ---
+---
 
-- 文脈を持たないもの
-  - AtomsとMoleculesをまとめてPartsに
-- 文脈を持つもの
-  - Organismsを各ページ配下のComponentsに
-- プレゼン層から呼ばれるもの
-  - TemplatesとPagesをまとめてPagesに
+https://note.com/tabelog_frontend/n/n07b4077f5cf3
+
+- Parts
+  - 文脈を持たないもの
+  - AtomsとMolecules
+- Components
+  - 文脈を持つもの、DTOに依存するもの
+  - Organismsを各ページ配下に
+- Pages
+  - プレゼン層から呼ばれるもの
+  - TemplatesとPagesをまとめて
+
+---
+
+AstroJSの場合
+
+https://docs.astro.build/ja/basics/project-structure/
+
+- layouts
+  - 複数のページで共有されるUI構造
+- components
+  - 再利用可能なコードの単位
+- pages
+  - プレゼン層から呼ばれるもの

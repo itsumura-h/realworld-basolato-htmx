@@ -5,10 +5,13 @@ type FavoriteButtonViewModel* = object
   articleId*:string
   count*:int
   isFavorited*:bool
+  willDelete*:bool
 
-proc new*(_:type FavoriteButtonViewModel, dto:FavoriteButtonDto): FavoriteButtonViewModel =
+proc new*(_:type FavoriteButtonViewModel, dto:FavoriteButtonDto, willDelete=false): FavoriteButtonViewModel =
+  ## willDelete is only in /users/{article} favorite articles
   return FavoriteButtonViewModel(
     articleId: dto.articleId,
     count: dto.favoriteCount,
     isFavorited: dto.isFavorited,
+    willDelete: willDelete,
   )

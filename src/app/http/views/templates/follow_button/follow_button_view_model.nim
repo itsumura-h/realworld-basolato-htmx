@@ -1,4 +1,4 @@
-import ../../../../models/dto/follow_button_in_user/follow_button_in_user_dto
+import ../../../../models/dto/follow_button/follow_button_dto
 
 
 type FollowButtonViewModel*  = object
@@ -7,7 +7,7 @@ type FollowButtonViewModel*  = object
   isFollowed*: bool
   followerCount*: int
 
-proc new*(_:type FollowButtonViewModel, dto:FollowButtonInUserDto):FollowButtonViewModel =
+proc new*(_:type FollowButtonViewModel, dto:FollowButtonDto):FollowButtonViewModel =
   return FollowButtonViewModel(
     userId:dto.userId,
     userName:dto.userName,
