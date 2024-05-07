@@ -19,7 +19,7 @@ proc impl(viewModel:ArticleViewModel):Component =
   """)
 
   tmpli html"""
-    <div class="post-page">
+    <div class="article-page">
 
       <div class="banner">
         <div class="container">
@@ -76,7 +76,7 @@ proc impl(viewModel:ArticleViewModel):Component =
 
         <hr />
 
-        <div class="post-actions">
+        <div class="article-actions">
           <div class="article-meta">
             <a href="profile.html"><img src="$(viewModel.user.image)" /></a>
             <div class="info">
@@ -108,7 +108,7 @@ proc impl(viewModel:ArticleViewModel):Component =
         </div>
 
         <div class="row">
-          <div class="col-md-8 col-md-offset-2" hx-get="/htmx/articles/$(viewModel.article.id)/comments" hx-trigger="load"></div>
+          <div class="col-xs-12 col-md-8 offset-md-2" hx-get="/htmx/articles/$(viewModel.article.id)/comments" hx-trigger="load"></div>
         </div>
 
       </div>

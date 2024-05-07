@@ -9,9 +9,9 @@ import ../../di_container
 type CommentListInArticlePresenter* = object
   query:ICommentListInArticleQuery
 
-proc new*(_:type CommentListInArticlePresenter):Future[CommentListInArticleDto] {.async.} =
+proc new*(_:type CommentListInArticlePresenter):CommentListInArticlePresenter =
   return CommentListInArticlePresenter(
-    query: di.commentListInArticle
+    query: di.commentListInArticleQuery
   )
 
 

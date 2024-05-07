@@ -9,6 +9,8 @@ import ../../di_container
 import ../../presenters/article/article_presenter
 import ../views/pages/article/article_view
 # comment
+import ../../presenters/comment/comment_list_in_article_presenter
+import ../views/pages/comment/comment_view
 # import ../../usecases/get_comments_in_article/get_comments_in_article_usecase
 # import ../views/pages/comment/comment_view_model
 # import ../views/pages/comment/comment_view
@@ -33,15 +35,16 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   return render(view)
 
 
-# proc comments*(context:Context, params:Params):Future[Response] {.async.} =
-#   let articleId = params.getStr("articleId")
-#   let isLogin = false
-#   let query = di.getCommentsInArticleQuery
-#   let usecase = GetCommentsInArticleUsecase.new(query)
-#   let dto = usecase.invoke(articleId).await
-#   let viewModel = CommentViewModel.new(dto, isLogin)
-#   let view = commentView(viewModel)
-#   return render(view)
+proc comments*(context:Context, params:Params):Future[Response] {.async.} =
+  let articleId = params.getStr("articleId")
+  let isLogin = context.isLogin().await
+  let presenter = CommentListInArticlePresenter.new()
+  let viewModel = presenter.invoke(articleId, isLogin).await
+  # let usecase = GetCommentsInArticleUsecase.new(query)
+  # let dto = usecase.invoke(articleId).await
+  # let viewModel = CommentViewModel.new(dto, isLogin)
+  let view = commentView(viewModel)
+  return render(view)
 
 
 # proc delete*(context:Context, params:Params):Future[Response] {.async.} =

@@ -6,7 +6,8 @@ proc favoriteButtonInArticleView*(viewModel: FavoriteButtonInArticleViewModel): 
   tmpli html"""
     <form
       hx-post="/htmx/articles/$(viewModel.articleId)/favorite"
-      hx-swap="outerHTML"
+      hx-swap="outerHTML:.favorite-button"
+      class="favorite-button"
     >
       $(csrfToken())
       <button class="btn btn-outline-primary btn-sm pull-xs-right $if viewModel.isFavorited{active}">

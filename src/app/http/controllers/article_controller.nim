@@ -1,26 +1,29 @@
 import std/asyncdispatch
+import std/options
 # framework
 import basolato/controller
 import basolato/view
-import ../../di_container
 import ../../errors
-import ../../presenters/app_presenter
-import ../../presenters/article_presenter
+import ../../presenters/app/app_presenter
+import ../../presenters/article/article_presenter
 import ../views/pages/article/article_view_model
 import ../views/pages/article/article_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let userId = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
   let articleId = params.getStr("articleId")
 
   try:
-    let articleShowPresenter = ArticleShowPresenter.new()
-    let articleShowViewModel = articleShowPresenter.invoke(articleId, userId).await
+    let articlePresenter = ArticlePresenter.new()
+    let articleViewModel = articlePresenter.invoke(articleId, loginUserId).await
     let appPresenter = AppPresenter.new()
-    let appViewModel = appPresenter.invoke(isLogin, userId, articleShowViewModel.article.title).await
-    let view = articleShowPageView(appViewModel, articleShowViewModel)
+    let appViewModel = appPresenter.invoke(loginUserId, articleViewModel.article.title).await
+    let view = articleShowPageView(appViewModel, articleViewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")

@@ -10,7 +10,7 @@ import ./app/http/middlewares/should_login_middleware
 # controller
 # import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/home_controller
-# import ./app/http/controllers/article_controller
+import ./app/http/controllers/article_controller
 import ./app/http/controllers/user_controller
 import ./app/http/controllers/sign_controller
 import ./app/http/controllers/setting_controller
@@ -38,7 +38,7 @@ let routes = @[
 
       Route.get("/settings", setting_controller.index).middleware(should_login_middleware.shouldLogin),
 
-      # Route.get("/articles/{articleId:str}", article_controller.show),
+      Route.get("/articles/{articleId:str}", article_controller.show),
 
       Route.get("/users/{userId:str}", user_controller.show),
       # Route.get("/users/{userId:str}/favorites", user_controller.favorites),
@@ -64,7 +64,7 @@ let routes = @[
         Route.post("/home/articles/{articleId:str}/favorite", htmx_home_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 
         Route.get("/articles/{articleId:str}", htmx_article_controller.show),
-        # Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
+        Route.get("/articles/{articleId:str}/comments", htmx_article_controller.comments),
       #   Route.delete("/articles/{articleId:str}", htmx_article_controller.delete).middleware(should_login_middleware.htmxShouldLogin),
         Route.post("/articles/{articleId:str}/favorite", htmx_article_controller.favorite).middleware(should_login_middleware.htmxShouldLogin),
 

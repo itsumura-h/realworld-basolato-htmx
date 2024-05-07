@@ -10,10 +10,12 @@ import ../../presenters/user_show/user_show_presenter
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let loginUserId = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
   let userId = params.getStr("userId")
-  let loginUserIdOpt = if loginUserId.len > 0: loginUserId.some() else: none(string)
   let page =
     if params.hasKey("page"):
       params.getInt("page")
@@ -21,11 +23,11 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
       1
   try:
     let userShowPresenter = UserShowPresenter.new()
-    let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt, page).await    
+    let userShowViewModel = userShowPresenter.invoke(userId, loginUserId, page).await    
 
     let appPresenter = AppPresenter.new()
     let title = &"{userShowViewModel.user.name} ― Cnduit"
-    let appViewModel = appPresenter.invoke(isLogin, loginUserId, title).await
+    let appViewModel = appPresenter.invoke(loginUserId, title).await
 
     let view = userShowView(appViewModel, userShowViewModel)
     return render(view)

@@ -108,7 +108,7 @@ proc new*(
     if isAuthor:
       none(FollowButtonViewModel)
     else:
-      FollowButtonViewModel.new(followButtonDto, false).some()
+      FollowButtonViewModel.new(followButtonDto, true).some()
 
   let editButtonViewModel =
     if isAuthor:

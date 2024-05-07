@@ -1,3 +1,5 @@
+import std/asyncdispatch
+import std/options
 # framework
 import basolato/controller
 import basolato/view
@@ -9,11 +11,14 @@ import ../views/pages/home/home_view
 
 
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let userId = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
 
   let appPresenter = AppPresenter.new()
-  let appViewModel = appPresenter.invoke(isLogin, userId, "conduit").await
+  let appViewModel = appPresenter.invoke(loginUserId, "conduit").await
 
   let globalFeedPresenter = GlobalFeedPresenter.new()
   let homeViewModel = globalFeedPresenter.invoke()
@@ -27,16 +32,15 @@ proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
       params.getInt("page")
     else:
       1
-  let userId =
-    if context.isSome("id").await:
-      context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
     else:
       return render(Http403, "Forbidden")
   let hasPage = page > 1
-  let isLogin = context.isLogin().await
 
   let appPresenter = AppPresenter.new()
-  let appViewModel = appPresenter.invoke(isLogin, userId, "conduit").await
+  let appViewModel = appPresenter.invoke(loginUserId, "conduit").await
 
   let presenter = YourFeedPresenter.new()
   let viewModel = presenter.invoke(hasPage, page)
@@ -45,11 +49,14 @@ proc yourFeed*(context:Context, params:Params):Future[Response] {.async.} =
 
 
 proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let userId = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
 
   let appPresenter = AppPresenter.new()
-  let appViewModel = appPresenter.invoke(isLogin, userId, "conduit").await
+  let appViewModel = appPresenter.invoke(loginUserId, "conduit").await
   
   let page =
     if params.hasKey("page"):

@@ -1,3 +1,5 @@
+import std/asyncdispatch
+import std/options
 # framework
 import basolato/controller
 import basolato/view
@@ -9,10 +11,14 @@ import ../views/pages/signin/signin_view
 
 
 proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let id = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
+
   let appPresenter = AppPresenter.new()
-  let appViewModel = appPresenter.invoke(isLogin, id, "Sign Up ― Conduit").await
+  let appViewModel = appPresenter.invoke(loginUserId, "Sign Up ― Conduit").await
   let oldName = params.old("username")
   let oldEmail = params.old("email")
   let signUpPresenter = SignUpPresenter.new()
@@ -22,10 +28,14 @@ proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
 
 
 proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
-  let isLogin = context.isLogin().await
-  let id = context.get("id").await
+  let loginUserId =
+    if context.isLogin().await:
+      context.get("id").await.some()
+    else:
+      none(string)
+
   let appPresenter = AppPresenter.new()
-  let appViewModel = appPresenter.invoke(isLogin, id, "Sign In ― Conduit").await
+  let appViewModel = appPresenter.invoke(loginUserId, "Sign In ― Conduit").await
   let oldEmail = params.old("email")
   let signInPresenter = SignInPresenter.new()
   let viewModel = signInPresenter.invoke(oldEmail)
