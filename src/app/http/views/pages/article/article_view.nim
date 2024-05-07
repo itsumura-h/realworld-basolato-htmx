@@ -4,7 +4,7 @@ import ./article_view_model
 import ../../layouts/app/app_view_model
 import ../../layouts/app/app_view
 import ./follow_button/follow_button_view
-import ./favorite_button/favorite_button_view
+import ./favorite_button/favorite_button_in_article_view
 import ./edit_button/edit_button_view
 import ./delete_button/delete_button_view
 
@@ -51,7 +51,7 @@ proc impl(viewModel:ArticleViewModel):Component =
                 <!-- follow button -->
                 $( followButtonView(viewModel.followButtonViewModel.get) )
                 <!-- favorite button -->
-                $( favoriteButtonView(viewModel.favoriteButtonViewModel.get) )
+                $( favoriteButtonInArticleView(viewModel.favoriteButtonViewModel.get) )
               </div>
             }
           </div>
@@ -101,7 +101,7 @@ proc impl(viewModel:ArticleViewModel):Component =
                 <!-- follow button -->
                 $(followButtonView(viewModel.followButtonViewModel.get))
                 <!-- favorite button -->
-                $(favoriteButtonView(viewModel.favoriteButtonViewModel.get))
+                $(favoriteButtonInArticleView(viewModel.favoriteButtonViewModel.get))
               </div>
             }
           </div>

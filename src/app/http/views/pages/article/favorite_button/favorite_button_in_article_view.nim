@@ -1,8 +1,8 @@
 import basolato/view
-import ./favorite_button_view_model
+import ./favorite_button_in_article_view_model
 
 
-proc favoriteButtonView*(viewModel: FavoriteButtonViewModel): Component =
+proc favoriteButtonInArticleView*(viewModel: FavoriteButtonInArticleViewModel): Component =
   tmpli html"""
     <form
       hx-post="/htmx/articles/$(viewModel.articleId)/favorite"

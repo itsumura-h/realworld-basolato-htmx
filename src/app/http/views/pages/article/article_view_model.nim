@@ -5,7 +5,7 @@ import ../../../../models/dto/article_detail/article_detail_dto
 import ../../../../models/dto/favorite_button/favorite_button_dto
 import ../../../../models/dto/follow_button/follow_button_dto
 import ../../../../models/vo/user_id
-import ./favorite_button/favorite_button_view_model
+import ./favorite_button/favorite_button_in_article_view_model
 import ./follow_button/follow_button_view_model
 import ./edit_button/edit_button_view_model
 import ./delete_button/delete_button_view_model
@@ -62,7 +62,7 @@ type ArticleViewModel*  = object
   article*:Article
   user*:User
   isAuthor*:bool
-  favoriteButtonViewModel*:Option[FavoriteButtonViewModel]
+  favoriteButtonViewModel*:Option[FavoriteButtonInArticleViewModel]
   followButtonViewModel*:Option[FollowButtonViewModel]
   editButtonViewModel*:Option[EditButtonViewModel]
   deleteButtonViewModel*:Option[DeleteButtonViewModel]
@@ -100,9 +100,9 @@ proc new*(
 
   let favoriteButtonViewModel =
     if isAuthor:
-      none(FavoriteButtonViewModel)
+      none(FavoriteButtonInArticleViewModel)
     else:
-      FavoriteButtonViewModel.new(favoriteButtonDto).some()
+      FavoriteButtonInArticleViewModel.new(favoriteButtonDto).some()
 
   let followButtonViewModel = 
     if isAuthor:

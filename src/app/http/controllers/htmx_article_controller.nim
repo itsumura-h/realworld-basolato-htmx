@@ -17,7 +17,7 @@ import ../views/pages/article/article_view
 # favorite
 import ../../usecases/favorite_usecase
 import ../../presenters/favorite_button_in_articles/favorite_button_in_articles_presenter
-import ../views/pages/article/favorite_button/favorite_button_view
+import ../views/pages/article/favorite_button/favorite_button_in_article_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =
@@ -65,7 +65,7 @@ proc favorite*(context:Context, params:Params):Future[Response] {.async.} =
 
     let presenter = FavoriteButtonInArticlesPresenter.new()
     let viewModel = presenter.invoke(articleId, loginUserId).await
-    let view = favoriteButtonView(viewModel)
+    let view = favoriteButtonInArticleView(viewModel)
     return render(view)
   except:
     return render(Http400, getCurrentExceptionMsg())

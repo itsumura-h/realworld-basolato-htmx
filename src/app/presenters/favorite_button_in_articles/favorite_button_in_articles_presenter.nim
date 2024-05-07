@@ -1,5 +1,5 @@
 import std/asyncdispatch
-import ../../http/views/pages/article/favorite_button/favorite_button_view_model
+import ../../http/views/pages/article/favorite_button/favorite_button_in_article_view_model
 import ../../models/dto/favorite_button/favorite_button_query_interface
 import ../../models/vo/article_id
 import ../../models/vo/user_id
@@ -15,9 +15,9 @@ proc new*(_:type FavoriteButtonInArticlesPresenter):FavoriteButtonInArticlesPres
   )
 
 
-proc invoke*(self:FavoriteButtonInArticlesPresenter, articleId:string, loginUserId:string):Future[FavoriteButtonViewModel] {.async.} =
+proc invoke*(self:FavoriteButtonInArticlesPresenter, articleId:string, loginUserId:string):Future[FavoriteButtonInArticleViewModel] {.async.} =
   let articleId = ArticleId.new(articleId)
   let loginUserId = UserId.new(loginUserId)
   let favoriteButtonDto = self.query.invoke(articleId, loginUserId).await
-  let viewModel = FavoriteButtonViewModel.new(favoriteButtonDto)
+  let viewModel = FavoriteButtonInArticleViewModel.new(favoriteButtonDto)
   return viewModel
