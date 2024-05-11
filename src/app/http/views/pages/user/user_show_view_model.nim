@@ -1,6 +1,6 @@
 import ../../../../models/dto/user/user_dto
 import ../../../../models/dto/follow_button/follow_button_dto
-import ../../templates/follow_button/follow_button_view_model
+import ../../islands/follow_button/follow_button_view_model
 
 
 type User*  = object

@@ -103,14 +103,20 @@ Atomicデザインは以下のようにモジュールを分割する
 
 https://note.com/tabelog_frontend/n/n07b4077f5cf3
 
-- Parts
-  - 文脈を持たないもの
-  - AtomsとMolecules
 - Components
-  - 文脈を持つもの、DTOに依存するもの
+  - 文脈を持たないもの
+  - 純関数
+  - ViewModelを持たない
+  - AtomsとMolecules
+- Islands
+  - 文脈を持つもの、DTOに依存する
+  - 副作用がある
+  - ViewModelがある
   - Organismsを各ページ配下に
 - Pages
   - プレゼン層から呼ばれるもの
+  - 副作用がある
+  - ViewModelがある
   - TemplatesとPagesをまとめて
 
 ---

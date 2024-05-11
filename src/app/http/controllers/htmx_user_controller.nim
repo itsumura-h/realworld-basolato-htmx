@@ -7,17 +7,17 @@ import ../../presenters/user_show/user_show_presenter
 import ../views/pages/user/user_show_view
 # user feed
 import ../../presenters/article_preview/user_article_list_presenter
-import ../views/templates/article_preview/article_preview_view
+import ../views/islands/article_preview/article_preview_view
 # # favoriteArticles
 # import ../../usecases/get_favorites_in_user/get_favorites_in_user_usecase
 # follow
 import ../../usecases/follow_usecase
 import ../../presenters/follow_button_in_user/follow_button_in_user_presenter
-import ../../http/views/templates/follow_button/follow_button_view
+import ../../http/views/islands/follow_button/follow_button_view
 # favorite
 import ../../usecases/favorite_usecase
 import ../../presenters/favorite_button/favorite_button_presenter
-import ../../http/views/templates/favorite_button/favorite_button_view
+import ../../http/views/islands/favorite_button/favorite_button_view
 
 
 proc show*(context:Context, params:Params):Future[Response] {.async.} =

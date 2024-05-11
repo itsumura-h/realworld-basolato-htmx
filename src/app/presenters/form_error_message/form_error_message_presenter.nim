@@ -1,5 +1,5 @@
 import std/json
-import ../../http/views/templates/form_error_message/form_error_message_view_model
+import ../../http/views/islands/form_error_message/form_error_message_view_model
 
 
 type FormErrorMessagePresenter* = object

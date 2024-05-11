@@ -1,5 +1,5 @@
 import std/asyncdispatch
-import ../../http/views/templates/favorite_button/favorite_button_view_model
+import ../../http/views/islands/favorite_button/favorite_button_view_model
 import ../../models/dto/favorite_button/favorite_button_query_interface
 import ../../models/vo/article_id
 import ../../models/vo/user_id

@@ -5,7 +5,7 @@ import basolato/view
 # global feed
 # import ../../usecases/get_global_feed/get_global_feed_usecase
 import ../views/pages/home/home_view
-import ../views/templates/article_preview/article_preview_view
+import ../views/islands/article_preview/article_preview_view
 #
 import ../../presenters/home/global_feed_presenter
 
@@ -18,7 +18,7 @@ import ../views/pages/home/htmx_tag_list/htmx_tag_list_view
 # favorite
 import ../../usecases/favorite_usecase
 import ../../presenters/favorite_button/favorite_button_presenter
-import ../views/templates/favorite_button/favorite_button_view
+import ../views/islands/favorite_button/favorite_button_view
 # import ../views/components/home/favorite_button/favorite_button_view_model
 # import ../views/components/home/favorite_button/favorite_button_view
 

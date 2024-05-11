@@ -1,4 +1,4 @@
-import ../../../templates/form_success_message/form_success_message_view_model
+import ../../../islands/form_success_message/form_success_message_view_model
 
 
 type FormMessageViewModel*  = object
