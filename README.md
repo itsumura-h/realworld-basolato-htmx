@@ -1,4 +1,5 @@
 # realworld-basolato-htmx
+Simplicity is the ultimate sophistication.
 
 
 ### プレゼンテーション層
@@ -20,6 +21,7 @@
 
 ### アプリケーション層
 presenterの返り値のViewModelの単位でまとめる
+返り値のViewModelはIslandかPagesのもの
 
 - Presenter():DTO
   - ※必ずしもQueryServiceを呼ぶわけではない
@@ -106,7 +108,6 @@ https://note.com/tabelog_frontend/n/n07b4077f5cf3
 - Components
   - 文脈を持たないもの
   - 純関数
-  - ViewModelを持たない
   - AtomsとMolecules
 - Islands
   - 文脈を持つもの、DTOに依存する
@@ -131,3 +132,5 @@ https://docs.astro.build/ja/basics/project-structure/
   - 再利用可能なコードの単位
 - pages
   - プレゼン層から呼ばれるもの
+
+---
