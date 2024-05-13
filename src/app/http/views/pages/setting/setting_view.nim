@@ -19,7 +19,7 @@ proc impl(viewModel:SettingViewModel):Component =
             $(formView(viewModel.formViewModel))
 
             <hr />
-            <form hx-post="/htmx/logout" method="post">
+            <form hx-post="/island/logout" method="post">
               $(csrfToken())
               <button type="submit" class="btn btn-outline-danger">
                 Or click here to logout.
@@ -34,5 +34,5 @@ proc impl(viewModel:SettingViewModel):Component =
 proc settingView*(appViewModel:AppViewModel, viewModel:SettingViewModel):Component =
   return appView(appViewModel, impl(viewModel)) 
 
-proc htmxSettingView*(viewModel:SettingViewModel):Component =
+proc islandSettingView*(viewModel:SettingViewModel):Component =
   return impl(viewModel)

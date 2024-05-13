@@ -1,8 +1,8 @@
 import basolato/view
-import ./htmx_tag_list_view_model
+import ./island_tag_list_view_model
 
 
-proc impl(popularTags:HtmxTagListViewModel):Component =
+proc impl(popularTags:IslandTagListViewModel):Component =
   tmpli html"""
     <div id="popular-tag-list" class="tag-list">
       $for tag in popularTags.tags{
@@ -10,7 +10,7 @@ proc impl(popularTags:HtmxTagListViewModel):Component =
           class="tag-pill tag-default"
           href="/tag-feed/$(tag.id)"
           hx-push-url="/tag-feed/$(tag.name)"
-          hx-get="/htmx/home/tag-feed/$(tag.name)"
+          hx-get="/island/home/tag-feed/$(tag.name)"
           hx-target="#feed-article-preview"
         >
           $(tag.name)
@@ -19,5 +19,5 @@ proc impl(popularTags:HtmxTagListViewModel):Component =
     </div>
   """
 
-proc htmxTagListView*(popularTags:HtmxTagListViewModel):Component =
+proc islandTagListView*(popularTags:IslandTagListViewModel):Component =
   return impl(popularTags)

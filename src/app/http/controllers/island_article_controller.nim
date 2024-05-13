@@ -1,5 +1,4 @@
 import std/asyncdispatch
-import std/strformat
 import std/options
 # framework
 import basolato/controller
@@ -31,7 +30,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
       none(string)
   let presenter = ArticlePresenter.new()
   let viewModel = presenter.invoke(articleId, loginUserId).await
-  let view = htmxArticleShowView(viewModel)
+  let view = islandArticleShowView(viewModel)
   return render(view)
 
 

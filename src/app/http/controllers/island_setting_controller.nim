@@ -16,7 +16,7 @@ proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let userId = context.get("id").await
   let settingPresenter = SettingPresenter.new()
   let settingViewModel = settingPresenter.invoke(userId).await
-  let view = htmxSettingView(settingViewModel)
+  let view = islandSettingView(settingViewModel)
   return render(view)
 
 
@@ -49,7 +49,7 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
     usecase.invoke(userId, name, email, password, bio, image).await
     let presenter = SettingWithSuccessMessagePresenter.new()
     let viewModel = presenter.invoke(userId).await
-    let view = htmxSettingView(viewModel)
+    let view = islandSettingView(viewModel)
     return render(view)
   except IdNotFoundError:
     let viewModel = FormErrorMessageViewModel.new(@[getCurrentExceptionMsg()])

@@ -19,9 +19,9 @@ proc impl(viewModel:EditorViewModel):Component =
 
               $if viewModel.article.isSome(){
                 ${ let article = viewModel.article.get() }
-                hx-post="/htmx/editor/$( article.id )"
+                hx-post="/islandndnd/editor/$( article.id )"
               }$else{
-                hx-post="/htmx/editor"
+                hx-post="/island/editor"
               }
 
               hx-target="#app-body"
@@ -64,5 +64,5 @@ proc impl(viewModel:EditorViewModel):Component =
 proc editorView*(appViewModel:AppViewModel, viewModel:EditorViewModel):Component =
   appView(appViewModel, impl(viewModel))
 
-proc htmxEditorView*(viewModel:EditorViewModel):Component =
+proc islandEditorView*(viewModel:EditorViewModel):Component =
   impl(viewModel)

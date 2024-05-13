@@ -31,7 +31,7 @@ proc impl(viewModel:ArticleViewModel):Component =
             <div class="info">
               <a href="/users/$(viewModel.user.id)"
                 hx-push-url="/users/$(viewModel.user.id)"
-                hx-get="/htmx/users/$(viewModel.user.id)"
+                hx-get="/island/users/$(viewModel.user.id)"
                 hx-target="#app-body"
                 class="author"
               >
@@ -82,7 +82,7 @@ proc impl(viewModel:ArticleViewModel):Component =
             <div class="info">
               <a href="/users/$(viewModel.user.id)"
                 hx-push-url="/users/$(viewModel.user.id)"
-                hx-get="/htmx/users/$(viewModel.user.id)"
+                hx-get="/island/users/$(viewModel.user.id)"
                 hx-target="#app-body"
                 class="author"
               >
@@ -108,7 +108,7 @@ proc impl(viewModel:ArticleViewModel):Component =
         </div>
 
         <div class="row">
-          <div class="col-xs-12 col-md-8 offset-md-2" hx-get="/htmx/articles/$(viewModel.article.id)/comments" hx-trigger="load"></div>
+          <div class="col-xs-12 col-md-8 offset-md-2" hx-get="/island/articles/$(viewModel.article.id)/comments" hx-trigger="load"></div>
         </div>
 
       </div>
@@ -117,7 +117,7 @@ proc impl(viewModel:ArticleViewModel):Component =
     $(style)
   """
 
-proc htmxArticleShowView*(viewModel:ArticleViewModel):Component =
+proc islandArticleShowView*(viewModel:ArticleViewModel):Component =
   return impl(viewModel)
 
 proc articleShowPageView*(appViewModel:AppViewModel, viewModel:ArticleViewModel):Component =

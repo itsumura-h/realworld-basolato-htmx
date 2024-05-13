@@ -14,7 +14,7 @@ proc cardView*(viewModel:CardViewModel):Component =
         <a
           href="/users/$(viewModel.userId)"
           hx-push-url="/users/$(viewModel.userId)"
-          hx-get="/htmx/users/$(viewModel.userId)"
+          hx-get="/island/users/$(viewModel.userId)"
           hx-target="#app-body"
           class="comment-author"
         >
@@ -24,7 +24,7 @@ proc cardView*(viewModel:CardViewModel):Component =
         <a
           href="/users/$(viewModel.userId)"
           hx-push-url="/users/$(viewModel.userId)"
-          hx-get="/htmx/users/$(viewModel.userId)"
+          hx-get="/island/users/$(viewModel.userId)"
           hx-target="#app-body"
           class="comment-author"
         >

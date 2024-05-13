@@ -16,7 +16,7 @@ proc impl(viewModel:SignInViewModel):Component =
               <a
                 href="/sign-up"
                 hx-push-url="/sign-up"
-                hx-get="/htmx/sign-up"
+                hx-get="/islandnd/sign-up"
                 hx-target="#app-body"
               >
                 Need an account?
@@ -25,7 +25,7 @@ proc impl(viewModel:SignInViewModel):Component =
 
             <div id="sign-in-form-messages"></div>
 
-            <form method="POST" hx-post="/htmx/sign-in" hx-target="#app-body">
+            <form method="POST" hx-post="/island/sign-in" hx-target="#app-body">
               $(csrfToken())
               <fieldset class="form-group">
                 <input type="text" id="sign-in-email" class="form-control form-control-lg" name="email" placeholder="Email" value="$(viewModel.oldEmail)" >
@@ -48,5 +48,5 @@ proc impl(viewModel:SignInViewModel):Component =
 proc signInView*(appViewModel:AppViewModel, viewModle:SignInViewModel):Component =
   return appView(appViewModel, impl(viewModle))
 
-proc htmxSignInView*(viewModl:SignInViewModel):Component =
+proc islandSignInView*(viewModl:SignInViewModel):Component =
   return impl(viewModl)

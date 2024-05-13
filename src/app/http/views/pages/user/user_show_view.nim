@@ -21,7 +21,7 @@ proc impl(viewModel:UserShowViewModel):Component =
                 <a class="btn btn-sm btn-outline-secondary action-btn"
                   href="/settings"
                   hx-push-url="/settings"
-                  hx-get="/htmx/settings"
+                  hx-get="/island/settings"
                   hx-target="#app-body"
                 >
                   <i class="ion-ios-gear"></i>
@@ -49,9 +49,9 @@ proc impl(viewModel:UserShowViewModel):Component =
               hx-trigger="load"
 
               $if viewModel.loadFavorites{
-                hx-get="/htmx/users/$(viewModel.user.id)/favorites$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/island/users/$(viewModel.user.id)/favorites$if viewModel.hasPage{?page=$(viewModel.page)}"
               }$else{
-                hx-get="/htmx/users/$(viewModel.user.id)/articles$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/islandnd/users/$(viewModel.user.id)/articles$if viewModel.hasPage{?page=$(viewModel.page)}"
               }
             ></div>
 
@@ -66,5 +66,5 @@ proc userShowView*(appViewModel:AppViewModel, viewModel:UserShowViewModel):Compo
   appView(appViewModel, impl(viewModel))
 
 
-proc htmxUserShowView*(viewModel:UserShowViewModel):Component =
+proc islandUserShowView*(viewModel:UserShowViewModel):Component =
   impl(viewModel)

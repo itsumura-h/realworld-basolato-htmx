@@ -4,7 +4,7 @@ import ./follow_button_view_model
 proc followButtonView*(viewModel:FollowButtonViewModel):Component =
   tmpli html"""
     <form
-      hx-post="/htmx/users/$(viewModel.userId)/follow"
+      hx-post="/island/users/$(viewModel.userId)/follow"
       hx-swap="outerHTML"
     >
       $(csrfToken())

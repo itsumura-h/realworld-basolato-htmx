@@ -14,7 +14,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
               class="nav-link active"
               href="/"
               hx-push-url="/"
-              hx-get="/htmx/home"
+              hx-get="/island/home"
               hx-target="#app-body"
             >
               Home
@@ -26,7 +26,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
                 class="nav-link" 
                 href="/sign-in"
                 hx-push-url="/sign-in"
-                hx-get="/htmx/sign-in"
+                hx-get="/island/sign-in"
                 hx-target="#app-body"
               >
                 Sign in
@@ -37,7 +37,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
                 class="nav-link"
                 href="/sign-up"
                 hx-push-url="/sign-up"
-                hx-get="/htmx/sign-up"
+                hx-get="/island/sign-up"
                 hx-target="#app-body"
               >
                 Sign up
@@ -49,7 +49,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
                 class="nav-link"
                 href="/editor"
                 hx-push-url="/editor"
-                hx-get="/htmx/editor"
+                hx-get="/island/editor"
                 hx-target="#app-body"
               >
                 <i class="ion-compose"></i>&nbsp;New Article
@@ -60,7 +60,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
                 class="nav-link"
                 href="/settings"
                 hx-push-url="/settings"
-                hx-get="/htmx/settings"
+                hx-get="/island/settings"
                 hx-target="#app-body"
               >
                 <i class="ion-gear-a"></i>&nbsp;Settings
@@ -71,7 +71,7 @@ proc navbarView*(viewModel:NavbarViewModel):Component =
                 class="nav-link"
                 href="/users/$(viewModel.userId)"
                 hx-push-url="/users/$(viewModel.userId)"
-                hx-get="/htmx/users/$(viewModel.userId)"
+                hx-get="/island/users/$(viewModel.userId)"
                 hx-target="#app-body"
               >
                 <img src="$(viewModel.image)" class="user-pic" />

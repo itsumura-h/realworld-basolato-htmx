@@ -18,7 +18,7 @@ import ../../usecases/update_article_usecase
 
 proc create*(context:Context, params:Params):Future[Response] {.async.} =
   let viewModel = EditorViewModel.new()
-  let view = htmxEditorView(viewModel)
+  let view = islandEditorView(viewModel)
   return render(view)
 
 
@@ -84,7 +84,7 @@ proc update*(context:Context, params:Params):Future[Response] {.async.} =
     let usecase = GetArticleInEditorUsecase.new()
     let article = usecase.invoke(articleId).await
     let viewModel = EditorViewModel.new(article)
-    let view = htmxEditorView(viewModel)
+    let view = islandEditorView(viewModel)
     return render(view)
   except IdNotFoundError:
     let error = getCurrentExceptionMsg()

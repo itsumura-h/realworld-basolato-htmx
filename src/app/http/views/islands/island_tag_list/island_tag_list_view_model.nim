@@ -1,4 +1,4 @@
-import ../../../../../models/dto/tag/tag_dto
+import ../../../../models/dto/tag/tag_dto
 
 
 type Tag*  = object
@@ -14,10 +14,10 @@ proc new*(_:type Tag, id:string, name:string, popularCount:int):Tag =
   )
 
 
-type HtmxTagListViewModel*  = object
+type IslandTagListViewModel*  = object
   tags*:seq[Tag]
 
-proc new*(_:type HtmxTagListViewModel, tagDtoList:seq[TagDto]):HtmxTagListViewModel =
+proc new*(_:type IslandTagListViewModel, tagDtoList:seq[TagDto]):IslandTagListViewModel =
   var tags:seq[Tag]
   for row in tagDtoList:
     let tag = Tag.new(
@@ -27,6 +27,6 @@ proc new*(_:type HtmxTagListViewModel, tagDtoList:seq[TagDto]):HtmxTagListViewMo
     )
     tags.add(tag)
 
-  return HtmxTagListViewModel(
+  return IslandTagListViewModel(
     tags:tags
   )

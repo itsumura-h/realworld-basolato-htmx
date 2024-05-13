@@ -7,7 +7,7 @@ proc formView*(viewModel:FormViewModel):Component =
     <form
       action="/settings"
       method="POST"
-      hx-post="/htmx/settings"
+      hx-post="/island/settings"
       id="settings-form"
       
       $if viewModel.oobSwap{
@@ -31,7 +31,7 @@ proc formView*(viewModel:FormViewModel):Component =
         <fieldset class="form-group">
           <input class="form-control form-control-lg" type="password" placeholder="Password" name="password">
         </fieldset>
-        <button class="btn btn-lg btn-primary pull-xs-right" hx-post="/htmx/settings">
+        <button class="btn btn-lg btn-primary pull-xs-right" hx-post="/island/settings">
           Update Settings
         </button>
       </fieldset>

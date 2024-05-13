@@ -5,7 +5,7 @@ import ./favorite_button_view_model
 proc favoriteButtonView*(viewModel: FavoriteButtonViewModel): Component =
   tmpli html"""
     <form
-      hx-post="/htmx/users/articles/$(viewModel.articleId)/favorite"
+      hx-post="/island/users/articles/$(viewModel.articleId)/favorite"
 
       $if viewModel.willDelete{
         hx-swap="delete"

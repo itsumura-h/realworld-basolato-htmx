@@ -7,7 +7,7 @@ proc formView*(viewModel:FormViewModel, oobSwap:bool):Component =
     <div id="form-message"></div>
 
     <form id="article-comment-form" class="card comment-form"
-      hx-post="/htmx/articles/$(viewModel.articleId)/comments" 
+      hx-post="/island/articles/$(viewModel.articleId)/comments" 
       hx-target="#article-comments-wrapper" hx-swap="afterbegin show:top"
       $if oobSwap{
         hx-swap-oob="true"

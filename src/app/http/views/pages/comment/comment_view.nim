@@ -8,13 +8,13 @@ proc impl(viewModel:CommentViewModel):Component =
   tmpli html"""
     $if not viewModel.isLogin{
       <div>
-        <a href="/htmx/sign-in" hx-get="/htmx/sign-in" hx-target="#app-body"
+        <a href="/island/sign-in" hx-get="/island/sign-in" hx-target="#app-body"
           hx-push-url="/sign-in"
         >
           Sign in
         </a>
         or
-        <a href="/htmx/sign-up" hx-get="/htmx/sign-up" hx-target="#app-body"
+        <a href="/island/sign-up" hx-get="/island/sign-up" hx-target="#app-body"
           hx-push-url="/sign-up"
         >
           sign up

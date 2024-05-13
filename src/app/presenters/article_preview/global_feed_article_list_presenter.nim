@@ -51,13 +51,13 @@ proc invoke*(
     )
 
   let paginatorDto = self.paginatorQuery.invoke(page, display).await
-  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, "/htmx/home/global-feed")
+  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, "/island/home/global-feed")
 
   var feedNavbarViewModelList = @[
     FeedNavbarViewModel.new(
       title = "Global Feed",
       isActive = true,
-      hxGetUrl = "/htmx/home/global-feed",
+      hxGetUrl = "/islandndnd/home/global-feed",
       hxPushUrl = "/"
     )
   ]
@@ -67,7 +67,7 @@ proc invoke*(
       FeedNavbarViewModel.new(
         title = "Your Feed",
         isActive = false,
-        hxGetUrl = "/htmx/home/your-feed",
+        hxGetUrl = "/island/home/your-feed",
         hxPushUrl = "/your-feed"
       ),
       0

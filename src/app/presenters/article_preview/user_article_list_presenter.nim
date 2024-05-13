@@ -59,19 +59,19 @@ proc invoke*(
     )
 
   let paginatorDto = self.paginatorQuery.invoke(loginUserId, page, display).await
-  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/htmx/users/{userId.value}/articles")
+  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/island/users/{userId.value}/articles")
 
   var feedNavbarViewModelList = @[
     FeedNavbarViewModel.new(
       title = "My Articles",
       isActive = true,
-      hxGetUrl = &"/htmx/user/{userId.value}",
+      hxGetUrl = &"/islandndnd/user/{userId.value}",
       hxPushUrl = &"/user/{userId.value}"
     ),
     FeedNavbarViewModel.new(
       title = "Favorited Articles",
       isActive = false,
-      hxGetUrl = &"/htmx/users/{userId.value}/favorites",
+      hxGetUrl = &"/islandndndnd/users/{userId.value}/favorites",
       hxPushUrl = &"/users/{userId.value}/favorites"
     )
   ]

@@ -16,7 +16,7 @@ proc impl(viewModel:ArticlePreviewViewModel):Component =
           <div class="article-meta">
             <a href="/users/$(article.user.id)"
               hx-push-url="/users/$(article.user.id)"
-              hx-get="/htmx/users/$(article.user.id)"
+              hx-get="/island/users/$(article.user.id)"
               hx-target="#app-body"
             >
               <img src="$(article.user.image)" />
@@ -25,7 +25,7 @@ proc impl(viewModel:ArticlePreviewViewModel):Component =
             <div class="info">
               <a href="/users/$(article.user.id)"
                 hx-push-url="/users/$(article.user.id)"
-                hx-get="/htmx/users/$(article.user.id)"
+                hx-get="/island/users/$(article.user.id)"
                 hx-target="#app-body"
                 class="author"
               >
@@ -39,7 +39,7 @@ proc impl(viewModel:ArticlePreviewViewModel):Component =
           </div>
           <a href="/articles/$(article.id)"
             hx-push-url="/articles/$(article.id)"
-            hx-get="/htmx/articles/$(article.id)"
+            hx-get="/island/articles/$(article.id)"
             hx-target="#app-body"
             class="preview-link"
           >

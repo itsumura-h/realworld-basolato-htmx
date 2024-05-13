@@ -33,7 +33,7 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   try:
     let userShowPresenter = UserShowPresenter.new()
     let userShowViewModel = userShowPresenter.invoke(userId, loginUserIdOpt, page).await
-    let view = htmxUserShowView(userShowViewModel)
+    let view = islandUserShowView(userShowViewModel)
     return render(view)
   except IdNotFoundError:
     return render(Http404, "")

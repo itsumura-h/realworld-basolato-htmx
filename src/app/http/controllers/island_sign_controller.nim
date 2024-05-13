@@ -16,7 +16,7 @@ proc signUpPage*(context:Context, params:Params):Future[Response] {.async.} =
   # let viewModel = SignUpViewModel.new(oldName, oldEmail)
   let signUpPresenter = SignUpPresenter.new()
   let viewModel = signUpPresenter.invoke(oldName, oldEmail)
-  let view = htmxSignUpView(viewModel)
+  let view = islandSignUpView(viewModel)
   return render(view)
 
 proc signUp*(context:Context, params:Params):Future[Response] {.async.} =
@@ -50,7 +50,7 @@ proc signInPage*(context:Context, params:Params):Future[Response] {.async.} =
   # let viewModel = SignInViewModel.new(oldEmail)
   let signInPresenter = SignInPresenter.new()
   let viewModel = signInPresenter.invoke(oldEmail)
-  let view = htmxSignInView(viewModel)
+  let view = islandSignInView(viewModel)
   return render(view)
 
 

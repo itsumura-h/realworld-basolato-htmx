@@ -14,7 +14,7 @@ import ../../presenters/article_preview/your_feed_article_list_presenter
 import ../../presenters/article_preview/tag_feed_article_list_presenter
 # tag list
 import ../../presenters/popular_tag_list/popular_tag_list_presenter
-import ../views/pages/home/htmx_tag_list/htmx_tag_list_view
+import ../views/islands/island_tag_list/island_tag_list_view
 # favorite
 import ../../usecases/favorite_usecase
 import ../../presenters/favorite_button/favorite_button_presenter
@@ -28,7 +28,7 @@ import ../views/islands/favorite_button/favorite_button_view
 proc index*(context:Context, params:Params):Future[Response] {.async.} =
   let presenter = GlobalFeedPresenter.new()
   let viewModel = presenter.invoke()
-  let view = htmxHomeView(viewModel)
+  let view = islandHomeView(viewModel)
   return render(view)
 
 
@@ -84,7 +84,7 @@ proc tagFeed*(context:Context, params:Params):Future[Response] {.async.} =
 proc tagList*(context:Context, params:Params):Future[Response] {.async.} =
   let presenter = PopularTagListPresenter.new()
   let viewModel = presenter.invoke().await
-  let view = htmxTagListView(viewModel)
+  let view = islandTagListView(viewModel)
   return render(view)
 
 

@@ -26,11 +26,11 @@ proc impl(viewModel:HomeViewModel):Component =
               hx-trigger="load"
 
               $if viewModel.feedType == tag{
-                hx-get="/htmx/home/tag-feed/$(viewModel.tagName)$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/islandndnd/home/tag-feed/$(viewModel.tagName)$if viewModel.hasPage{?page=$(viewModel.page)}"
               }$elif viewModel.feedType == personal{
-                hx-get="/htmx/home/your-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/island/home/your-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
               }$else{
-                hx-get="/htmx/home/global-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
+                hx-get="/island/home/global-feed$if viewModel.hasPage{?page=$(viewModel.page)}"
               }
             ></div>
 
@@ -43,7 +43,7 @@ proc impl(viewModel:HomeViewModel):Component =
 
               <div id="popular-tag-list" class="tag-list"
                 hx-trigger="load"
-                hx-get="/htmx/home/tag-list"
+                hx-get="/island/home/tag-list"
               ></div>
             </div>
           </div>
@@ -57,5 +57,5 @@ proc impl(viewModel:HomeViewModel):Component =
 proc homeView*(appViewModel:AppViewModel, viewModel:HomeViewModel):Component =
   return appView(appViewModel, impl(viewModel))
 
-proc htmxHomeView*(viewModel:HomeViewModel):Component =
+proc islandHomeView*(viewModel:HomeViewModel):Component =
   return impl(viewModel)

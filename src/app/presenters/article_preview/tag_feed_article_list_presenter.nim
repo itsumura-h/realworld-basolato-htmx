@@ -47,19 +47,19 @@ proc invoke*(self:TagFeedArticleListPresenter, tagName:string, page:int, isLogin
     )
 
   let paginatorDto = self.paginator.invoke(tagName, page, display).await
-  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/htmx/home/tag-feed/{tagName}")
+  let paginatorViewModel = PaginatorViewModel.new(paginatorDto, &"/island/home/tag-feed/{tagName}")
 
   var feedNavbarViewModelList = @[
     FeedNavbarViewModel.new(
       title = "Global Feed",
       isActive = false,
-      hxGetUrl = "/htmx/home/global-feed",
+      hxGetUrl = "/island/home/global-feed",
       hxPushUrl = "/"
     ),
     FeedNavbarViewModel.new(
       title = tagName,
       isActive = true,
-      hxGetUrl = &"/htmx/home/tag-feed/{tagName}",
+      hxGetUrl = &"/island/home/tag-feed/{tagName}",
       hxPushUrl = "/"
     ),
   ]
@@ -69,7 +69,7 @@ proc invoke*(self:TagFeedArticleListPresenter, tagName:string, page:int, isLogin
       FeedNavbarViewModel.new(
         title = "Your Feed",
         isActive = false,
-        hxGetUrl = "/htmx/home/your-feed",
+        hxGetUrl = "/island/home/your-feed",
         hxPushUrl = "/your-feed"
       ),
       0

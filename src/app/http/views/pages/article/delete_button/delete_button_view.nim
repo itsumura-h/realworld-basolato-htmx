@@ -13,7 +13,7 @@ proc deleteButtonView*(viewModel:DeleteButtonViewModel):Component =
   tmpli html"""
   $(style)
     <form
-      hx-delete="/htmx/articles/$(viewModel.articleId)"
+      hx-delete="/island/articles/$(viewModel.articleId)"
       hx-target="#app-body"
       class="$(style.element("form_inline"))"
     >
