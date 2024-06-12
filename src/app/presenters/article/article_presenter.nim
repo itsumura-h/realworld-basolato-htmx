@@ -1,9 +1,11 @@
 import std/asyncdispatch
 import std/options
-import ../../http/views/pages/article/article_view_model
+import std/sequtils
+import ../../http/views/islands/article/article_view_model
 import ../../models/dto/article_detail/article_detail_query_interface
 import ../../models/dto/follow_button/follow_button_query_interface
 import ../../models/dto/favorite_button/favorite_button_query_interface
+import ../../models/dto/comment/comment_list_query_interface
 import ../../models/vo/article_id
 import ../../models/vo/user_id
 import ../../di_container
@@ -13,12 +15,14 @@ type ArticlePresenter* = object
   articleQuery:IArticleDetailQuery
   favoriteButtonQuery:IFavoriteButtonQuery
   followButtonQuery:IFollowButtonQuery
+  commentListQuery: ICommentListQuery
 
 proc new*(_:type ArticlePresenter):ArticlePresenter =
   return ArticlePresenter(
     articleQuery: di.articleDetailQuery,
     favoriteButtonQuery: di.favoriteButtonQuery,
     followButtonQuery: di.followButtonQuery,
+    commentListQuery: di.commentListQuery,
   )
   
 
@@ -41,5 +45,7 @@ proc invoke*(self:ArticlePresenter, articleId:string, loginUserId:Option[string]
   let authorId = UserId.new(articleDto.author.id)
   let followButtonDto = self.followButtonQuery.invoke(authorId, loginUserId).await
 
-  let articleViewModel = ArticleViewModel.new(articleDto, favoriteButtonDto, followButtonDto, loginUserId)
+  let commentDtoList = self.commentListQuery.invoke(articleId).await
+
+  let articleViewModel = ArticleViewModel.new(articleDto, favoriteButtonDto, followButtonDto, commentDtoList, loginUserId)
   return articleViewModel

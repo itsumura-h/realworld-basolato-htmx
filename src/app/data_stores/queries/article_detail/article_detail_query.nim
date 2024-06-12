@@ -42,7 +42,7 @@ method invoke*(self:ArticleDetailQuery, articleId:ArticleId):Future[ArticleDetai
                             .count()
                             .await
 
-  let tags =
+  let tagList =
     if articleTagCount > 0:
       rdb.select(
             "tag.id",
@@ -82,7 +82,7 @@ method invoke*(self:ArticleDetailQuery, articleId:ArticleId):Future[ArticleDetai
     createdAt = articleData["createdAt"].getStr(),
     popularCount = popularCount,
     author = author,
-    tags = tags
+    tagList = tagList
   )
 
   return article

@@ -18,19 +18,26 @@ Simplicity is the ultimate sophistication.
 - ヘッダーのログイン状態
   - AppView
   - AppViewModel
+  
+  ---
+
+- ComponentのViewModelとDtoは単数形の単位で紐づける
+- 複数形のViewModelはPresenterの中でループして作る
+- 複数形のViewはIslandの中でループして作る
 
 ### アプリケーション層
-presenterの返り値のViewModelの単位でまとめる
+Presenterの返り値のViewModelの単位でまとめる
 返り値のViewModelはIslandかPagesのもの
+Presenterで文脈固有の操作をするので、ドメイン層には「どう呼ばれるか」から関数名の命名はしない
 
-- Presenter():DTO
+- Presenter():ViewModel
   - ※必ずしもQueryServiceを呼ぶわけではない
   - → Query Interface
-  - → DTO
+  - → ViewModel
 
   ---
 
-- article_preview/
+- feed/
   - 最新の記事一覧                GlobalFeedPresenter
   - フォローしている人の記事一覧  YourFeedPresenter
   - いいねした記事一覧            FavoritesInUserPresenter

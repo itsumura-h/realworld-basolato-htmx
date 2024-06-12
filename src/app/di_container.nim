@@ -69,9 +69,10 @@ import ./models/dto/follow_button/follow_button_query_interface
 import ./data_stores/queries/follow_button/follow_button_query
 import ./data_stores/queries/follow_button/mock_follow_button_query
 #
-import ./models/dto/comment_list_in_article/comment_list_in_article_query_interface
-import ./data_stores/queries/comment_list_in_article/comment_list_in_article_quer
-import ./data_stores/queries/comment_list_in_article/mock_comment_list_in_article_quer
+import ./models/dto/comment/comment_list_query_interface
+# import ./data_stores/queries/comment_list/comment_list_query
+import ./data_stores/queries/comment_list/comment_list_query
+import ./data_stores/queries/comment_list/mock_comment_list_query
 
 
 type DiContainer* = object
@@ -94,7 +95,7 @@ type DiContainer* = object
   favoriteButtonQuery*: IFavoriteButtonQuery
   tagListQuery*: ITagListQuery
   followButtonQuery*:IFollowButtonQuery
-  commentListInArticleQuery*:ICommentListInArticleQuery
+  commentListQuery*:ICommentListQuery
 
 
 proc new(_:type DiContainer):DiContainer =
@@ -119,7 +120,7 @@ proc new(_:type DiContainer):DiContainer =
       favoriteButtonQuery: MockFavoriteButtonQuery.new(),
       tagListQuery: MockPopularTagListQuery.new(),
       followButtonQuery: MockFollowButtonQuery.new(),
-      commentListInArticleQuery: MockCommentListInArticleQuery.new(),
+      commentListQuery: MockCommentListQuery.new(),
     )
   else:
     return DiContainer(
@@ -146,7 +147,7 @@ proc new(_:type DiContainer):DiContainer =
       favoriteButtonQuery: FavoriteButtonQuery.new(),
       tagListQuery: PopularTagListQuery.new(),
       followButtonQuery: FollowButtonQuery.new(),
-      commentListInArticleQuery: CommentListInArticleQuery.new(),
+      commentListQuery: CommentListQuery.new(),
     )
 
 let di* = DiContainer.new()

@@ -1,12 +1,13 @@
-import ../navbar/navbar_view_model
+import ../header/header_view_model
 
-
-type AppViewModel*  = object
+type AppViewModel* = object
   title*:string
-  navbarViewModel*:NavbarViewModel
+  headerViewModel*:HeaderViewModel
 
-proc new*(_:type AppViewModel, title:string, navbarViewModel:NavbarViewModel):AppViewModel =
-  return AppViewModel(
+
+proc new*(_:type AppViewModel, title:string, headerViewModel:HeaderViewModel):AppViewModel =
+  let viewModel = AppViewModel(
     title:title,
-    navbarViewModel:navbarViewModel
+    headerViewModel:headerViewModel,
   )
+  return viewModel

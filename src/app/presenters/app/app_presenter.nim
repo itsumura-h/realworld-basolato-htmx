@@ -1,14 +1,14 @@
 import std/asyncdispatch
 import std/options
 import ../../http/views/layouts/app/app_view_model
-import ../../http/views/layouts/navbar/navbar_view_model
+import ../../http/views/layouts/header/header_view_model
 import ../../models/dto/user/user_query_interface
 import ../../models/vo/user_id
 import ../../di_container
 
-
 type AppPresenter* = object
   userQuery:IUserQuery
+
 
 proc new*(_:type AppPresenter):AppPresenter =
   return AppPresenter(
@@ -20,10 +20,10 @@ proc invoke*(self:AppPresenter, loginUserId:Option[string], title:string):Future
   if loginUserId.isSome():
     let userId = UserId.new(loginUserId.get())
     let userDto = self.userQuery.invoke(userId).await
-    let navbarViewModel = NavbarViewModel.new(true, userDto.id, userDto.name, userDto.image)
-    let appViewModel = AppViewModel.new(title, navbarViewModel)
+    let headerViewModel = HeaderViewModel.new(userDto.id, userDto.name, userDto.image)
+    let appViewModel = AppViewModel.new(title, headerViewModel)
     return appViewModel
   else:
-    let navbarViewModel = NavbarViewModel.new(false, "", "", "")
-    let appViewModel = AppViewModel.new(title, navbarViewModel)
+    let headerViewModel = HeaderViewModel.new()
+    let appViewModel = AppViewModel.new(title, headerViewModel)
     return appViewModel

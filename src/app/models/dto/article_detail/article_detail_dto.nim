@@ -29,7 +29,7 @@ type ArticleDetailDto*  = object
   createdAt*:DateTime
   popularCount*:int
   author*:AuthorDto
-  tags*:seq[TagDto]
+  tagList*:seq[TagDto]
 
 proc new*(_:type ArticleDetailDto,
   id:string,
@@ -39,7 +39,7 @@ proc new*(_:type ArticleDetailDto,
   createdAt:string,
   popularCount:int,
   author:AuthorDto,
-  tags:seq[TagDto]
+  tagList:seq[TagDto]
 ):ArticleDetailDto =
   let createdAt = parse(createdAt, "yyyy-MM-dd hh:mm:ss")
   return ArticleDetailDto(
@@ -50,5 +50,5 @@ proc new*(_:type ArticleDetailDto,
     createdAt:createdAt,
     popularCount:popularCount,
     author:author,
-    tags:tags
+    tagList:tagList
   )

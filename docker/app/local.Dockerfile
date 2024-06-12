@@ -10,6 +10,7 @@ RUN apt install -y --fix-missing \
         g++ \
         xz-utils \
         ca-certificates \
+        libpcre3-dev \
         vim \
         curl \
         git \

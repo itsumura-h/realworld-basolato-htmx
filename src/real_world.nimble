@@ -9,17 +9,18 @@ backend       = "c"
 # Dependencies
 requires "nim >= 2.0.2"
 # requires "https://github.com/itsumura-h/nim-basolato == 0.15.0"
-# requires "https://github.com/itsumura-h/nim-basolato#head"
-requires "https://github.com/itsumura-h/nim-basolato#629a140"
+requires "https://github.com/itsumura-h/nim-basolato#head"
 requires "allographer == 0.30.0"
 # requires "allographer#head"
-requires "interface_implements >= 0.2.4"
+requires "interface_implements >= 0.2.6"
 requires "bcrypt >= 0.2.1"
 requires "cligen >= 1.5.9"
 requires "faker >= 0.14.0"
 requires "redis >= 0.3.0"
 requires "sass >= 0.1.0"
 requires "jwt >= 0.2"
+# manual add
+requires "markdown >= 0.8.7"
 
 task test, "run testament":
   echo staticExec("testament p \"./tests/test_*.nim\"")

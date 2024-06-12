@@ -4,14 +4,14 @@ import basolato/middleware
 
 proc shouldLogin*(c:Context, p:Params):Future[Response] {.async.} =
   if not c.isLogin().await:
-    return redirect("/sign-in")
+    return redirect("/login")
   return next()
 
 
 proc islandShouldLogin*(c:Context, p:Params):Future[Response] {.async.} =
   if not c.isLogin().await:
     let header = {
-      "HX-Redirect": "/sign-in"
+      "HX-Redirect": "/login"
     }.newHttpHeaders()
     return render(Http303, "", header)
   return next()
