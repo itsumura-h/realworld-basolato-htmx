@@ -24,7 +24,7 @@ proc new*(_:type MockUserRepository):MockUserRepository =
 
 method getUserByEmail*(self:MockUserRepository, email:Email):Future[Option[User]] {.async.} =
   let rowOpt = rdb.table("user")
-                  .where("email", "=", email.value())
+                  .where("email", "=", email.value)
                   .first()
                   .await
 
@@ -43,12 +43,11 @@ method getUserByEmail*(self:MockUserRepository, email:Email):Future[Option[User]
   return user.some()
 
 
-method create*(self:MockUserRepository, user:DraftUser):Future[UserId] {.async.} =
+method create*(self:MockUserRepository, user:DraftUser) {.async.} =
   rdb.table("user").insert(%*{
     "id":user.id.value,
     "name":user.name.value,
     "email":user.email.value,
-    "password":user.password.hashed(),
+    "password":user.password.value,
     "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss"),
   }).await
-  return user.id

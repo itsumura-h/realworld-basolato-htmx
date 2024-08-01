@@ -22,7 +22,7 @@ type UserQuery* = object of IUserQuery
 proc new*(_:type UserQuery):UserQuery =
   return  UserQuery()
 
-method invoke*(self:UserQuery, userId:UserId):Future[UserDto] {.async.} =
+method getUserById*(self:UserQuery, userId:UserId):Future[UserDto] {.async.} =
   let userDataOpt = rdb.table("user").find(userId.value).orm(UserDbResponse).await
   if not userDataOpt.isSome():
     raise newException(DomainError, "user is not found") 

@@ -23,7 +23,7 @@ proc new*(_:type UserRepository):UserRepository =
 
 method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.async.} =
   let rowOpt = rdb.table("user")
-                  .where("email", "=", email.value())
+                  .where("email", "=", email.value)
                   .first()
                   .await
 
@@ -62,25 +62,26 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
   return user.some()
 
 
-method create(self:UserRepository, user:DraftUser):Future[UserId] {.async.} =
+method create*(self:UserRepository, user:DraftUser) {.async.} =
   rdb.table("user").insert(%*{
     "id":user.id.value,
     "name":user.name.value,
     "email":user.email.value,
-    "password":user.password.hashed().value,
-    "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss"),
+    "password":user.password.value,
+    "created_at": user.createdAt.format("yyyy-MM-dd hh:mm:ss"),
   }).await
-  return user.id
 
 
-method update(self:UserRepository, user:User) {.async.} =
+method update*(self:UserRepository, user:User) {.async.} =
   let val = %*{
-        "name": user.name.value,
-        "email": user.email.value,
-        "password": user.password.value,
-        "bio": user.bio.value,
-        "image": user.image.value,
-      }
+    "name": user.name.value,
+    "email": user.email.value,
+    "bio": user.bio.value,
+    "image": user.image.value,
+  }
+  if user.password.value != "":
+    val["password"] = %user.password.value
+
   rdb.table("user")
       .where("id", "=", user.id.value)
       .update(val)

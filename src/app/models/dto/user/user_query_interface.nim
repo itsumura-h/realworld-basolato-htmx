@@ -5,4 +5,4 @@ import ./user_dto
 
 interfaceDefs:
   type IUserQuery* = object of RootObj
-    invoke: proc(self: IUserQuery, userId: UserId): Future[UserDto]
+    getUserById: proc(self: IUserQuery, userId: UserId): Future[UserDto]

@@ -1,3 +1,4 @@
+import std/times
 import ../../vo/user_id
 import ../../vo/user_name
 import ../../vo/email
@@ -7,24 +8,27 @@ import ../../vo/bio
 import ../../vo/image
 
 
-type DraftUser*  = object
-  id*:UserId
+type DraftUser*  = ref object
+  id*:UserId  
   name*:UserName
   email*:Email
-  password*:Password
+  password*:HashedPassword
+  createdAt*:DateTime
 
 
 proc new*(_:type DraftUser, userName:UserName, email:Email, password:Password):DraftUser =
   let userId = UserId.new(userName)
+  let hashedPassword = HashedPassword.new(password)
   return DraftUser(
     id:userId,
     name:userName,
     email:email,
-    password:password,
+    password:hashedPassword,
+    createdAt:now(),
   )
 
 
-type User*  = object
+type User*  = ref object
   id*:UserId
   name*:UserName
   email*:Email

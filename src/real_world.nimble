@@ -18,7 +18,6 @@ requires "cligen >= 1.5.9"
 requires "faker >= 0.14.0"
 requires "redis >= 0.3.0"
 requires "sass >= 0.1.0"
-requires "jwt >= 0.2"
 # manual add
 requires "markdown >= 0.8.7"
 

@@ -9,6 +9,7 @@ import ../models/vo/user_id
 import ../models/vo/email
 import ../models/vo/password
 
+
 type LoginUsecase*  = object
   repository:IUserRepository
 
@@ -17,7 +18,7 @@ proc new*(_:type LoginUsecase):LoginUsecase =
     repository:di.userRepository
   )
 
-proc invoke*(self:LoginUsecase, email, password:string):Future[(string, string)] {.async.} =
+proc invoke*(self:LoginUsecase, email, password:string):Future[tuple[id:string, name:string]] {.async.} =
   let email = Email.new(email)
   let password = Password.new(password)
 
@@ -31,5 +32,5 @@ proc invoke*(self:LoginUsecase, email, password:string):Future[(string, string)]
   if not service.isMatchPassword(password, user.password):
     raise newException(DomainError, "Invalid password")
 
-  let resp = (user.id.value, user.name.value)
+  let resp = (id:user.id.value, name:user.name.value)
   return resp

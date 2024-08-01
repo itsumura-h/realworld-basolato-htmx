@@ -116,13 +116,14 @@ https://note.com/tabelog_frontend/n/n07b4077f5cf3
   - 文脈を持たないもの
   - 純関数
   - AtomsとMolecules
-- Islands
+- Templates
   - 文脈を持つもの、DTOに依存する
+  - Contextからデータを取得する
   - 副作用がある
   - ViewModelがある
   - Organismsを各ページ配下に
 - Pages
-  - プレゼン層から呼ばれるもの
+  - コントローラーから呼ばれるもの
   - 副作用がある
   - ViewModelがある
   - TemplatesとPagesをまとめて
