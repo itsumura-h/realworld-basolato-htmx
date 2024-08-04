@@ -19,7 +19,7 @@ proc new*(_:type AuthorDto, id, name, image:string):AuthorDto =
   )
 
 
-type ArticleRowDto*  = object
+type ArticleDto*  = object
   id*:string
   title*:string
   description*:string
@@ -28,7 +28,7 @@ type ArticleRowDto*  = object
   author*:AuthorDto
   tags*:seq[TagDto]
 
-proc new*(_:type ArticleRowDto,
+proc new*(_:type ArticleDto,
   id:string,
   title:string,
   description:string,
@@ -36,9 +36,9 @@ proc new*(_:type ArticleRowDto,
   popularCount:int,
   author:AuthorDto,
   tags:seq[TagDto]
-):ArticleRowDto =
+):ArticleDto =
   let createdAt = createdAt.parse("yyyy-MM-dd hh:mm:ss")
-  return ArticleRowDto(
+  return ArticleDto(
     id:id,
     title:title,
     description:description,

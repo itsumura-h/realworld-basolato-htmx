@@ -2,8 +2,8 @@ import std/asyncdispatch
 import std/json
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article_list/global_feed_article_list_query_interface
-import ../../../../models/dto/article_list/article_row_dto
+import ../../../../models/dto/article/global_feed_article_list_query_interface
+import ../../../../models/dto/article/article_dto
 
 
 type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
@@ -16,7 +16,7 @@ method invoke*(
   self:GlobalFeedArticleListQuery,
   offset:int,
   display:int
-):Future[seq[ArticleRowDto]] {.async.} =
+):Future[seq[ArticleDto]] {.async.} =
   let articleListJson = rdb.select(
                       "article.id",
                       "article.title",
@@ -33,7 +33,7 @@ method invoke*(
                     .get()
                     .await
 
-  var articleList:seq[ArticleRowDto]
+  var articleList:seq[ArticleDto]
   for i, row in articleListJson:
     let articleId = row["id"].getStr()
     let popularCount = rdb.table("user_article_map")
@@ -67,7 +67,7 @@ method invoke*(
       else:
         newSeq[TagDto]()
 
-    let article = ArticleRowDto.new(
+    let article = ArticleDto.new(
       id = row["id"].getStr(),
       title = row["title"].getStr(),
       description = row["description"].getStr(),

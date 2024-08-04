@@ -9,7 +9,7 @@ import ./models/dto/user/user_query_interface
 import ./data_stores/queries/user/user_query
 import ./data_stores/queries/user/mock_user_query
 
-import ./models/dto/article_list/global_feed_article_list_query_interface
+import ./models/dto/article/global_feed_article_list_query_interface
 import ./data_stores/queries/article_list/global_feed/global_feed_article_list_query
 import ./data_stores/queries/article_list/global_feed/mock_global_feed_article_list_query
 
