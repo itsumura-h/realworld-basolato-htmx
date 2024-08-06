@@ -3,7 +3,7 @@ import std/options
 import basolato/view
 import ../../../../di_container
 import ../../../../models/vo/user_id
-import ../../../../models/aggregates/user/user_repository_interface
+import ../../../../models/dto/user/user_query_interface
 
 
 type NavbarLayoutModel*  = object
@@ -19,13 +19,13 @@ proc new*(_:type NavbarLayoutModel):Future[NavbarLayoutModel] {.async.} =
 
   if isLogin:
     let userId = UserId.new(loginUserId)
-    let userRepository:IUserRepository = di.userRepository
-    let userDto = userRepository.getUserById(userId).await.get()
+    let userQuery:IUserQuery = di.userQuery
+    let userDto = userQuery.getUserById(userId).await
     let navbarViewModel = NavbarLayoutModel(
       isLogin:true,
-      userId:userDto.id.value,
-      userName:userDto.name.value,
-      image:userDto.image.value
+      userId:userDto.id,
+      userName:userDto.name,
+      image:userDto.image,
     )
     return navbarViewModel
   else:

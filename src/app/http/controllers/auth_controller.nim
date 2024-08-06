@@ -77,4 +77,4 @@ proc signOut*(context:Context):Future[Response] {.async.} =
   context.logout().await
   context.delete("user_id").await
   context.delete("user_name").await
-  return redirect("/login")
+  return redirect("/")

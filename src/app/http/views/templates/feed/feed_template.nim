@@ -1,11 +1,30 @@
 import basolato/view
+import ../../../../presenters/feed/global_feed_presenter
 import ./feed_template_model
 import ../../components/feed_article/feed_article_component
+import ../../components/paginator/paginator_component
 
 
 proc feedTemplate*():Future[Component] {.async.} =
-  let model = FeedTemplateModel.new().await
-  
+  let context = context()
+  let feedType =
+    if context.request.url.path == "/":
+      global
+    elif context.request.url.path == "/your-feed":
+      yourFeed
+    else:
+      tag
+
+  let model =
+    case feedType
+    of global:
+      let presenter = GlobalFeedPresenter.new()
+      presenter.invoke().await
+    else:
+      let presenter = GlobalFeedPresenter.new()
+      presenter.invoke().await
+    
+
   tmpl"""
     <div class="col-md-9">
       <div class="feed-toggle">
@@ -30,13 +49,6 @@ proc feedTemplate*():Future[Component] {.async.} =
         $(feedArticleComponent(article))
       }
 
-      <ul class="pagination">
-        <li class="page-item active">
-          <a class="page-link" href="">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="">2</a>
-        </li>
-      </ul>
+      $(paginatorComponent(model.paginatorModel))
     </div>
   """

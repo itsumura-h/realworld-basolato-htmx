@@ -2,6 +2,25 @@
 Simplicity is the ultimate sophistication.
 
 
+## 参照系の流れ
+### MPA
+- controller
+  - page
+    - template
+      - presenter
+        - query
+          - dto
+        - templateModel
+      - component
+        - componentModel
+
+### API
+- controller
+  - apiModel
+    - presenter
+      - query
+        - dto
+
 ### プレゼンテーション層
 - View(ViewModel):string
 - ViewModel(DTO)

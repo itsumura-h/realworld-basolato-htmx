@@ -1,6 +1,5 @@
 import std/asyncdispatch
 import basolato/view
-import ../../../../presenters/feed/global_feed_presenter
 import ../../layouts/app/app_layout
 import ../../templates/feed/feed_template
 import ../../templates/popular_tags/popular_tags_template

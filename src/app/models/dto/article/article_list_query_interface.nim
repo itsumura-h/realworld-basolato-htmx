@@ -9,5 +9,7 @@ interfaceDefs:
     invoke*: proc(
         self:IGlobalFeedArticleListQuery,
         offset:int,
-        display:int
+        display:int,
+        isLogin:bool,
+        loginUserId:string,
       ):Future[seq[ArticleDto]]

@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/json
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article/global_feed_article_list_query_interface
+import ../../../../models/dto/article/article_list_query_interface
 import ../../../../models/dto/article/article_dto
 
 
@@ -15,7 +15,9 @@ proc new*(_:type GlobalFeedArticleListQuery):GlobalFeedArticleListQuery =
 method invoke*(
   self:GlobalFeedArticleListQuery,
   offset:int,
-  display:int
+  display:int,
+  isLogin:bool,
+  loginUserId:string
 ):Future[seq[ArticleDto]] {.async.} =
   let articleListJson = rdb.select(
                       "article.id",
@@ -41,6 +43,13 @@ method invoke*(
                           .count()
                           .await
 
+    let isLoginUserLikedCount = rdb.table("user_article_map")
+                          .where("article_id", "=", articleId)
+                          .where("user_id", "=", loginUserId)
+                          .count()
+                          .await
+    let isLoginUserLiked = isLoginUserLikedCount > 0
+
     let author = AuthorDto.new(
       id = row["author_id"].getStr(),
       name = row["name"].getStr(),
@@ -52,7 +61,7 @@ method invoke*(
                               .count()
                               .await
 
-    let tags =
+    let tagList =
       if articleTagCount > 0:
         rdb.select(
               "tag.id",
@@ -73,8 +82,9 @@ method invoke*(
       description = row["description"].getStr(),
       createdAt = row["createdAt"].getStr(),
       popularCount = popularCount,
+      isLoginUserLiked = isLoginUserLiked,
       author = author,
-      tags = tags
+      tagList = tagList,
     )
 
     articleList.add(article)

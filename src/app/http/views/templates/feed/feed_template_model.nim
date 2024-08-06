@@ -1,6 +1,8 @@
 import std/asyncdispatch
 import basolato/view
 import ../../components/feed_article/feed_article_component_model
+import ../../components/paginator/paginator_component_model
+
 
 type FeedType* = enum
   global
@@ -12,25 +14,23 @@ type FeedTemplateModel* = object
   articleList*:seq[FeedArticleComponentModel]
   feedType*:FeedType
   tagName*:string
+  paginatorModel*:PaginatorComponentModel
 
 
-proc new*(_:type FeedTemplateModel):Future[FeedTemplateModel] {.async.} =
+proc new*(
+  _:type FeedTemplateModel,
+  articleList:seq[FeedArticleComponentModel],
+  paginatorModel:PaginatorComponentModel,
+  feedType:FeedType,
+  tagName:string
+):Future[FeedTemplateModel] {.async.} =
   let context = context()
   let isLogin = context.isLogin().await
-  
-  let feedType =
-    if context.request.url.path == "/":
-      global
-    elif context.request.url.path == "/your-feed":
-      yourFeed
-    else:
-      tag
-
-  let tagName = context.params.getStr("tag")
 
   return FeedTemplateModel(
     isLogin: isLogin,
-    articleList: @[],
+    articleList: articleList,
+    paginatorModel: paginatorModel,
     feedType: feedType,
-    tagName:  tagName,
+    tagName: tagName,
   )

@@ -71,7 +71,10 @@ proc settingTemplate*():Future[Component] {.async.} =
               </fieldset>
             </form>
             <hr />
-            <button class="btn btn-outline-danger">Or click here to logout.</button>
+            <form method="post" action="/logout">
+              $(csrfToken())
+              <button class="btn btn-outline-danger">Or click here to logout.</button>
+            </form>
           </div>
         </div>
       </div>

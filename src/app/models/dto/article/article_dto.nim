@@ -25,8 +25,9 @@ type ArticleDto*  = object
   description*:string
   createdAt*:DateTime
   popularCount*:int
+  isLoginUserLiked*:bool
   author*:AuthorDto
-  tags*:seq[TagDto]
+  tagList*:seq[TagDto]
 
 proc new*(_:type ArticleDto,
   id:string,
@@ -34,8 +35,9 @@ proc new*(_:type ArticleDto,
   description:string,
   createdAt:string,
   popularCount:int,
+  isLoginUserLiked:bool,
   author:AuthorDto,
-  tags:seq[TagDto]
+  tagList:seq[TagDto],
 ):ArticleDto =
   let createdAt = createdAt.parse("yyyy-MM-dd hh:mm:ss")
   return ArticleDto(
@@ -44,6 +46,7 @@ proc new*(_:type ArticleDto,
     description:description,
     createdAt:createdAt,
     popularCount:popularCount,
+    isLoginUserLiked:isLoginUserLiked,
     author:author,
-    tags:tags
+    tagList:tagList,
   )

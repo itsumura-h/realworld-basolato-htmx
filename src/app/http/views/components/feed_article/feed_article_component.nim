@@ -5,7 +5,7 @@ proc feedArticleComponent*(model:FeedArticleComponentModel):Component =
   tmpl"""
     <div class="article-preview">
       <div class="article-meta">
-        <a href="/profile/$(model.authorId)"><img src="$(model.image)" /></a>
+        <a href="/profile/$(model.authorId)"><img src="$(model.authorImage)" /></a>
         <div class="info">
           <a href="/profile/$(model.authorId)" class="author">$(model.authorName)</a>
           <span class="date">$(model.createdAt)</span>
