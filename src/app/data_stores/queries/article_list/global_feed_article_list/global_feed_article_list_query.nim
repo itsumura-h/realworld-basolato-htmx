@@ -1,5 +1,4 @@
 import std/asyncdispatch
-import std/json
 import std/sequtils
 import allographer/query_builder
 from ../../../../../config/database import rdb
@@ -7,8 +6,19 @@ import ../../../../models/dto/article_list/article_list_query_interface
 import ../../../../models/dto/article_list/article_list_dto
 
 
+type ArticleRow = object
+  id:string
+  title:string
+  description:string
+  createdAt:string
+  authorId:string
+  name:string
+  image:string
+
+
 type PopularUserIdRow = object
   userId:string
+
 
 type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
 
@@ -21,12 +31,12 @@ method invoke*(
   offset:int,
   display:int,
 ):Future[seq[ArticleDto]] {.async.} =
-  let articleListJson = rdb.select(
+  let dbArticleList = rdb.select(
                       "article.id",
                       "article.title",
                       "article.description",
                       "article.created_at as createdAt",
-                      "article.author_id",
+                      "article.author_id as authorId",
                       "user.name",
                       "user.image as image",
                     )
@@ -35,11 +45,12 @@ method invoke*(
                     .offset(offset)
                     .limit(display)
                     .get()
+                    .orm(ArticleRow)
                     .await
 
   var articleList:seq[ArticleDto]
-  for i, row in articleListJson:
-    let articleId = row["id"].getStr()
+  for i, dbArticle in dbArticleList:
+    let articleId = dbArticle.id
 
     let dbPopularUserIdList = rdb
                               .select("user_id as userId")
@@ -55,9 +66,9 @@ method invoke*(
     )
 
     let author = AuthorDto.new(
-      id = row["author_id"].getStr(),
-      name = row["name"].getStr(),
-      image = row["image"].getStr(),
+      id = dbArticle.authorId,
+      name = dbArticle.name,
+      image = dbArticle.image,
     )
 
     let articleTagCount = rdb.table("tag_article_map")
@@ -81,10 +92,10 @@ method invoke*(
         newSeq[TagDto]()
 
     let article = ArticleDto.new(
-      id = row["id"].getStr(),
-      title = row["title"].getStr(),
-      description = row["description"].getStr(),
-      createdAt = row["createdAt"].getStr(),
+      id = dbArticle.id,
+      title = dbArticle.title,
+      description = dbArticle.description,
+      createdAt = dbArticle.createdAt,
       popularUserIdList = popularUserIdList,
       author = author,
       tagList = tagList,
