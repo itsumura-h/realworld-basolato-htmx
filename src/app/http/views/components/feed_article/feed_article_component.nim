@@ -10,8 +10,8 @@ proc feedArticleComponent*(model:FeedArticleComponentModel):Component =
           <a href="/profile/$(model.authorId)" class="author">$(model.authorName)</a>
           <span class="date">$(model.createdAt)</span>
         </div>
-        <button class="btn btn-outline-primary btn-sm pull-xs-right">
-          <i class="ion-heart"></i> $(model.likes)
+        <button class="btn btn-outline-primary btn-sm pull-xs-right $if model.isLoginUserLiked{active}">
+          <i class="ion-heart"></i> $(model.popularCount)
         </button>
       </div>
       <a href="/article/$(model.articleId)" class="preview-link">

@@ -1,10 +1,14 @@
 import std/asyncdispatch
 import std/json
+import std/sequtils
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article/article_list_query_interface
-import ../../../../models/dto/article/article_dto
+import ../../../../models/dto/article_list/article_list_query_interface
+import ../../../../models/dto/article_list/article_list_dto
 
+
+type PopularUserIdRow = object
+  userId:string
 
 type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
 
@@ -16,8 +20,6 @@ method invoke*(
   self:GlobalFeedArticleListQuery,
   offset:int,
   display:int,
-  isLogin:bool,
-  loginUserId:string
 ):Future[seq[ArticleDto]] {.async.} =
   let articleListJson = rdb.select(
                       "article.id",
@@ -38,17 +40,19 @@ method invoke*(
   var articleList:seq[ArticleDto]
   for i, row in articleListJson:
     let articleId = row["id"].getStr()
-    let popularCount = rdb.table("user_article_map")
-                          .where("article_id", "=", articleId)
-                          .count()
-                          .await
 
-    let isLoginUserLikedCount = rdb.table("user_article_map")
-                          .where("article_id", "=", articleId)
-                          .where("user_id", "=", loginUserId)
-                          .count()
-                          .await
-    let isLoginUserLiked = isLoginUserLikedCount > 0
+    let dbPopularUserIdList = rdb
+                              .select("user_id as userId")
+                              .table("user_article_map")
+                              .where("article_id", "=", articleId)
+                              .get()
+                              .orm(PopularUserIdRow)
+                              .await
+
+    let popularUserIdList = dbPopularUserIdList.map(
+      proc(row:PopularUserIdRow):string =
+        return row.userId
+    )
 
     let author = AuthorDto.new(
       id = row["author_id"].getStr(),
@@ -81,8 +85,7 @@ method invoke*(
       title = row["title"].getStr(),
       description = row["description"].getStr(),
       createdAt = row["createdAt"].getStr(),
-      popularCount = popularCount,
-      isLoginUserLiked = isLoginUserLiked,
+      popularUserIdList = popularUserIdList,
       author = author,
       tagList = tagList,
     )

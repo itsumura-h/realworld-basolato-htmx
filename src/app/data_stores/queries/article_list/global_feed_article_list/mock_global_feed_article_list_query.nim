@@ -2,8 +2,8 @@ import std/asyncdispatch
 import std/json
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article/article_list_query_interface
-import ../../../../models/dto/article/article_dto
+import ../../../../models/dto/article_list/article_list_query_interface
+import ../../../../models/dto/article_list/article_list_dto
 
 
 type MockGlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
@@ -16,7 +16,5 @@ method invoke*(
   self:MockGlobalFeedArticleListQuery,
   offset:int,
   display:int,
-  isLogin:bool,
-  loginUserId:string
 ):Future[seq[ArticleDto]] {.async.} =
   discard

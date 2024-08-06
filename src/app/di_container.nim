@@ -9,14 +9,13 @@ import ./models/dto/user/user_query_interface
 import ./data_stores/queries/user/user_query
 import ./data_stores/queries/user/mock_user_query
 
-import ./models/dto/article/article_list_query_interface
-import ./data_stores/queries/article_list/global_feed_article_count/global_feed_article_count_query
-import ./data_stores/queries/article_list/global_feed_article_count/mock_global_feed_article_count_query
-
-import ./models/dto/article/article_count_query_interface
+import ./models/dto/article_list/article_list_query_interface
 import ./data_stores/queries/article_list/global_feed_article_list/global_feed_article_list_query
 import ./data_stores/queries/article_list/global_feed_article_list/mock_global_feed_article_list_query
 
+import ./models/dto/article_list/article_count_query_interface
+import ./data_stores/queries/article_list/global_feed_article_count/global_feed_article_count_query
+import ./data_stores/queries/article_list/global_feed_article_count/mock_global_feed_article_count_query
 
 type DiContainer* = object
 # ==================== write ====================

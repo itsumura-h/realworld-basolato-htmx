@@ -1,7 +1,7 @@
 import std/asyncdispatch
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article/article_count_query_interface
+import ../../../../models/dto/article_list/article_count_query_interface
 
 
 type GlobalFeedArticleCountQuery* = object of IGlobalFeedArticleCountQuery

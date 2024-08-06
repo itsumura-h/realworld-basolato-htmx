@@ -24,9 +24,8 @@ type ArticleDto*  = object
   title*:string
   description*:string
   createdAt*:DateTime
-  popularCount*:int
-  isLoginUserLiked*:bool
   author*:AuthorDto
+  popularUserIdList*:seq[string]
   tagList*:seq[TagDto]
 
 proc new*(_:type ArticleDto,
@@ -34,8 +33,7 @@ proc new*(_:type ArticleDto,
   title:string,
   description:string,
   createdAt:string,
-  popularCount:int,
-  isLoginUserLiked:bool,
+  popularUserIdList:seq[string],
   author:AuthorDto,
   tagList:seq[TagDto],
 ):ArticleDto =
@@ -45,8 +43,7 @@ proc new*(_:type ArticleDto,
     title:title,
     description:description,
     createdAt:createdAt,
-    popularCount:popularCount,
-    isLoginUserLiked:isLoginUserLiked,
+    popularUserIdList:popularUserIdList,
     author:author,
     tagList:tagList,
   )

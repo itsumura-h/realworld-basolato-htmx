@@ -1,6 +1,5 @@
 import std/times
 import basolato/view
-import ../../../../models/dto/article/article_dto
 
 
 type FeedArticleComponentModel* = object
@@ -11,7 +10,7 @@ type FeedArticleComponentModel* = object
   authorId*:string
   authorName*:string
   authorImage*:string
-  likes*:int
+  popularCount*:int
   isLoginUserLiked*:bool
   tagList*:seq[string]
 
@@ -24,7 +23,7 @@ proc new*(
   authorId:string,
   authorName:string,
   authorImage:string,
-  likes:int,
+  popularCount:int,
   isLoginUserLiked:bool,
   tagList:seq[string]
 ):FeedArticleComponentModel = 
@@ -36,7 +35,7 @@ proc new*(
     authorId:authorId,
     authorName:authorName,
     authorImage:authorImage,
-    likes:likes,
+    popularCount:popularCount,
     isLoginUserLiked:isLoginUserLiked,
     tagList:tagList
   )

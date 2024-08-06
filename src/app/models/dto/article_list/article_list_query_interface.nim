@@ -1,7 +1,7 @@
 
 import std/asyncdispatch
 import interface_implements
-import ./article_dto
+import ./article_list_dto
 
 
 interfaceDefs:
@@ -10,6 +10,4 @@ interfaceDefs:
         self:IGlobalFeedArticleListQuery,
         offset:int,
         display:int,
-        isLogin:bool,
-        loginUserId:string,
       ):Future[seq[ArticleDto]]

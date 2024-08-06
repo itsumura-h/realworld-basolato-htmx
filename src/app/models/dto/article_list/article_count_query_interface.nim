@@ -1,7 +1,6 @@
 
 import std/asyncdispatch
 import interface_implements
-import ./article_dto
 
 
 interfaceDefs:
