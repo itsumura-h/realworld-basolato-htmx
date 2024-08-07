@@ -1,5 +1,5 @@
 import std/asyncdispatch
-import ../../../../models/dto/article_list/article_count_query_interface
+import ../../../../models/dto/article_list/global_feed_article_count_query_interface
 
 
 type MockGlobalFeedArticleCountQuery* = object of IGlobalFeedArticleCountQuery

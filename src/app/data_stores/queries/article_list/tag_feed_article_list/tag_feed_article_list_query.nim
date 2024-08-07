@@ -2,8 +2,8 @@ import std/asyncdispatch
 import std/sequtils
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../models/dto/article_list/global_feed_article_list_query_interface
 import ../../../../models/dto/article_list/article_list_dto
+import ../../../../models/dto/article_list/tag_feed_article_list_query_interface
 
 
 type ArticleRow = object
@@ -20,17 +20,13 @@ type PopularUserIdRow = object
   userId:string
 
 
-type GlobalFeedArticleListQuery* = object of IGlobalFeedArticleListQuery
+type TagFeedArticleListQuery* = object of ITagFeedArticleListQuery
 
-proc new*(_:type GlobalFeedArticleListQuery):GlobalFeedArticleListQuery =
-  return GlobalFeedArticleListQuery()
+proc new*(_:type TagFeedArticleListQuery): TagFeedArticleListQuery =
+  return TagFeedArticleListQuery()
 
 
-method invoke*(
-  self:GlobalFeedArticleListQuery,
-  offset:int,
-  display:int,
-):Future[seq[ArticleDto]] {.async.} =
+method invoke*(self: TagFeedArticleListQuery, tagId: string, offset: int, display: int): Future[seq[ArticleDto]] {.async.} =
   let dbArticleList = rdb.select(
                       "article.id",
                       "article.title",
@@ -42,6 +38,8 @@ method invoke*(
                     )
                     .table("article")
                     .join("user", "user.id", "=", "article.author_id")
+                    .join("tag_article_map", "tag_article_map.article_id", "=", "article.id")
+                    .where("tag_article_map.tag_id", "=", tagId)
                     .offset(offset)
                     .limit(display)
                     .get()
