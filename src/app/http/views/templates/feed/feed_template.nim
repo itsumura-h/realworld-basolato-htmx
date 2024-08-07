@@ -15,6 +15,8 @@ proc feedTemplate*():Future[Component] {.async.} =
     else:
       tag
 
+  let tagName = context.params.getStr("tag")
+
   let model =
     case feedType
     of global:
@@ -29,18 +31,18 @@ proc feedTemplate*():Future[Component] {.async.} =
     <div class="col-md-9">
       <div class="feed-toggle">
         <ul class="nav nav-pills outline-active">
-          $if model.feedType == tag{
+          $if feedType == tag{
             <li class="nav-item">
-              <a class="nav-link active" href="">$(model.tagName)</a>
+              <a class="nav-link active" href="">$(tagName)</a>
             </li>
           }
           $if model.isLogin{
             <li class="nav-item">
-              <a class="nav-link $if model.feedType == yourFeed{active}" href="/your-feed">Your Feed</a>
+              <a class="nav-link $if feedType == yourFeed{active}" href="/your-feed">Your Feed</a>
             </li>
           }
           <li class="nav-item">
-            <a class="nav-link $if model.feedType == global{active}" href="/">Global Feed</a>
+            <a class="nav-link $if feedType == global{active}" href="/">Global Feed</a>
           </li>
         </ul>
       </div>

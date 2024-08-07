@@ -6,12 +6,12 @@ Simplicity is the ultimate sophistication.
 ### MPA
 - controller
   - page
-    - template
-      - presenter
-        - query
+    - template():Component
+      - presenter():templateModel
+        - query():dto
           - dto
         - templateModel
-      - component
+      - component(templateModel.componentModel):Component
         - componentModel
 
 ### API

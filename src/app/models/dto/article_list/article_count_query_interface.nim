@@ -7,4 +7,4 @@ interfaceDefs:
   type IGlobalFeedArticleCountQuery* = object of RootObj
     invoke*: proc(
         self:IGlobalFeedArticleCountQuery,
-      ):Future[int]
+      ): Future[int]

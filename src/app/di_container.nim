@@ -17,6 +17,10 @@ import ./models/dto/article_list/article_count_query_interface
 import ./data_stores/queries/article_list/global_feed_article_count/global_feed_article_count_query
 import ./data_stores/queries/article_list/global_feed_article_count/mock_global_feed_article_count_query
 
+import ./models/dto/tag/polutar_tag_list_query_interface
+import ./data_stores/queries/tag/popular_tag_list/popular_tag_list_query
+import ./data_stores/queries/tag/popular_tag_list/mock_popular_tag_list_query
+
 type DiContainer* = object
 # ==================== write ====================
   userRepository*: IUserRepository
@@ -24,6 +28,7 @@ type DiContainer* = object
   userQuery*: IUserQuery
   globalFeedArticleListQuery*: IGlobalFeedArticleListQuery
   globalFeedArticleCountQuery*: IGlobalFeedArticleCountQuery
+  popularTagListQuery*: IPopularTagListQuery
 
 proc new(_:type DiContainer):DiContainer =
   if APP_ENV == "test":
@@ -34,6 +39,7 @@ proc new(_:type DiContainer):DiContainer =
       userQuery: MockUserQuery.new(),
       globalFeedArticleListQuery: MockGlobalFeedArticleListQuery.new(),
       globalFeedArticleCountQuery: MockGlobalFeedArticleCountQuery.new(),
+      popularTagListQuery: MockPopularTagListQuery.new(),
     )
   else:
     return DiContainer(
@@ -43,6 +49,7 @@ proc new(_:type DiContainer):DiContainer =
       userQuery: UserQuery.new(),
       globalFeedArticleListQuery: GlobalFeedArticleListQuery.new(),
       globalFeedArticleCountQuery: GlobalFeedArticleCountQuery.new(),
+      popularTagListQuery: PopularTagListQuery.new(),
     )
 
 let di* = DiContainer.new()
