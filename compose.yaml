@@ -27,6 +27,6 @@ services:
     ports:
       - 9000:8000
     volumes:
-      - .:/root/project
+      - .:/project-root
     depends_on:
       - database

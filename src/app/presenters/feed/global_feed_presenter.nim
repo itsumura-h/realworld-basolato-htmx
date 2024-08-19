@@ -24,7 +24,6 @@ proc new*(_:type GlobalFeedPresenter):GlobalFeedPresenter =
 
 proc invoke*(self: GlobalFeedPresenter):Future[FeedTemplateModel] {.async.} =
   let context = context()
-  let isLogin = context.isLogin().await
   let loginUserId = context.get("user_id").await
   let page = context.params.getInt("page", 1)
   let offset = (page - 1) * FEED_DISPLAY_COUNT

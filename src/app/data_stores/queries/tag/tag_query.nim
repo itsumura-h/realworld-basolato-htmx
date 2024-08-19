@@ -1,9 +1,9 @@
 import std/asyncdispatch
 import std/sequtils
 import allographer/query_builder
-from ../../../../../config/database import rdb
-import ../../../../models/dto/tag/polutar_tag_list_query_interface
-import ../../../../models/dto/tag/tag_dto
+from ../../../../config/database import rdb
+import ../../../models/dto/tag/tag_query_interface
+import ../../../models/dto/tag/tag_dto
 
 
 type DbTagResponse = object
@@ -12,13 +12,13 @@ type DbTagResponse = object
   popularCount: int
 
 
-type PopularTagListQuery* = object of IPopularTagListQuery
+type TagQuery* = object of ITagQuery
 
-proc new*(_:type PopularTagListQuery): PopularTagListQuery =
-  return PopularTagListQuery()
+proc new*(_:type TagQuery): TagQuery =
+  return TagQuery()
 
 
-method invoke*(self: PopularTagListQuery): Future[seq[TagDto]] {.async.} =
+method getPopularTagList*(self: TagQuery): Future[seq[TagDto]] {.async.} =
   let sql = """
     SELECT
       "tag"."id",

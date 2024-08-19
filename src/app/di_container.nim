@@ -24,11 +24,15 @@ import ./data_stores/queries/article_list/tag_feed_article_list/mock_tag_feed_ar
 import ./models/dto/article_list/tag_feed_article_count_query_interface
 import ./data_stores/queries/article_list/tag_feed_article_count/tag_feed_article_count_query
 import ./data_stores/queries/article_list/tag_feed_article_count/mock_tag_feed_article_count_query
+# tag list
+import ./models/dto/tag/tag_query_interface
+import ./data_stores/queries/tag/tag_query
+import ./data_stores/queries/tag/mock_tag_query
+# article detail
+import ./models/dto/article_detail/article_detail_query_interface
+import ./data_stores/queries/article_detail/article_detail_query
+import ./data_stores/queries/article_detail/mock_article_detail_query
 
-
-import ./models/dto/tag/polutar_tag_list_query_interface
-import ./data_stores/queries/tag/popular_tag_list/popular_tag_list_query
-import ./data_stores/queries/tag/popular_tag_list/mock_popular_tag_list_query
 
 type DiContainer* = object
 # ==================== write ====================
@@ -39,7 +43,8 @@ type DiContainer* = object
   globalFeedArticleCountQuery*: IGlobalFeedArticleCountQuery
   tagFeedArticleListQuery*: ITagFeedArticleListQuery
   tagFeedArticleCountQuery*: ITagFeedArticleCountQuery
-  popularTagListQuery*: IPopularTagListQuery
+  tagQuery*: ITagQuery
+  articleDetailQuery*: IArticleDetailQuery
 
 proc new(_:type DiContainer):DiContainer =
   if APP_ENV == "test":
@@ -52,7 +57,8 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedArticleCountQuery: MockGlobalFeedArticleCountQuery.new(),
       tagFeedArticleListQuery: MockTagFeedArticleListQuery.new(),
       tagFeedArticleCountQuery: MockTagFeedArticleCountQuery.new(),
-      popularTagListQuery: MockPopularTagListQuery.new(),
+      tagQuery: MockTagQuery.new(),
+      articleDetailQuery: MockArticleDetailQuery.new(),
     )
   else:
     return DiContainer(
@@ -64,7 +70,8 @@ proc new(_:type DiContainer):DiContainer =
       globalFeedArticleCountQuery: GlobalFeedArticleCountQuery.new(),
       tagFeedArticleListQuery: TagFeedArticleListQuery.new(),
       tagFeedArticleCountQuery: TagFeedArticleCountQuery.new(),
-      popularTagListQuery: PopularTagListQuery.new(),
+      tagQuery: TagQuery.new(),
+      articleDetailQuery: ArticleDetailQuery.new(),
     )
 
 let di* = DiContainer.new()

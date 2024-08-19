@@ -9,6 +9,7 @@ import ./app/http/controllers/welcome_controller
 import ./app/http/controllers/auth_controller
 import ./app/http/controllers/setting_controller
 import ./app/http/controllers/home_controller
+import ./app/http/controllers/article_controller
 # import ./app/http/controllers/authentication_controller
 
 
@@ -24,8 +25,10 @@ let routes = @[
       Route.post("/settings", setting_controller.updateSettings),
 
       Route.get("/", home_controller.homePage),
-      Route.get("/your-feed", home_controller.yourFeedPage),
-      Route.get("/tag/{tag:string}", home_controller.tagPage),
+      Route.get("/your-feed", home_controller.homePage),
+      Route.get("/tag/{tag:str}", home_controller.homePage),
+
+      Route.get("/article/{articleId:str}", article_controller.show),
     ])
     .middleware(session_middleware.sessionFromCookie)
     .middleware(session_middleware.checkCsrfToken),

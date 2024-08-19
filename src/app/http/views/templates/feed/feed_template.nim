@@ -1,9 +1,9 @@
 import basolato/view
 import ../../../../presenters/feed/global_feed_presenter
 import ../../../../presenters/feed/tag_feed_presenter
-import ./feed_template_model
 import ../../components/feed_article/feed_article_component
 import ../../components/paginator/paginator_component
+import ./feed_template_model
 
 
 proc feedTemplate*():Future[Component] {.async.} =

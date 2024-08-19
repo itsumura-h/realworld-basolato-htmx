@@ -22,6 +22,12 @@ Simplicity is the ultimate sophistication.
         - dto
 
 ### プレゼンテーション層
+- Page
+  - Template
+    - Component
+
+の3層
+
 - View(ViewModel):string
 - ViewModel(DTO)
   - → DTO
