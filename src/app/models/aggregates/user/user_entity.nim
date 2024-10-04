@@ -17,7 +17,7 @@ type DraftUser*  = ref object
 
 
 proc new*(_:type DraftUser, userName:UserName, email:Email, password:Password):DraftUser =
-  let userId = UserId.new(userName)
+  let userId = UserId.new()
   let hashedPassword = HashedPassword.new(password)
   return DraftUser(
     id:userId,

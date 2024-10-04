@@ -21,5 +21,9 @@ proc headLayout*(title:string):Component =
       />
       <!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
       <link rel="stylesheet" href="//demo.productionready.io/main.css" />
+      <!-- hotwire -->
+      <script type="module">
+        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo@7';
+      </script>
     </head>
   """

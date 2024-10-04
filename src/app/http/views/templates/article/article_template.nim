@@ -4,8 +4,7 @@ import ./article_template_model
 
 
 proc articleTemplate*():Future[Component] {.async.} =
-  let model = ArticleTemplateModel.new()
-  echo model.repr
+  let model = ArticleTemplateModel.new().await
 
   tmpl"""
     <div class="article-page">
@@ -44,7 +43,7 @@ proc articleTemplate*():Future[Component] {.async.} =
         <div class="row article-content">
           <div class="col-md-12">
             
-            $(model.article.content)
+            $(model.article.content |raw)
             <br>
 
             $if model.article.tagList.len > 0{
@@ -89,6 +88,8 @@ proc articleTemplate*():Future[Component] {.async.} =
 
         <div class="row">
           <div class="col-xs-12 col-md-8 offset-md-2">
+
+          $if model.isLogin{
             <form class="card comment-form">
               <div class="card-block">
                 <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
@@ -98,10 +99,11 @@ proc articleTemplate*():Future[Component] {.async.} =
                 <button class="btn btn-sm btn-primary">Post Comment</button>
               </div>
             </form>
+          }
 
-            $for comment in model.commentList{
-              $(commentComponent(comment))
-            }
+          $for comment in model.commentList{
+            $(commentComponent(comment))
+          }
 
           </div>
         </div>

@@ -3,8 +3,8 @@ import std/sequtils
 import basolato/view
 import ../../consts
 import ../../di_container
-import ../../models/dto/article_list/global_feed_article_list_query_interface
-import ../../models/dto/article_list/global_feed_article_count_query_interface
+import ../../models/dto/article_list/global_feed_article_list_dao_interface
+import ../../models/dto/article_list/global_feed_article_count_dao_interface
 import ../../models/dto/article_list/article_list_dto
 import ../../http/views/templates/feed/feed_template_model
 import ../../http/views/components/feed_article/feed_article_component_model
@@ -12,13 +12,13 @@ import ../../http/views/components/paginator/paginator_component_model
 
 
 type GlobalFeedPresenter* = object
-  articleListQuery: IGlobalFeedArticleListQuery
-  articleCountQuery: IGlobalFeedArticleCountQuery
+  articleListDao: IGlobalFeedArticleListDao
+  articleCountDao: IGlobalFeedArticleCountDao
 
 proc new*(_:type GlobalFeedPresenter):GlobalFeedPresenter =
   return GlobalFeedPresenter(
-    articleListQuery: di.globalFeedArticleListQuery,
-    articleCountQuery: di.globalFeedArticleCountQuery
+    articleListDao: di.globalFeedArticleListDao,
+    articleCountDao: di.globalFeedArticleCountDao
   )
 
 
@@ -28,7 +28,7 @@ proc invoke*(self: GlobalFeedPresenter):Future[FeedTemplateModel] {.async.} =
   let page = context.params.getInt("page", 1)
   let offset = (page - 1) * FEED_DISPLAY_COUNT
 
-  let articleDtoList = self.articleListQuery.invoke(offset, FEED_DISPLAY_COUNT).await
+  let articleDtoList = self.articleListDao.invoke(offset, FEED_DISPLAY_COUNT).await
 
   let articleList = articleDtoList.map(
     proc(article:ArticleDto):FeedArticleComponentModel =
@@ -53,7 +53,7 @@ proc invoke*(self: GlobalFeedPresenter):Future[FeedTemplateModel] {.async.} =
       )
   )
 
-  let totalCount = self.articleCountQuery.invoke().await
+  let totalCount = self.articleCountDao.invoke().await
 
   let paginatorModel = PaginatorComponentModel.new(
     currentPage = page,

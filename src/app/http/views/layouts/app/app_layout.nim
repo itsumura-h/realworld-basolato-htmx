@@ -4,7 +4,6 @@ import ../head/head_layout
 import ../navbar/navbar_layout
 import ../footer/footer_layout
 
-import std/macros
 
 proc appLayout*(title:string, body:Component):Future[Component] {.async.} =
   tmpl"""

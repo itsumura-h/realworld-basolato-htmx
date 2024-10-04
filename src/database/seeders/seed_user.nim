@@ -8,6 +8,7 @@ import basolato/password
 import allographer/query_builder
 import faker
 import ./lib/random_text
+import ../../app/models/vo/user_id
 
 
 proc generateRandomRGB(): string =
@@ -22,11 +23,12 @@ proc user*(rdb:PostgresConnections) {.async.} =
 
   var users:seq[JsonNode]
   for i in 1..20:
+    let id = UserId.new()
     let name = fake.name()
     let imageName = name.toLowerAscii().multiReplace([(".", ""), (" ", "+")])
     let rpg = generateRandomRGB()
     users.add(%*{
-      "id": name.toLowerAscii().multiReplace([(".", ""), (" ", "-")]),
+      "id": id.value,
       "name": name,
       "email": fake.email(),
       "password": genHashedPassword("password"),

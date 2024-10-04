@@ -8,17 +8,25 @@ Simplicity is the ultimate sophistication.
   - page
     - template():Component
       - presenter():templateModel
-        - query():dto
+        - dao():dto
           - dto
         - templateModel
       - component(templateModel.componentModel):Component
         - componentModel
 
+- DAOはDTOを返す
+- DTOはロジックを持たないデータモデル
+- PresenterはDAOを呼び出し、DTOを取得し、TemplateModelを返す
+- TemplateModelはDTOを引数にとり、TemplateModelを返す
+- TemplateはPresenterを呼び出し、TemplateModelを取得し、描画する
+- PageはTemplateを呼び出す
+
+
 ### API
 - controller
   - apiModel
     - presenter
-      - query
+      - dao
         - dto
 
 ### プレゼンテーション層

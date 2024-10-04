@@ -21,12 +21,12 @@ services:
       context: .
       dockerfile: ./docker/app/local.Dockerfile
       args:
-        VERSION: 2.0.2
+        NIM_VERSION: 2.2.0
     tty: true
     user: ${UID}:${GID}
     ports:
       - 9000:8000
     volumes:
-      - .:/project-root
+      - .:/root/project
     depends_on:
       - database

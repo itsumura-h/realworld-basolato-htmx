@@ -1,5 +1,6 @@
 # framework
 import basolato
+import ./app/env
 # middleware
 import ./app/http/middlewares/session_middleware
 import ./app/http/middlewares/auth_middleware
@@ -41,9 +42,13 @@ let routes = @[
   .middleware(set_headers_middleware.setCorsHeaders)
 ]
 
-let settings = Settings.new(
-  host = "0.0.0.0",
-  sessionTime = 0,
-)
+let settings = 
+  if APP_ENV == AppEnvType.Develop:
+    Settings.new(
+      host = "0.0.0.0",
+      sessionTime = 0,
+    )
+  else:
+    Settings.new()
 
 serve(routes, settings)

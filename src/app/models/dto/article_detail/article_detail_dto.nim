@@ -1,12 +1,14 @@
 import std/times
 
+
 type ArticleDetailDto* = object
-  id:string
-  title:string
-  content:string
-  createdAt:DateTime
-  updatedAt:DateTime
-  favoriteCount:int
+  id*:string
+  title*:string
+  content*:string
+  createdAt*:DateTime
+  updatedAt*:DateTime
+  authorId*:string
+  favoriteCount*:int
 
 proc new*(_:type ArticleDetailDto,
   id:string,
@@ -14,6 +16,7 @@ proc new*(_:type ArticleDetailDto,
   content:string,
   createdAt:DateTime,
   updatedAt:DateTime,
+  authorId:string,
   favoriteCount:int
 ): ArticleDetailDto =
   return ArticleDetailDto(
@@ -22,5 +25,6 @@ proc new*(_:type ArticleDetailDto,
     content: content,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    favoriteCount: favoriteCount
+    authorId: authorId,
+    favoriteCount: favoriteCount,
   )
