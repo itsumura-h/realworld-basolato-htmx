@@ -8,13 +8,13 @@ import ../../../models/dto/comment/comment_dao_interface
 import ../../../models/dto/comment/comment_dto
 
 
-type CommentTable = object
-  articleId: Comment.articleId
-  body: Comment.body
-  authorId: Comment.authorId
-  createdAt: Comment.createdAt
-  authorName: User.name
-  authorImage: User.image
+type CommentDb = object
+  body: CommentTable.body
+  articleId: CommentTable.articleId
+  createdAt: CommentTable.createdAt
+  authorId: CommentTable.authorId
+  authorName: UserTable.name
+  authorImage: UserTable.image
 
 
 type CommentDao* = object of ICommentDao
@@ -39,11 +39,11 @@ method getCommentListByArticleId*(self: CommentDao, articleId: string): Future[s
     .where("article_id", "=", articleId)
     .orderBy("comment.created_at", Desc)
     .get()
-    .orm(CommentTable)
+    .orm(CommentDb)
     .await
 
   let commentDtoList = comments.map(
-    proc(comment: CommentTable): CommentDto =
+    proc(comment: CommentDb): CommentDto =
       return CommentDto.new(
         authorId = comment.authorId,
         authorName = comment.authorName,

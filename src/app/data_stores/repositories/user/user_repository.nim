@@ -4,6 +4,7 @@ import std/json
 import std/times
 import allographer/query_builder
 from ../../../../config/database import rdb
+import ../../../../database/db_tables
 import ../../../models/vo/user_id
 import ../../../models/vo/user_name
 import ../../../models/vo/email
@@ -13,6 +14,15 @@ import ../../../models/vo/bio
 import ../../../models/vo/image
 import ../../../models/aggregates/user/user_entity
 import ../../../models/aggregates/user/user_repository_interface
+
+
+type UserDb* = object
+  id*:UserTable.id
+  name*:UserTable.name
+  email*:UserTable.email
+  password*:UserTable.password
+  bio*:UserTable.bio
+  image*:UserTable.image
 
 
 type UserRepository*  = object of IUserRepository
@@ -26,6 +36,7 @@ method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.a
     rdb.table("user")
     .where("email", "=", email.value)
     .first()
+    .orm(UserDb)
     .await
 
   if not rowOpt.isSome():
@@ -33,12 +44,12 @@ method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.a
 
   let row = rowOpt.get()
   let user = User.new(
-    UserId.new(row["id"].getStr),
-    UserName.new(row["name"].getStr),
-    Email.new(row["email"].getStr),
-    HashedPassword.new(row["password"].getStr),
-    Bio.new(row["bio"].getStr),
-    Image.new(row["image"].getStr),
+    UserId.new(row.id),
+    UserName.new(row.name),
+    Email.new(row.email),
+    HashedPassword.new(row.password),
+    Bio.new(row.bio),
+    Image.new(row.image),
   )
   return user.some()
 
@@ -48,6 +59,7 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
     rdb.table("user")
     .where("id", "=", userId.value)
     .first()
+    .orm(UserDb)
     .await
   
   if not rowOpt.isSome():
@@ -55,12 +67,12 @@ method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.a
 
   let row = rowOpt.get()
   let user = User.new(
-    UserId.new(row["id"].getStr),
-    UserName.new(row["name"].getStr),
-    Email.new(row["email"].getStr),
-    HashedPassword.new(row["password"].getStr),
-    Bio.new(row["bio"].getStr),
-    Image.new(row["image"].getStr),
+    UserId.new(row.id),
+    UserName.new(row.name),
+    Email.new(row.email),
+    HashedPassword.new(row.password),
+    Bio.new(row.bio),
+    Image.new(row.image),
   )
   return user.some()
 

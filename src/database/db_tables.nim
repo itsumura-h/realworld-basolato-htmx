@@ -1,5 +1,5 @@
 type
-  Article* = object
+  ArticleTable* = object
     id*: string
     title*: string
     description*: string
@@ -8,7 +8,7 @@ type
     createdAt*: string
     updatedAt*: string
 
-  Comment* = object
+  CommentTable* = object
     id*: int64
     body*: string
     articleId*: string
@@ -16,15 +16,15 @@ type
     createdAt*: string
     updatedAt*: string
 
-  Tag* = object
+  TagTable* = object
     id*: string
     name*: string
 
-  TagArticleMap* = object
+  TagArticleMapTable* = object
     tagId*: string
     articleId*: string
 
-  User* = object
+  UserTable* = object
     id*: string
     name*: string
     email*: string
@@ -35,10 +35,10 @@ type
     createdAt*: string
     updatedAt*: string
 
-  UserArticleMap* = object
+  UserArticleMapTable* = object
     userId*: string
     articleId*: string
 
-  UserUserMap* = object
+  UserUserMapTable* = object
     userId*: string
     followerId*: string
