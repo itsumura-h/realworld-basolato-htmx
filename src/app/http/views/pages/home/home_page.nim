@@ -6,7 +6,7 @@ import ../../templates/popular_tags/popular_tags_template
 
 
 proc impl():Future[Component] {.async.} =
-  tmpl""""
+  tmpl"""
     <div class="home-page">
       <div class="banner">
         <div class="container">

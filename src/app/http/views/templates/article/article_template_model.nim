@@ -27,7 +27,6 @@ type Article* = object
 type ArticleTemplateModel* = object
   author*:Author
   article*:Article
-  commentList*:seq[CommentComponentModel]
   isAuthor*:bool
   isLogin*:bool
 
@@ -35,7 +34,7 @@ type ArticleTemplateModel* = object
 proc new*(_: type ArticleTemplateModel):Future[ArticleTemplateModel] {.async.} =
   let context = context()
   let articleId = context.params.getStr("articleId")
-  let loginUserId = context.get("userId").await
+  let loginUserId = context.get("user_id").await
   let isLogin = context.isLogin().await
 
   let articleDetailDao:IArticleDetailDao = di.articleDetailDao
@@ -58,27 +57,11 @@ proc new*(_: type ArticleTemplateModel):Future[ArticleTemplateModel] {.async.} =
     updatedAt: articleDeatailDto.updatedAt.format("yyyy MMM d"),
   )
 
-  let commentDao:ICommentDao = di.commentDao
-  let commentDtoList = commentDao.getCommentListByArticleId(articleId).await
-
-  let commentComponentModelList = commentDtoList.map(
-    proc(commentDto: CommentDto): CommentComponentModel =
-      return CommentComponentModel.new(
-        authorId = commentDto.authorId,
-        authorName = commentDto.authorName,
-        authorImage = commentDto.authorImage,
-        content = commentDto.content,
-        createdAt = commentDto.createdAt.format("yyyy MMM d"),
-        isAuthor = commentDto.authorId == loginUserId,
-      )
-  )
-
   let isAuthor = loginUserId == articleDeatailDto.authorId
 
   return ArticleTemplateModel(
     author: author,
     article: article,
-    commentList: commentComponentModelList,
     isAuthor: isAuthor,
-    isLogin:isLogin,
+    isLogin: isLogin,
   )
