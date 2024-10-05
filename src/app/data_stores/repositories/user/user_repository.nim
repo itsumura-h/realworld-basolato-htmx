@@ -22,10 +22,11 @@ proc new*(_:type UserRepository):UserRepository =
 
 
 method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.async.} =
-  let rowOpt = rdb.table("user")
-                  .where("email", "=", email.value)
-                  .first()
-                  .await
+  let rowOpt =
+    rdb.table("user")
+    .where("email", "=", email.value)
+    .first()
+    .await
 
   if not rowOpt.isSome():
     return none(User)
@@ -43,10 +44,12 @@ method getUserByEmail(self:UserRepository, email:Email):Future[Option[User]] {.a
 
 
 method getUserById*(self:UserRepository, userId:UserId):Future[Option[User]] {.async.} =
-  let rowOpt = rdb.table("user")
-                  .where("id", "=", userId.value)
-                  .first()
-                  .await
+  let rowOpt =
+    rdb.table("user")
+    .where("id", "=", userId.value)
+    .first()
+    .await
+  
   if not rowOpt.isSome():
     return none(User)
 
@@ -83,6 +86,6 @@ method update*(self:UserRepository, user:User) {.async.} =
     val["password"] = %user.password.value
 
   rdb.table("user")
-      .where("id", "=", user.id.value)
-      .update(val)
-      .await
+  .where("id", "=", user.id.value)
+  .update(val)
+  .await

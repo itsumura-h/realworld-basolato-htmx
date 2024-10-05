@@ -18,11 +18,8 @@ type CommentTemplateModel* = object
 proc new*(_:type CommentTemplateModel):Future[CommentTemplateModel] {.async.} =
   let context = context()
   let isLogin = context.isLogin().await
-  echo "isLogin: ", isLogin
   let loginUserId = context.get("user_id").await
-  echo "loginUserId: ", loginUserId
   let articleId = context.params.getStr("articleId")
-  echo "articleId: ", articleId
 
   let commentDao:ICommentDao = di.commentDao
   let commentDtoList = commentDao.getCommentListByArticleId(articleId).await
