@@ -13,6 +13,7 @@ proc new*(_:type UserInfoPresenter): UserInfoPresenter =
     userDao: di.userDao
   )
 
+
 proc invoke*(self: UserInfoPresenter): Future[UserInfoTemplateModel] {.async.} =
   let context = context()
   let loginUserId = context.get("user_id").await

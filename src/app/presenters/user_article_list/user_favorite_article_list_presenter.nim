@@ -11,18 +11,18 @@ import ../../http/views/components/paginator/paginator_component_model
 import ../../http/views/components/feed_article/feed_article_component_model
 
 
-type UserArticleListPresenter* = object
+type UserFavoriteArticleListPresenter* = object
   articleListDao*: IUserArticleListDao
   articleCountDao*: IUserArticleCountDao
 
-proc new*(_:type UserArticleListPresenter): UserArticleListPresenter =
-  return UserArticleListPresenter(
-    articleListDao: di.userArticleListDao,
-    articleCountDao: di.userArticleCountDao
+proc new*(_:type UserFavoriteArticleListPresenter): UserFavoriteArticleListPresenter =
+  return UserFavoriteArticleListPresenter(
+    articleListDao: di.userFavoriteArticleListDao,
+    articleCountDao: di.userFavoriteArticleCountDao
   )
 
 
-proc invoke*(self: UserArticleListPresenter):Future[UserArticleListTemplateModel] {.async.} =
+proc invoke*(self: UserFavoriteArticleListPresenter):Future[UserArticleListTemplateModel] {.async.} =
   let context = context()
   let isLogin = context.isLogin().await
   let userId = context.params.getStr("userId")

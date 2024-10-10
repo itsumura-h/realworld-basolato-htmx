@@ -32,6 +32,7 @@ let routes = @[
       Route.get("/article/{articleId:str}", article_controller.show),
 
       Route.get("/profile/{userId:str}", profile_controller.show),
+      Route.get("/profile/{userId:str}/favorite", profile_controller.favoriteShow),
     ])
     .middleware(session_middleware.sessionFromCookie)
     .middleware(session_middleware.checkCsrfToken),

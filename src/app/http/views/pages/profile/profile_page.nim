@@ -1,7 +1,6 @@
 import std/asyncdispatch
 import basolato/view
 import ../../layouts/app/app_layout
-import ../../templates/article/article_template
 import ../../templates/user_info/user_info_template
 import ../../templates/user_article_list/user_article_list_template
 

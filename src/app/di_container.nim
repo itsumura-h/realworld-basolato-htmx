@@ -44,6 +44,12 @@ import ./data_stores/dao/article_list/user_article_list/mock_user_article_list_d
 import ./models/dto/article_list/user_article_count_dao_interface
 import ./data_stores/dao/article_list/user_article_count/user_article_count_dao
 import ./data_stores/dao/article_list/user_article_count/mock_user_article_count_dao
+# user favorite article list
+import ./data_stores/dao/article_list/user_favorite_article_list/user_favorite_article_list_dao
+import ./data_stores/dao/article_list/user_favorite_article_list/mock_user_favorite_article_list_dao
+# user favorite article count
+import ./data_stores/dao/article_list/user_favorite_article_count/user_favorite_article_count_dao
+import ./data_stores/dao/article_list/user_favorite_article_count/mock_user_favorite_article_count_dao
 
 
 type DiContainer* = object
@@ -60,6 +66,8 @@ type DiContainer* = object
   commentDao*: ICommentDao
   userArticleListDao*: IUserArticleListDao
   userArticleCountDao*: IUserArticleCountDao
+  userFavoriteArticleListDao*: IUserArticleListDao
+  userFavoriteArticleCountDao*: IUserArticleCountDao
 
 proc new(_:type DiContainer):DiContainer =
   if APP_ENV == "test":
@@ -77,6 +85,8 @@ proc new(_:type DiContainer):DiContainer =
       commentDao: MockCommentDao.new(),
       userArticleListDao: MockUserArticleListDao.new(),
       userArticleCountDao: MockUserArticleCountDao.new(),
+      userFavoriteArticleListDao: MockUserFavoriteArticleListDao.new(),
+      userFavoriteArticleCountDao: MockUserFavoriteArticleCountDao.new(),
     )
   else:
     return DiContainer(
@@ -93,6 +103,8 @@ proc new(_:type DiContainer):DiContainer =
       commentDao: CommentDao.new(),
       userArticleListDao: UserArticleListDao.new(),
       userArticleCountDao: UserArticleCountDao.new(),
+      userFavoriteArticleListDao: UserFavoriteArticleListDao.new(),
+      userFavoriteArticleCountDao: UserFavoriteArticleCountDao.new(),
     )
 
 let di* = DiContainer.new()
