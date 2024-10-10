@@ -1,10 +1,10 @@
 import std/asyncdispatch
 import std/sequtils
 import allographer/query_builder
-from ../../../../../config/database import rdb
 import ../../../../../database/db_tables
-import ../../../../models/dto/article_list/global_feed_article_list_dao_interface
+import ../../../../../config/database
 import ../../../../models/dto/article_list/article_list_dto
+import ../../../../models/dto/article_list/user_article_list_dao_interface
 
 
 type ArticleData = object
@@ -21,17 +21,17 @@ type PopularUserIdData = object
   userId:UserTable.id
 
 
-type GlobalFeedArticleListDao* = object of IGlobalFeedArticleListDao
+type UserArticleListDao* = object of IUserArticleListDao
 
-proc new*(_:type GlobalFeedArticleListDao):GlobalFeedArticleListDao =
-  return GlobalFeedArticleListDao()
-
+proc new*(_:type UserArticleListDao): UserArticleListDao = 
+  return UserArticleListDao()
 
 method invoke*(
-  self:GlobalFeedArticleListDao,
-  offset:int,
-  display:int,
-):Future[seq[ArticleDto]] {.async.} =
+  self: UserArticleListDao, 
+  userId: string, 
+  offset:int, 
+  display:int
+): Future[seq[ArticleDto]] {.async.} =
   let dbArticleList =
     rdb
     .select(
@@ -45,6 +45,7 @@ method invoke*(
     )
     .table("article")
     .join("user", "user.id", "=", "article.author_id")
+    .where("article.author_id", "=", userId)
     .offset(offset)
     .limit(display)
     .get()

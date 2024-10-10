@@ -17,7 +17,9 @@ proc impl():Future[Component] {.async.} =
 
       <div class="container page">
         <div class="row">
-          $(feedTemplate().await)
+          <div class="col-md-9">
+            $(feedTemplate().await)
+          </div>
 
           <div class="col-md-3">
             $(popularTagsTemplate().await)

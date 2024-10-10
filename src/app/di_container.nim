@@ -36,6 +36,14 @@ import ./data_stores/dao/article_detail/mock_article_detail_dao
 import ./models/dto/comment/comment_dao_interface
 import ./data_stores/dao/comment/comment_dao
 import ./data_stores/dao/comment/mock_comment_dao
+# user article list
+import ./models/dto/article_list/user_article_list_dao_interface
+import ./data_stores/dao/article_list/user_article_list/user_article_list_dao
+import ./data_stores/dao/article_list/user_article_list/mock_user_article_list_dao
+# user article count
+import ./models/dto/article_list/user_article_count_dao_interface
+import ./data_stores/dao/article_list/user_article_count/user_article_count_dao
+import ./data_stores/dao/article_list/user_article_count/mock_user_article_count_dao
 
 
 type DiContainer* = object
@@ -50,6 +58,9 @@ type DiContainer* = object
   tagDao*: ITagDao
   articleDetailDao*: IArticleDetailDao
   commentDao*: ICommentDao
+  userArticleListDao*: IUserArticleListDao
+  userArticleCountDao*: IUserArticleCountDao
+
 proc new(_:type DiContainer):DiContainer =
   if APP_ENV == "test":
     return DiContainer(
@@ -64,6 +75,8 @@ proc new(_:type DiContainer):DiContainer =
       tagDao: MockTagDao.new(),
       articleDetailDao: MockArticleDetailDao.new(),
       commentDao: MockCommentDao.new(),
+      userArticleListDao: MockUserArticleListDao.new(),
+      userArticleCountDao: MockUserArticleCountDao.new(),
     )
   else:
     return DiContainer(
@@ -78,6 +91,8 @@ proc new(_:type DiContainer):DiContainer =
       tagDao: TagDao.new(),
       articleDetailDao: ArticleDetailDao.new(),
       commentDao: CommentDao.new(),
+      userArticleListDao: UserArticleListDao.new(),
+      userArticleCountDao: UserArticleCountDao.new(),
     )
 
 let di* = DiContainer.new()

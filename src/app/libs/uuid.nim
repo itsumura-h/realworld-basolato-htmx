@@ -1,3 +1,5 @@
+# https://antonz.org/uuidv7/#nim
+
 import std/[times, strutils, sequtils, sysrand]
 
 proc uuidv7(): seq[byte] =

@@ -11,7 +11,7 @@ import ./app/http/controllers/auth_controller
 import ./app/http/controllers/setting_controller
 import ./app/http/controllers/home_controller
 import ./app/http/controllers/article_controller
-# import ./app/http/controllers/authentication_controller
+import ./app/http/controllers/profile_controller
 
 
 let routes = @[
@@ -30,6 +30,8 @@ let routes = @[
       Route.get("/tag/{tag:str}", home_controller.homePage),
 
       Route.get("/article/{articleId:str}", article_controller.show),
+
+      Route.get("/profile/{userId:str}", profile_controller.show),
     ])
     .middleware(session_middleware.sessionFromCookie)
     .middleware(session_middleware.checkCsrfToken),
@@ -43,7 +45,7 @@ let routes = @[
 ]
 
 let settings = 
-  if APP_ENV == AppEnvType.Develop:
+  when not defined(release):
     Settings.new(
       host = "0.0.0.0",
       sessionTime = 0,
