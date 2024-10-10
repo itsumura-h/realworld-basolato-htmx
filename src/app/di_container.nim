@@ -16,6 +16,14 @@ import ./data_stores/dao/article_list/global_feed_article_list/mock_global_feed_
 import ./models/dto/article_list/global_feed_article_count_dao_interface
 import ./data_stores/dao/article_list/global_feed_article_count/global_feed_article_count_dao
 import ./data_stores/dao/article_list/global_feed_article_count/mock_global_feed_article_count_dao
+# your feed list
+import ./models/dto/article_list/your_feed_article_list_dao_interface
+import ./data_stores/dao/article_list/your_feed_article_list/your_feed_article_list_dao
+import ./data_stores/dao/article_list/your_feed_article_list/mock_your_feed_article_list_dao
+# your feed count
+import ./models/dto/article_list/your_feed_article_count_dao_interface
+import ./data_stores/dao/article_list/your_feed_article_count/your_feed_article_count_dao
+import ./data_stores/dao/article_list/your_feed_article_count/mock_your_feed_article_count_dao
 # tag feed list
 import ./models/dto/article_list/tag_feed_article_list_dao_interface
 import ./data_stores/dao/article_list/tag_feed_article_list/tag_feed_article_list_dao
@@ -59,6 +67,8 @@ type DiContainer* = object
   userDao*: IUserDao
   globalFeedArticleListDao*: IGlobalFeedArticleListDao
   globalFeedArticleCountDao*: IGlobalFeedArticleCountDao
+  yourFeedArticleListDao*: IYourFeedArticleListDao
+  yourFeedArticleCountDao*: IYourFeedArticleCountDao
   tagFeedArticleListDao*: ITagFeedArticleListDao
   tagFeedArticleCountDao*: ITagFeedArticleCountDao
   tagDao*: ITagDao
@@ -78,6 +88,8 @@ proc new(_:type DiContainer):DiContainer =
       userDao: MockUserDao.new(),
       globalFeedArticleListDao: MockGlobalFeedArticleListDao.new(),
       globalFeedArticleCountDao: MockGlobalFeedArticleCountDao.new(),
+      yourFeedArticleListDao: MockYourFeedArticleListDao.new(),
+      yourFeedArticleCountDao: MockYourFeedArticleCountDao.new(),
       tagFeedArticleListDao: MockTagFeedArticleListDao.new(),
       tagFeedArticleCountDao: MockTagFeedArticleCountDao.new(),
       tagDao: MockTagDao.new(),
@@ -96,6 +108,8 @@ proc new(_:type DiContainer):DiContainer =
       userDao: UserDao.new(),
       globalFeedArticleListDao: GlobalFeedArticleListDao.new(),
       globalFeedArticleCountDao: GlobalFeedArticleCountDao.new(),
+      yourFeedArticleListDao: YourFeedArticleListDao.new(),
+      yourFeedArticleCountDao: YourFeedArticleCountDao.new(),
       tagFeedArticleListDao: TagFeedArticleListDao.new(),
       tagFeedArticleCountDao: TagFeedArticleCountDao.new(),
       tagDao: TagDao.new(),

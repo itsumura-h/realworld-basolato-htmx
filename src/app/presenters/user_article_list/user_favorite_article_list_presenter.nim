@@ -25,6 +25,7 @@ proc new*(_:type UserFavoriteArticleListPresenter): UserFavoriteArticleListPrese
 proc invoke*(self: UserFavoriteArticleListPresenter):Future[UserArticleListTemplateModel] {.async.} =
   let context = context()
   let isLogin = context.isLogin().await
+  let loginUserId = context.get("user_Id").await
   let userId = context.params.getStr("userId")
   let page = context.params.getInt("page", 1)
   let offset = (page - 1) * FEED_DISPLAY_COUNT
@@ -38,7 +39,7 @@ proc invoke*(self: UserFavoriteArticleListPresenter):Future[UserArticleListTempl
           tag.name
       )
 
-      let isLoginUserLiked = article.popularUserIdList.contains(userId)
+      let isLoginUserLiked = article.popularUserIdList.contains(loginUserId)
 
       return FeedArticleComponentModel.new(
         articleId = article.id,

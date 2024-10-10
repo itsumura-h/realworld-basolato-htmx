@@ -1,5 +1,6 @@
 import basolato/view
 import ../../../../presenters/feed/global_feed_presenter
+import ../../../../presenters/feed/your_feed_presenter
 import ../../../../presenters/feed/tag_feed_presenter
 import ../../components/feed_article/feed_article_component
 import ../../components/paginator/paginator_component
@@ -25,6 +26,9 @@ proc feedTemplate*():Future[Component] {.async.} =
       presenter.invoke().await
     of tag:
       let presenter = TagFeedPresenter.new()
+      presenter.invoke().await
+    of yourFeed:
+      let presenter = YourFeedPresenter.new()
       presenter.invoke().await
     else:
       let presenter = GlobalFeedPresenter.new()
