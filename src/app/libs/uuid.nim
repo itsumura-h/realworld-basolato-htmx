@@ -1,26 +1,37 @@
-# https://antonz.org/uuidv7/#nim
+import times
+import random
+import strformat
 
-import std/[times, strutils, sequtils, sysrand]
+proc genUuid*(): string =
+  var uuid = newSeq[uint8](16)
 
-proc uuidv7(): seq[byte] =
-  # random bytes
-  result = urandom(16)
+  # 現在のタイムスタンプをミリ秒単位で取得
+  let nowMs = int64(epochTime() * 1000)
 
-  # current timestamp in ms
-  let timestamp = epochTime().uint64 * 1000
+  # タイムスタンプを最初の6バイトに設定
+  for i in 0..5:
+    uuid[i] = uint8((nowMs shr (8 * (5 - i))) and 0xFF)
 
-  # timestamp
-  result[0] = (timestamp shr 40).byte and 0xFF
-  result[1] = (timestamp shr 32).byte and 0xFF
-  result[2] = (timestamp shr 24).byte and 0xFF
-  result[3] = (timestamp shr 16).byte and 0xFF
-  result[4] = (timestamp shr 8).byte and 0xFF
-  result[5] = timestamp.byte and 0xFF
+  # 12ビットのランダムデータを生成
+  let rand12 = rand(1 shl 12)  # 0から4095までのランダム値
 
-  # version and variant
-  result[6] = (result[6] and 0x0F) or 0x70
-  result[8] = (result[8] and 0x3F) or 0x80
+  # uuid[6]の設定：バージョン（7）とランダムデータの上位4ビット
+  uuid[6] = uint8(((rand12 shr 8) and 0x0F) or 0x70)  # 0x70はバージョン7を示す
 
-proc genUuid*():string =
-  var uuidVal = uuidv7()
-  return uuidVal.mapIt(it.toHex(2)).join()
+  # uuid[7]の設定：ランダムデータの下位8ビット
+  uuid[7] = uint8(rand12 and 0xFF)
+
+  # uuid[8]の設定：バリアントビット（'10'）とランダムデータ
+  let rand8 = rand(256)
+  uuid[8] = uint8((rand8 and 0x3F) or 0x80)  # 0x80でビット7を1に設定
+
+  # 残りのバイトをランダムデータで埋める
+  for i in 9..15:
+    uuid[i] = uint8(rand(256))
+
+  # UUIDを文字列形式に変換
+  result = ""
+  for i in 0..15:
+    result &= &"{uuid[i]:02x}"
+    if i == 3 or i == 5 or i == 7 or i == 9:
+      result &= "-"

@@ -19,19 +19,23 @@ proc new*(_:type TagDao): TagDao =
 
 
 method getPopularTagList*(self: TagDao): Future[seq[TagDto]] {.async.} =
-  let sql = """
-    SELECT
-      "tag"."id",
-      "tag"."name",
-      COUNT("id") as "popularCount"
-    FROM "tag"
-    JOIN "tag_article_map" ON "tag"."id" = "tag_article_map"."tag_id"
-    GROUP BY "tag"."id", "tag"."name"
-    ORDER BY "popularCount" DESC
-    LIMIT 10
-  """
-  let dbTagList = rdb.raw(sql).get().orm(DbTagResponse).await
-  
+  let dbTagList =
+    rdb
+    .select(
+      "tag.id",
+      "tag.name",
+      "COUNT(id) as popularCount"
+    )
+    .table("tag")
+    .join("tag_article_map", "tag.id", "=", "tag_article_map.tag_id")
+    .groupBy("tag.id")
+    .groupBy("tag.name")
+    .orderBy("popularCount", Desc)
+    .limit(10)
+    .get()
+    .orm(DbTagResponse)
+    .await
+
   let tagList = dbTagList.map(
     proc(tag:DbTagResponse):TagDto =
       return TagDto.new(tag.id, tag.name)

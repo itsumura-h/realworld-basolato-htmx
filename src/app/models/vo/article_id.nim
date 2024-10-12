@@ -1,12 +1,10 @@
-import std/strutils
-import ./title
+import ../../libs/uuid
 
 type ArticleId* = object
   value*:string
 
-proc new*(_:type ArticleId, value:string):ArticleId =
-  return ArticleId(value: value)
+proc new*(_:type ArticleId):ArticleId =
+  return ArticleId(value: genUuid())
 
-proc new*(_:type ArticleId, title:Title):ArticleId =
-  let value = title.value.replace(" ", "-").toLower()
+proc new*(_:type ArticleId, value:string):ArticleId =
   return ArticleId(value: value)

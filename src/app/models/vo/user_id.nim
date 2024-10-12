@@ -6,8 +6,7 @@ type UserId*  = object
   value*:string = ""
 
 proc new*(_:type UserId):UserId =
-  let value = genUuid()
-  return UserId(value:value)
+  return UserId(value:genUuid())
 
 
 proc new*(_:type UserId, value:string):UserId =

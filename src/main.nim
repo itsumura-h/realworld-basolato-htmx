@@ -52,6 +52,8 @@ let settings =
       sessionTime = 0,
     )
   else:
-    Settings.new()
+    Settings.new(
+      host = "0.0.0.0",
+    )
 
 serve(routes, settings)

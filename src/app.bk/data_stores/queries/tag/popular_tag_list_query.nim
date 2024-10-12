@@ -12,16 +12,21 @@ proc new*(_:type PopularTagListQuery):PopularTagListQuery =
 
 
 method invoke*(self:PopularTagListQuery, count:int):Future[seq[TagDto]] {.async.} =
-  let sql = &"""
-    SELECT
-      "tag"."id",
-      "tag"."name",
-      COUNT("id") as "popularCount"
-    FROM "tag"
-    JOIN "tag_article_map" ON "tag"."id" = "tag_article_map"."tag_id"
-    GROUP BY "tag"."id", "tag"."name"
-    ORDER BY "popularCount" DESC
-    LIMIT {count}
-  """
-  let tagList = rdb.raw(sql).get().orm(TagDto).await
+  let tagList =
+    rdb
+    .select(
+      "tag.id",
+      "tag.name",
+      "COUNT(id) as popularCount"
+    )
+    .table("tag")
+    .join("tag_article_map", "tag.id", "=", "tag_article_map.tag_id")
+    .groupBy("tag.id")
+    .groupBy("tag.name")
+    .orderBy("popularCount", Desc)
+    .limit(count)
+    .get()
+    .orm(TagDto)
+    .await
+
   return tagList

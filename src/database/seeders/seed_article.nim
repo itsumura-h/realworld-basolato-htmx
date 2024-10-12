@@ -2,23 +2,22 @@ import std/asyncdispatch
 import std/json
 import std/times
 import std/strutils
-import basolato/password
+import std/strformat
+import std/random
 import allographer/query_builder
-import faker
 import ./lib/random_text
 import ../../app/models/vo/article_id
 import ../../app/models/vo/title
 
-
-let fake = newFaker()
+randomize()
 
 proc article*(rdb:PostgresConnections) {.async.} =
   let users = rdb.table("user").get().await
   var articles:seq[JsonNode]
   for i in 1..30:
     let title = Title.new( randomText(5) )
-    let id = ArticleId.new(title)
-    var body = """
+    let id = ArticleId.new()
+    var body = fmt"""
 # title
 ## subTitle1
 - point1
@@ -36,8 +35,9 @@ proc fib(n: int): int =
 
 echo(fib(30))
 ```
+
+{randomText(500)}
 """
-    body.add(randomText(500))
     articles.add(%*{
       "title": title.value,
       "id": id.value,
