@@ -33,6 +33,7 @@ let routes = @[
 
       Route.get("/profile/{userId:str}", profile_controller.show),
       Route.get("/profile/{userId:str}/favorite", profile_controller.favoriteShow),
+      Route.post("/profile/{userId:str}/follow", profile_controller.follow).middleware(auth_middleware.loginRequired),
     ])
     .middleware(session_middleware.sessionFromCookie)
     .middleware(session_middleware.checkCsrfToken),

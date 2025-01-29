@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/times
 import std/options
 import ../../../errors
-import ../../../../database/db_tables
+import ../../../../database/schema
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../models/dto/article_detail/article_detail_dao_interface

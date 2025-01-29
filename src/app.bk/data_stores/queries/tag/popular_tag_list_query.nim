@@ -1,5 +1,4 @@
 import std/asyncdispatch
-import std/strformat
 import allographer/query_builder
 from ../../../../config/database import rdb
 import ../../../models/dto/tag/tag_list_query_interface

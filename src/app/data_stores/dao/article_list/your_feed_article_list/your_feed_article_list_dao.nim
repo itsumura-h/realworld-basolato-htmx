@@ -2,7 +2,7 @@ import std/asyncdispatch
 import std/sequtils
 import allographer/query_builder
 from ../../../../../config/database import rdb
-import ../../../../../database/db_tables
+import ../../../../../database/schema
 import ../../../../models/dto/article_list/your_feed_article_list_dao_interface
 import ../../../../models/dto/article_list/article_list_dto
 

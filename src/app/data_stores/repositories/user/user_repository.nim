@@ -4,7 +4,7 @@ import std/json
 import std/times
 import allographer/query_builder
 from ../../../../config/database import rdb
-import ../../../../database/db_tables
+import ../../../../database/schema
 import ../../../models/vo/user_id
 import ../../../models/vo/user_name
 import ../../../models/vo/email

@@ -19,7 +19,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/app/local.Dockerfile
+      dockerfile: ./docker/app/Dockerfile
       args:
         NIM_VERSION: 2.2.0
     tty: true

@@ -1,7 +1,7 @@
 import std/asyncdispatch
 import std/sequtils
 import allographer/query_builder
-import ../../../../../database/db_tables
+import ../../../../../database/schema
 import ../../../../../config/database
 import ../../../../models/dto/article_list/article_list_dto
 import ../../../../models/dto/article_list/user_article_list_dao_interface

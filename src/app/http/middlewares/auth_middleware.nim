@@ -8,13 +8,7 @@ proc loginSkip*(c:Context):Future[Response] {.async.} =
   return next()
 
 
-proc shouldLogin*(c:Context):Future[Response] {.async.} =
-  if not c.isLogin().await:
-    return redirect("/login")
-  return next()
-
-
-proc islandShouldLogin*(c:Context):Future[Response] {.async.} =
+proc loginRequired*(c:Context):Future[Response] {.async.} =
   if not c.isLogin().await:
     return redirect("/login")
   return next()

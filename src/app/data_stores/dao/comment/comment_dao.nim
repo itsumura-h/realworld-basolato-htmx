@@ -3,7 +3,7 @@ import std/times
 import std/sequtils
 import allographer/query_builder
 from ../../../../config/database import rdb
-import ../../../../database/db_tables
+import ../../../../database/schema
 import ../../../models/dto/comment/comment_dao_interface
 import ../../../models/dto/comment/comment_dto
 
