@@ -1,13 +1,9 @@
 import std/asyncdispatch
 import std/times
-import std/sequtils
 import basolato/view
 import markdown
-import ../../components/comment/comment_component_model
 import ../../../../models/dto/user/user_dao_interface
 import ../../../../models/dto/article_detail/article_detail_dao_interface
-import ../../../../models/dto/comment/comment_dao_interface
-import ../../../../models/dto/comment/comment_dto
 import ../../../../di_container
 
 

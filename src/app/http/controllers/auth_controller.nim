@@ -1,4 +1,5 @@
 import std/asyncdispatch
+import std/strutils
 import basolato/controller
 import basolato/request_validation
 import ../views/pages/login/login_page
@@ -35,7 +36,7 @@ proc signIn*(context:Context):Future[Response] {.async.} =
     return redirect("/")
   except:
     let error = getCurrentExceptionMsg()
-    context.storeError(error).await
+    context.storeError(error.split("\n")[0]).await
     return redirect("/login")
 
 

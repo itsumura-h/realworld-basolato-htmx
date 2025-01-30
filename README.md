@@ -7,10 +7,9 @@ Simplicity is the ultimate sophistication.
 - controller
   - page
     - template():Component
-      - presenter():templateModel
+      - templateModel.new():templateModel
         - dao():dto
           - dto
-        - templateModel
       - component(templateModel.componentModel):Component
         - componentModel
 

@@ -1,5 +1,4 @@
 import basolato/view
-import ../../components/comment/comment_component
 import ./article_template_model
 
 
