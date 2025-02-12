@@ -1,9 +1,10 @@
 import basolato/view
-import ./article_template_model
+import ../../../../presenters/article_detail/article_detail_presenter
 
 
 proc articleTemplate*():Future[Component] {.async.} =
-  let model = ArticleTemplateModel.new().await
+  let presenter = ArticleDetailPresenter.new()
+  let model = presenter.invoke().await
 
   tmpl"""
     <div class="container">

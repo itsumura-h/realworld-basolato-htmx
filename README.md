@@ -7,18 +7,21 @@ Simplicity is the ultimate sophistication.
 - controller
   - page
     - template():Component
-      - templateModel.new():templateModel
-        - dao():dto
-          - dto
+      - presenter.invoke():TemplateModel
+        - dao():Dto
+        - Dto
+        - TemplateModel.new(Dto):TemplateModel
+          - ComponentModel
       - component(templateModel.componentModel):Component
-        - componentModel
+        - ComponentModel
 
-- DAOはDTOを返す
-- DTOはロジックを持たないデータモデル
-- PresenterはDAOを呼び出し、DTOを取得し、TemplateModelを返す
-- TemplateModelはDTOを引数にとり、TemplateModelを返す
-- TemplateはPresenterを呼び出し、TemplateModelを取得し、描画する
-- PageはTemplateを呼び出す
+参照系
+Page: HTMLのbody以下のレイアウトを定義する。Templateを呼び出す。どこのtemolateを呼び出すかのロジックを持つ。
+Template: 文脈に基づいて異なるPresenterを呼び出し、TemplateModelを受け取り、TemplateModelのオブジェクトのフィールドの状態を描画するHTMLを定義する。
+Presenter: DAOを呼び出し、DTOを受け取り、DTOをTemplateModelに変換するコンストラクタのみのメソッドを持つ。
+TemplateModel: Templateで描画されるデータ定義。
+DAO(Data Access Object): データベースに接続してクエリを実行し、DTOを作って返す。
+DTO(Data Transfer Object): データベースのテーブルのカラムのデータを保持する。
 
 
 ### API

@@ -1,11 +1,32 @@
 import std/asyncdispatch
 import basolato/view
 import ../../layouts/app/app_layout
-import ../../templates/feed/feed_template
+import ../../templates/feed/global_feed_template
+import ../../templates/feed/your_feed_template
+import ../../templates/feed/tag_feed_template
 import ../../templates/popular_tags/popular_tags_template
+import ../../templates/feed/feed_template_model
 
 
 proc impl():Future[Component] {.async.} =
+  let context = context()
+  let feedType =
+    if context.request.url.path == "/":
+      global
+    elif context.request.url.path == "/your-feed":
+      yourFeed
+    else:
+      tag
+
+  let feedTemplate =
+    case feedType
+    of global:
+      globalFeedTemplate().await
+    of yourFeed:
+      yourFeedTemplate().await
+    of tag:
+      tagFeedTemplate().await
+
   tmpl"""
     <div class="home-page">
       <div class="banner">
@@ -18,7 +39,7 @@ proc impl():Future[Component] {.async.} =
       <div class="container page">
         <div class="row">
           <div class="col-md-9">
-            $(feedTemplate().await)
+            $(feedTemplate)
           </div>
 
           <div class="col-md-3">
