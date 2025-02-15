@@ -9,4 +9,4 @@ proc main*() =
 
 
 main()
-createSchema(rdb, "/root/project/src/database").waitFor()
+createSchema(rdb, "/root/project/src/database/schema.nim").waitFor()

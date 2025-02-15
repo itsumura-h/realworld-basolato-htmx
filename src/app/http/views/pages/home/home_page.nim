@@ -8,23 +8,14 @@ import ../../templates/popular_tags/popular_tags_template
 import ../../templates/feed/feed_template_model
 
 
-proc impl():Future[Component] {.async.} =
+proc impl(): Future[Component] {.async.} =
   let context = context()
-  let feedType =
-    if context.request.url.path == "/":
-      global
-    elif context.request.url.path == "/your-feed":
-      yourFeed
-    else:
-      tag
-
   let feedTemplate =
-    case feedType
-    of global:
+    if context.request.url.path == "/":
       globalFeedTemplate().await
-    of yourFeed:
+    elif context.request.url.path == "/your-feed":
       yourFeedTemplate().await
-    of tag:
+    else:
       tagFeedTemplate().await
 
   tmpl"""
@@ -50,5 +41,5 @@ proc impl():Future[Component] {.async.} =
     </div>
   """
 
-proc homePage*():Future[Component] {.async.} =
+proc homePage*(): Future[Component] {.async.} =
   return appLayout("Home", impl().await).await
