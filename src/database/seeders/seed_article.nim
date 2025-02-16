@@ -8,12 +8,23 @@ import allographer/query_builder
 import ./lib/random_text
 import ../../app/models/vo/article_id
 import ../../app/models/vo/title
+import ../schema
 
 randomize()
 
+type Article = object
+  id: ArticleTable.id
+  title: ArticleTable.title
+  description: ArticleTable.description
+  body: ArticleTable.body
+  author_id: ArticleTable.author_id
+  created_at: ArticleTable.created_at
+
+
 proc article*(rdb:PostgresConnections) {.async.} =
-  let users = rdb.table("user").get().await
-  var articles:seq[JsonNode]
+  let users = rdb.table("user").get().orm(UserTable).await
+
+  var articles:seq[Article]
   for i in 1..30:
     let title = Title.new( randomText(5) )
     let id = ArticleId.new()
@@ -38,13 +49,14 @@ echo(fib(30))
 
 {randomText(500)}
 """
-    articles.add(%*{
-      "title": title.value,
-      "id": id.value,
-      "description": randomText(30),
-      "body": body,
-      "author_id": users[rand(0..<users.len)]["id"].getStr(),
-      "created_at": now().utc().format("yyyy-MM-dd hh:mm:ss")
-    })
+    let article = Article(
+      id: id.value,
+      title: title.value,
+      description: randomText(30),
+      body: body,
+      author_id: users[rand(0..<users.len)].id,
+      created_at: now().utc().format("yyyy-MM-dd hh:mm:ss")
+    )
+    articles.add(article)
   
   rdb.table("article").insert(articles).await
